@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BikeConnect · Bicicleta compartilhada sem depender de internet</title>
+<meta name="description" content="Tecnologia B2B que libera bicicletas compartilhadas por comunicação local, mesmo com o celular sem sinal.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="wrap"><a class="logo" href="#"><i></i>BikeConnect</a>
+<nav><a href="#apresentacao">Apresentação</a><a href="#simulador">Simulador</a><a href="#pesquisa">Pesquisa</a></nav></div></header>
+<main>
+<div class="wrap hero">
+ <div>
+  <h1>Libere a bicicleta, mesmo sem sinal no celular.</h1>
+  <p>O BikeConnect instala nas estações uma comunicação local por Bluetooth. Operadoras, prefeituras e universidades deixam de perder corridas quando o usuário está sem internet.</p>
+  <a class="btn alt" href="#apresentacao">Ver a apresentação</a> <a class="btn" href="simulador.html">Abrir o simulador</a>
+ </div>
+ <div class="qr">
+  <div id="qr" aria-label="QR Code que abre o simulador"></div>
+  <p>Aponte a câmera do celular para este QR Code e veja como a liberação funciona por trás.</p>
+  <small id="qrurl"></small>
+ </div>
+</div>
+
+<section id="apresentacao"><div class="wrap">
+ <h2>Apresentação em 5 minutos</h2>
+ <p class="lead">As dez perguntas da apresentação executiva, cada uma com a resposta do grupo e o tempo sugerido de fala.</p>
+ <details open><summary>Qual é o problema?<span>0:00–0:30</span></summary><p>Quem já tem cadastro e aplicativo não consegue liberar uma bicicleta compartilhada quando está sem dados móveis ou com sinal ruim. O serviço existe, a bicicleta está disponível, e a pessoa não consegue usar.</p></details>
+ <details><summary>Quem sofre com ele?<span>0:30–1:00</span></summary><p>O usuário final (estudantes, trabalhadores e turistas) perde tempo ou desiste. A operadora, a prefeitura ou a universidade perde corridas e assinantes, e o erro não aparece no sistema, porque a pessoa nem chega a tentar.</p></details>
+ <details><summary>Qual é a solução?<span>1:00–1:30</span></summary><p>Um módulo de comunicação local instalado na estação. O usuário escaneia o QR Code, o aplicativo conversa com a estação por Bluetooth e a bicicleta é liberada sem internet móvel. O módulo se acopla às estações que o cliente já tem.</p></details>
+ <details><summary>Como a tecnologia será utilizada?<span>1:30–2:00</span></summary><p>Bluetooth Low Energy como canal principal e um microcontrolador ESP32 na estação. Quando o celular está online, o app recebe tokens assinados de curta duração (24 a 48 horas). Na estação, o microcontrolador valida a assinatura sem internet, libera a trava e guarda o evento. Depois, tudo é sincronizado com o servidor.</p></details>
+ <details><summary>Qual é a proposta de valor?<span>2:00–2:30</span></summary><p>Mais retiradas concluídas, menos reclamações e cobertura em áreas com sinal instável, sem trocar a frota existente. Para o usuário, liberação em até 5 segundos e acesso para quem está sem plano de dados.</p></details>
+ <details><summary>Quem são os concorrentes?<span>2:30–3:00</span></summary><p>Tembici e Yellow são operadoras e, portanto, clientes potenciais. Os concorrentes diretos são fabricantes de estações com tecnologia própria, fechaduras inteligentes com Bluetooth e sistemas dockless. O diferencial é ser uma camada agnóstica, compatível com estações já instaladas.</p></details>
+ <details><summary>Como a empresa ganha dinheiro?<span>3:00–3:30</span></summary><p>Assinatura por estação (R$ 150 a R$ 200 por mês) mais implantação única (R$ 750 a R$ 1.600 por estação). Quem paga é o cliente B2B, nunca o usuário final. O hardware se paga em 5 a 11 meses de mensalidade.</p></details>
+ <details><summary>Como irá conquistar clientes?<span>3:30–4:00</span></summary><p>Começa com um piloto em 1 ou 2 estações de uma universidade, que tem ciclo de decisão curto. O resultado vira estudo de caso. Os canais seguintes são venda direta, parcerias com fabricantes de estações, feiras de mobilidade e indicações.</p></details>
+ <details><summary>Como poderá crescer?<span>4:00–4:30</span></summary><p>Validação em 0 a 6 meses, operadoras regionais e condomínios em 6 a 18 meses e, depois, prefeituras por licitação e grandes operadoras. Mais adiante: patinetes, bicicletas elétricas e outros países da América Latina.</p></details>
+ <details><summary>Por que esse negócio tem potencial?<span>4:30–5:00</span></summary><p>A estimativa é de 100 a 500 estações em 24 a 36 meses, com receita de R$ 2,7 a 4,5 milhões no terceiro ano no cenário conservador. A receita é recorrente, o cliente tem custo de troca alto e o ponto de equilíbrio fica em 250 a 350 estações. São estimativas do plano de negócios, a validar com um piloto.</p></details>
+</div></section>
+
+<section id="simulador"><div class="wrap">
+ <h2>Simulador de liberação</h2>
+ <p class="lead">Escaneie o QR Code da estação e acompanhe, lado a lado, o que o celular e a estação fazem. Funciona também no seu celular, pelo QR Code do topo da página.</p>
+ <iframe src="simulador.html" title="Simulador de liberação de bicicleta"></iframe>
+</div></section>
+
+<section id="pesquisa"><div class="wrap">
+ <h2>O que os entrevistados disseram</h2>
+ <p class="lead">Duas entrevistas de validação com o mesmo questionário de 15 perguntas. Os participantes não são identificados.</p>
+ <div class="two">
+  <div class="card"><h3>Participante A</h3><p class="tag">Sem acesso à internet</p><dl>
+   <dt>Já usou bicicleta compartilhada?</dt><dd>Tentou, mas teve dificuldades, e já deixou de usar por precisar de internet.</dd>
+   <dt>Principal dificuldade</dt><dd>Precisar de internet. Dificulta bastante.</dd>
+   <dt>Quando não consegue</dt><dd>Vai a pé. O que mais incomoda é não conseguir liberar a bicicleta e ter de ir de ônibus ou a pé.</dd>
+   <dt>Usaria sem internet ou aplicativo?</dt><dd>Sim. Prefere código ou senha.</dd>
+   <dt>Pagaria?</dt><dd>Talvez, dependendo do preço: até R$ 5.</dd>
+   <dt>Sugestão</dt><dd>Liberar um código válido por 24 horas para a pessoa usar a bicicleta naquele dia.</dd></dl></div>
+  <div class="card"><h3>Participante B</h3><p class="tag">Internet sempre disponível</p><dl>
+   <dt>Já usou bicicleta compartilhada?</dt><dd>Sim, e já deixou de usar por precisar de internet ou aplicativo.</dd>
+   <dt>Principal dificuldade</dt><dd>Precisar de um aplicativo. A falta de internet dificulta muito.</dd>
+   <dt>Quando não consegue</dt><dd>Usa ônibus ou vai a pé. O que mais incomoda é o sinal ruim ou o celular descarregado.</dd>
+   <dt>Usaria sem internet ou aplicativo?</dt><dd>Sim. Prefere bilhete ou cartão de transporte.</dd>
+   <dt>Pagaria?</dt><dd>Sim: de R$ 6 a R$ 10.</dd>
+   <dt>Sugestão</dt><dd>Cadastro e recarga em pontos pela cidade, que gerem um código de uso. Ampliar o acesso a quem não tem familiaridade com aplicativos.</dd></dl></div>
+ </div>
+ <p class="note"><b>Em comum:</b> os dois já desistiram de usar o serviço, os dois usariam uma alternativa sem internet e os dois propuseram um código temporário como solução. Com apenas duas entrevistas, a evidência é inicial, e o grupo pretende ampliar a amostra antes do piloto.</p>
+</div></section>
+</main>
+<footer><div class="wrap">BikeConnect · Centro Universitário Anhanguera de Niterói · Modelos de Negócios para TI · Ciências da Computação, 2026<br>Daniel Holanda de Campos, David Capulot Corrêa, Fabrício Mello Tegon, Gabriel do Almo Silveira Vicente e Welington Carlos Silva De Barros</div></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+var u=new URL('simulador.html?origem=qr',location.href).href;
+document.getElementById('qrurl').textContent=u;
+try{new QRCode(document.getElementById('qr'),{text:u,width:200,height:200,correctLevel:QRCode.CorrectLevel.M})}catch(e){document.getElementById('qr').textContent='Abra o endereço abaixo no celular.'}
+</script>
+</body>
+</html>

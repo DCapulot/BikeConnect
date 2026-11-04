@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador BikeConnect</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+body{font-size:16px}.s{padding:24px 0}.s h1{font-size:30px;margin-bottom:6px}
+.grid{display:grid;grid-template-columns:1fr 1.3fr;gap:20px;margin-top:20px}
+.phone{background:#11242c;color:#e9f1f0;border-radius:28px;padding:22px;min-height:360px;display:flex;flex-direction:column;gap:14px}
+.badge{align-self:flex-start;border-radius:99px;padding:4px 12px;font-size:14px;background:#27404a}.badge.off{background:var(--signal);color:#11242c;font-weight:700}
+.msg{font:800 28px/1.15 "Bricolage Grotesque",sans-serif;margin-top:auto}
+.bar{height:6px;border-radius:3px;background:#27404a;overflow:hidden}.bar b{display:block;height:100%;width:0;background:var(--signal);transition:width .5s}
+.st{background:var(--soft);border-radius:14px;padding:20px}
+.lock{font:800 22px "Bricolage Grotesque",sans-serif}.lock.open{color:var(--ocean)}
+ol{list-style:none;margin:14px 0 0;padding:0}li{padding:10px 0 10px 14px;border-left:3px solid var(--line);margin:0;opacity:.45;transition:opacity .3s,border-color .3s}
+li.on{opacity:1;border-color:var(--signal)}li b{display:block}li code{font-size:13px;color:var(--mute);word-break:break-all}
+label{display:flex;gap:8px;align-items:center;margin:14px 0}.net{color:var(--mute);font-size:14px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body><div class="wrap s">
+<h1>Libere uma bicicleta sem internet</h1>
+<p class="net" id="net"></p>
+<label><input type="checkbox" id="off" checked> Simular celular sem internet móvel</label>
+<button class="btn alt" id="go">Escanear QR Code da Estação 001</button>
+<div class="grid">
+ <div class="phone" aria-live="polite"><span class="badge off" id="badge">Sem internet</span><div class="bar"><b id="bar"></b></div><div class="msg" id="msg">Aponte para o QR Code da estação.</div></div>
+ <div class="st"><div class="lock" id="lock">Estação 001 · trava fechada</div>
+  <ol id="steps">
+   <li><b>1. App lê o QR Code</b>O QR Code só identifica a estação. Não é uma senha.<br><code>station_id = "EST-001"</code></li>
+   <li><b>2. Conexão Bluetooth local</b>O celular fala direto com a estação, sem passar pela internet.<br><code>BLE connect → EST-001</code></li>
+   <li><b>3. App envia o token assinado</b>Credencial de curta duração, baixada antes, quando havia sinal.<br><code>{ user, exp: +24h, limite_offline: 5/dia, sig }</code></li>
+   <li><b>4. Estação valida sozinha</b>O microcontrolador confere a assinatura com a chave da operadora e a validade.<br><code>verify(sig, chave_publica) = OK</code></li>
+   <li><b>5. Trava liberada e evento gravado</b>O atuador libera a bicicleta e a estação guarda o registro.<br><code>log: EST-001 · bike 17 · liberada</code></li>
+   <li><b>6. Sincronização com o servidor</b>Quando houver sinal, o evento sobe para o backend e a viagem é conciliada.<br><code>POST /eventos (reenvio automático)</code></li>
+  </ol></div>
+</div>
+<p class="net">Simulação didática. Não usa Bluetooth nem hardware real.</p>
+</div>
+<script>
+var $=function(i){return document.getElementById(i)},lis=document.querySelectorAll('#steps li'),run=false;
+function net(){$('net').textContent='Seu aparelho agora: '+(navigator.onLine?'online':'offline')}
+net();addEventListener('online',net);addEventListener('offline',net);
+$('off').onchange=function(){var o=this.checked;$('badge').textContent=o?'Sem internet':'Com internet';$('badge').className='badge'+(o?' off':'')};
+var msgs=['Lendo o QR Code…','Conectando à estação por Bluetooth…','Enviando token assinado…','Estação validando o token…','Bicicleta liberada. Boa viagem!','Viagem sincronizada com o servidor.'];
+function wait(t){return new Promise(function(r){setTimeout(r,t)})}
+$('go').onclick=async function(){
+ if(run)return;run=true;this.disabled=true;
+ lis.forEach(function(l){l.className=''});$('lock').textContent='Estação 001 · trava fechada';$('lock').className='lock';$('bar').style.width='0';
+ var off=$('off').checked;
+ for(var i=0;i<6;i++){
+  if(i==5&&off){$('msg').textContent='Sem sinal. O evento fica guardado até o celular voltar a ter internet…';await wait(1600);$('badge').textContent='Com internet';$('badge').className='badge';$('off').checked=false}
+  lis[i].className='on';$('msg').textContent=msgs[i];$('bar').style.width=((i+1)/6*100)+'%';
+  if(i==4){$('lock').textContent='Estação 001 · trava liberada';$('lock').className='lock open'}
+  await wait(1100)}
+ run=false;this.disabled=false;this.textContent='Repetir simulação';$('off').checked=true;$('badge').textContent='Sem internet';$('badge').className='badge off'};
+</script>
+</body></html>
