@@ -2,63 +2,200 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>BikeConnect · Bicicleta compartilhada sem depender de internet</title>
 <meta name="description" content="Tecnologia B2B que libera bicicletas compartilhadas por comunicação local, mesmo com o celular sem sinal.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<style>
+:root{--bg:#0a1a1f;--sf:#112a31;--sf2:#173640;--ink:#eaf3f1;--mute:#9fb8bd;--sig:#f4c20d;--teal:#3cc4d6;--line:#25464f;--red:#e5533d;--ok:#2fb57a}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.1;margin:0}
+a{color:var(--sig)}:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:5;background:rgba(10,26,31,.94);backdrop-filter:blur(8px);padding-top:env(safe-area-inset-top);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;height:64px}
+.logo{font:800 23px "Bricolage Grotesque",sans-serif;text-decoration:none;color:var(--ink)}.logo i{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--sig);margin-right:8px}
+nav a{margin-left:22px;text-decoration:none;color:var(--mute);font-size:16px}nav a:hover{color:var(--ink)}
+.hero{padding:64px 0 56px;display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center;background:linear-gradient(var(--bg),var(--bg)) padding-box}
+.hero h1{font-size:clamp(40px,6.2vw,74px);font-weight:800;letter-spacing:-.02em}
+.hero p{color:var(--mute);max-width:33em;margin:22px 0 28px}
+.road{height:6px;margin:0;background:repeating-linear-gradient(90deg,var(--sig) 0 34px,transparent 34px 60px);opacity:.9}
+.btn{display:inline-block;padding:14px 22px;border-radius:10px;font-weight:700;text-decoration:none;font-size:17px;background:var(--sig);color:#11242c;margin:0 8px 10px 0}
+.btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.qr{background:var(--sf);border:1px solid var(--line);border-radius:22px;padding:28px;text-align:center}
+#qr{background:#fff;border-radius:14px;overflow:hidden;width:min(100%,264px);margin:0 auto;line-height:0}
+#qr svg{display:block;width:100%;height:auto}
+.qr p{margin:18px 0 8px;color:var(--ink);font-size:17px}.qr a{word-break:break-all;font-size:14px}
+section{padding:72px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(30px,4.4vw,48px);font-weight:800;margin-bottom:12px}
+.lead{color:var(--mute);max-width:42em;margin:0 0 40px}
+.q{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;padding:44px 0;border-top:1px solid var(--line);align-items:start}
+.q:first-of-type{border-top:0;padding-top:8px}
+.q h3{font-size:clamp(25px,3.2vw,34px);margin-bottom:14px}
+.q p{margin:0 0 14px;max-width:34em}.q p.k{color:var(--sig);font-weight:600}
+.vis{background:var(--sf);border:1px solid var(--line);border-radius:18px;padding:22px;font-size:16px}
+.vis h4{margin:0 0 12px;font:700 17px system-ui;color:var(--mute)}
+.chk{list-style:none;margin:0;padding:0}.chk li{display:flex;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.chk li:last-child{border:0}
+.dot{flex:0 0 26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:15px;background:var(--ok);color:#fff}.dot.x{background:var(--red)}
+.flow{display:flex;flex-direction:column;gap:0}
+.nd{background:var(--sf2);border-radius:12px;padding:10px 14px;display:flex;flex-direction:column}.nd b{font-size:16px}.nd span{color:var(--mute);font-size:14px}
+.ar{align-self:center;color:var(--sig);font-size:20px;line-height:1.2;padding:2px 0}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}.cmp>div{background:var(--sf2);border-radius:12px;padding:14px}.cmp b{display:block;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;font-size:15px}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--mute);font-weight:600}
+.big{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}.big div{background:var(--sf2);border-radius:12px;padding:14px}.big b{display:block;font:800 28px "Bricolage Grotesque";color:var(--sig);line-height:1.1}.big span{font-size:14px;color:var(--mute)}
+.tl{display:grid;gap:12px}.tl div{border-left:4px solid var(--sig);padding:2px 0 2px 14px}.tl b{display:block}.tl span{color:var(--mute);font-size:15px}
+.rng{position:relative;height:28px;background:var(--sf2);border-radius:8px;margin:6px 0 4px}.rng i{position:absolute;top:0;bottom:0;border-radius:8px}
+.ax{display:flex;justify-content:space-between;color:var(--mute);font-size:13px}.leg{font-size:14px;margin:12px 0 2px;display:flex;align-items:center;gap:8px}.leg u{width:14px;height:14px;border-radius:4px;display:inline-block}
+.bmc{display:grid;gap:12px;grid-template-columns:repeat(5,1fr);grid-template-areas:"pa at pv rc sg" "pa rr pv ca sg" "cu cu cu rv rv"}
+.bmc>div{background:var(--sf);border:1px solid var(--line);border-radius:14px;padding:16px;font-size:15px}
+.bmc h3{font-size:18px;margin-bottom:8px;color:var(--sig)}.bmc ul{margin:0;padding-left:18px}.bmc li{margin:0 0 6px}
+.bmc .pv{border:2px solid var(--sig)}
+.src{font-size:14px;color:var(--mute);margin-top:6px}
+.sim{width:100%;height:760px;border:1px solid var(--line);border-radius:18px;background:var(--bg)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.card{background:var(--sf);border:1px solid var(--line);border-radius:18px;padding:28px}.card h3{font-size:26px}.tag{color:var(--sig);font-size:15px;margin:4px 0 14px;font-weight:600}
+dt{font-weight:700;font-size:15px;margin-top:12px;color:var(--teal)}dd{margin:2px 0 0}dl{margin:0}
+.note{border-left:4px solid var(--sig);padding:4px 0 4px 18px;margin-top:32px;max-width:48em}
+.team{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.team li{background:var(--sf);border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-weight:600}
+footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);font-size:15px}
+@media(max-width:1000px){.bmc{grid-template-columns:1fr 1fr;grid-template-areas:"sg sg" "pv pv" "pa at" "rr ca" "rc rc" "cu rv"}}
+@media(max-width:820px){.hero,.q,.two{grid-template-columns:1fr}.hero{padding-top:40px;gap:36px}.q{gap:22px}nav a:not(:last-child){display:none}.team{grid-template-columns:1fr 1fr}.sim{height:880px}}
+@media(max-width:620px){.bmc{grid-template-columns:1fr;grid-template-areas:"sg" "pv" "pa" "at" "rr" "rc" "ca" "cu" "rv"}}
+@media(max-width:480px){body{font-size:17px}.wrap{padding:0 18px}.team,.cmp,.big{grid-template-columns:1fr}.sim{height:940px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
 </head>
 <body>
 <header><div class="wrap"><a class="logo" href="#"><i></i>BikeConnect</a>
-<nav><a href="#apresentacao">Apresentação</a><a href="#simulador">Simulador</a><a href="#pesquisa">Pesquisa</a></nav></div></header>
+<nav><a href="#conhecendo">Conhecendo melhor</a><a href="#simulador">Simulador</a><a href="#canvas">Canvas</a><a href="#pesquisa">Pesquisa</a><a href="#equipe">Equipe</a></nav></div></header>
 <main>
+<div class="road" aria-hidden="true"></div>
 <div class="wrap hero">
  <div>
   <h1>Libere a bicicleta, mesmo sem sinal no celular.</h1>
-  <p>O BikeConnect instala nas estações uma comunicação local por Bluetooth. Operadoras, prefeituras e universidades deixam de perder corridas quando o usuário está sem internet.</p>
-  <a class="btn alt" href="#apresentacao">Ver a apresentação</a> <a class="btn" href="simulador.html">Abrir o simulador</a>
+  <p>O BikeConnect instala nas estações uma comunicação local por Bluetooth. Operadoras, prefeituras e universidades deixam de perder corridas quando o usuário está sem internet, e a estação avisa a central de tudo o que aconteceu.</p>
+  <a class="btn" href="#conhecendo">Conhecer o BikeConnect</a><a class="btn ghost" href="#simulador">Ver o simulador</a>
  </div>
  <div class="qr">
-  <div id="qr" aria-label="QR Code que abre o simulador"></div>
-  <p>Aponte a câmera do celular para este QR Code e veja como a liberação funciona por trás.</p>
-  <small id="qrurl"></small>
+  <div id="qr"><svg viewBox="-4 -4 37 37" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" role="img" aria-label="QR Code que abre o simulador no celular"><rect x="-4" y="-4" width="37" height="37" fill="#fff"/><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM11 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM25 0h1v1h-1zM26 0h1v1h-1zM27 0h1v1h-1zM28 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM11 1h1v1h-1zM13 1h1v1h-1zM15 1h1v1h-1zM20 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM11 2h1v1h-1zM12 2h1v1h-1zM14 2h1v1h-1zM17 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM25 2h1v1h-1zM26 2h1v1h-1zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM10 3h1v1h-1zM14 3h1v1h-1zM15 3h1v1h-1zM19 3h1v1h-1zM20 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM25 3h1v1h-1zM26 3h1v1h-1zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM9 4h1v1h-1zM11 4h1v1h-1zM13 4h1v1h-1zM15 4h1v1h-1zM16 4h1v1h-1zM17 4h1v1h-1zM18 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM25 4h1v1h-1zM26 4h1v1h-1zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM9 5h1v1h-1zM10 5h1v1h-1zM13 5h1v1h-1zM15 5h1v1h-1zM17 5h1v1h-1zM18 5h1v1h-1zM19 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM25 6h1v1h-1zM26 6h1v1h-1zM27 6h1v1h-1zM28 6h1v1h-1zM8 7h1v1h-1zM9 7h1v1h-1zM12 7h1v1h-1zM17 7h1v1h-1zM0 8h1v1h-1zM1 8h1v1h-1zM3 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM9 8h1v1h-1zM12 8h1v1h-1zM13 8h1v1h-1zM15 8h1v1h-1zM16 8h1v1h-1zM19 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM27 8h1v1h-1zM0 9h1v1h-1zM2 9h1v1h-1zM8 9h1v1h-1zM16 9h1v1h-1zM20 9h1v1h-1zM22 9h1v1h-1zM25 9h1v1h-1zM28 9h1v1h-1zM0 10h1v1h-1zM1 10h1v1h-1zM2 10h1v1h-1zM3 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM10 10h1v1h-1zM12 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM20 10h1v1h-1zM21 10h1v1h-1zM24 10h1v1h-1zM25 10h1v1h-1zM26 10h1v1h-1zM27 10h1v1h-1zM0 11h1v1h-1zM2 11h1v1h-1zM5 11h1v1h-1zM9 11h1v1h-1zM11 11h1v1h-1zM13 11h1v1h-1zM16 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM26 11h1v1h-1zM27 11h1v1h-1zM0 12h1v1h-1zM2 12h1v1h-1zM4 12h1v1h-1zM6 12h1v1h-1zM10 12h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM21 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM25 12h1v1h-1zM27 12h1v1h-1zM28 12h1v1h-1zM0 13h1v1h-1zM5 13h1v1h-1zM7 13h1v1h-1zM8 13h1v1h-1zM10 13h1v1h-1zM12 13h1v1h-1zM14 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM21 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM13 14h1v1h-1zM20 14h1v1h-1zM21 14h1v1h-1zM24 14h1v1h-1zM25 14h1v1h-1zM26 14h1v1h-1zM27 14h1v1h-1zM28 14h1v1h-1zM1 15h1v1h-1zM2 15h1v1h-1zM3 15h1v1h-1zM7 15h1v1h-1zM8 15h1v1h-1zM12 15h1v1h-1zM13 15h1v1h-1zM14 15h1v1h-1zM16 15h1v1h-1zM17 15h1v1h-1zM18 15h1v1h-1zM19 15h1v1h-1zM21 15h1v1h-1zM23 15h1v1h-1zM25 15h1v1h-1zM27 15h1v1h-1zM1 16h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM6 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM15 16h1v1h-1zM17 16h1v1h-1zM18 16h1v1h-1zM20 16h1v1h-1zM21 16h1v1h-1zM27 16h1v1h-1zM1 17h1v1h-1zM2 17h1v1h-1zM3 17h1v1h-1zM9 17h1v1h-1zM11 17h1v1h-1zM12 17h1v1h-1zM14 17h1v1h-1zM16 17h1v1h-1zM17 17h1v1h-1zM21 17h1v1h-1zM22 17h1v1h-1zM23 17h1v1h-1zM25 17h1v1h-1zM28 17h1v1h-1zM0 18h1v1h-1zM4 18h1v1h-1zM6 18h1v1h-1zM12 18h1v1h-1zM14 18h1v1h-1zM17 18h1v1h-1zM21 18h1v1h-1zM23 18h1v1h-1zM27 18h1v1h-1zM28 18h1v1h-1zM2 19h1v1h-1zM3 19h1v1h-1zM5 19h1v1h-1zM8 19h1v1h-1zM10 19h1v1h-1zM11 19h1v1h-1zM12 19h1v1h-1zM14 19h1v1h-1zM16 19h1v1h-1zM17 19h1v1h-1zM18 19h1v1h-1zM19 19h1v1h-1zM20 19h1v1h-1zM23 19h1v1h-1zM27 19h1v1h-1zM28 19h1v1h-1zM0 20h1v1h-1zM1 20h1v1h-1zM2 20h1v1h-1zM5 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM8 20h1v1h-1zM9 20h1v1h-1zM10 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM13 20h1v1h-1zM14 20h1v1h-1zM16 20h1v1h-1zM17 20h1v1h-1zM20 20h1v1h-1zM21 20h1v1h-1zM22 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM26 20h1v1h-1zM8 21h1v1h-1zM12 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM19 21h1v1h-1zM20 21h1v1h-1zM24 21h1v1h-1zM26 21h1v1h-1zM27 21h1v1h-1zM28 21h1v1h-1zM0 22h1v1h-1zM1 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM5 22h1v1h-1zM6 22h1v1h-1zM8 22h1v1h-1zM13 22h1v1h-1zM16 22h1v1h-1zM17 22h1v1h-1zM18 22h1v1h-1zM20 22h1v1h-1zM22 22h1v1h-1zM24 22h1v1h-1zM27 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM13 23h1v1h-1zM15 23h1v1h-1zM16 23h1v1h-1zM20 23h1v1h-1zM24 23h1v1h-1zM25 23h1v1h-1zM26 23h1v1h-1zM0 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM6 24h1v1h-1zM10 24h1v1h-1zM12 24h1v1h-1zM13 24h1v1h-1zM16 24h1v1h-1zM17 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1zM27 24h1v1h-1zM28 24h1v1h-1zM0 25h1v1h-1zM2 25h1v1h-1zM3 25h1v1h-1zM4 25h1v1h-1zM6 25h1v1h-1zM8 25h1v1h-1zM9 25h1v1h-1zM12 25h1v1h-1zM14 25h1v1h-1zM20 25h1v1h-1zM22 25h1v1h-1zM23 25h1v1h-1zM24 25h1v1h-1zM25 25h1v1h-1zM26 25h1v1h-1zM0 26h1v1h-1zM2 26h1v1h-1zM3 26h1v1h-1zM4 26h1v1h-1zM6 26h1v1h-1zM9 26h1v1h-1zM10 26h1v1h-1zM11 26h1v1h-1zM12 26h1v1h-1zM14 26h1v1h-1zM17 26h1v1h-1zM18 26h1v1h-1zM19 26h1v1h-1zM20 26h1v1h-1zM21 26h1v1h-1zM24 26h1v1h-1zM25 26h1v1h-1zM26 26h1v1h-1zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM8 27h1v1h-1zM10 27h1v1h-1zM11 27h1v1h-1zM12 27h1v1h-1zM13 27h1v1h-1zM14 27h1v1h-1zM17 27h1v1h-1zM18 27h1v1h-1zM19 27h1v1h-1zM20 27h1v1h-1zM23 27h1v1h-1zM27 27h1v1h-1zM0 28h1v1h-1zM1 28h1v1h-1zM2 28h1v1h-1zM3 28h1v1h-1zM4 28h1v1h-1zM5 28h1v1h-1zM6 28h1v1h-1zM8 28h1v1h-1zM9 28h1v1h-1zM10 28h1v1h-1zM11 28h1v1h-1zM12 28h1v1h-1zM15 28h1v1h-1zM17 28h1v1h-1zM19 28h1v1h-1zM20 28h1v1h-1zM23 28h1v1h-1zM24 28h1v1h-1zM25 28h1v1h-1zM27 28h1v1h-1z" fill="#000"/></svg></div>
+  <p>Aponte a câmera do celular para o QR Code e veja a liberação passo a passo.</p>
+  <a id="qrlink" href="https://dcapulot.github.io/BikeConnect/simulador.html">dcapulot.github.io/BikeConnect/simulador.html</a>
  </div>
 </div>
 
-<section id="apresentacao"><div class="wrap">
- <h2>Apresentação em 5 minutos</h2>
- <p class="lead">As dez perguntas da apresentação executiva, cada uma com a resposta do grupo e o tempo sugerido de fala.</p>
- <details open><summary>Qual é o problema?<span>0:00–0:30</span></summary><p>Quem já tem cadastro e aplicativo não consegue liberar uma bicicleta compartilhada quando está sem dados móveis ou com sinal ruim. O serviço existe, a bicicleta está disponível, e a pessoa não consegue usar.</p></details>
- <details><summary>Quem sofre com ele?<span>0:30–1:00</span></summary><p>O usuário final (estudantes, trabalhadores e turistas) perde tempo ou desiste. A operadora, a prefeitura ou a universidade perde corridas e assinantes, e o erro não aparece no sistema, porque a pessoa nem chega a tentar.</p></details>
- <details><summary>Qual é a solução?<span>1:00–1:30</span></summary><p>Um módulo de comunicação local instalado na estação. O usuário escaneia o QR Code, o aplicativo conversa com a estação por Bluetooth e a bicicleta é liberada sem internet móvel. O módulo se acopla às estações que o cliente já tem.</p></details>
- <details><summary>Como a tecnologia será utilizada?<span>1:30–2:00</span></summary><p>Bluetooth Low Energy como canal principal e um microcontrolador ESP32 na estação. Quando o celular está online, o app recebe tokens assinados de curta duração (24 a 48 horas). Na estação, o microcontrolador valida a assinatura sem internet, libera a trava e guarda o evento. Depois, tudo é sincronizado com o servidor.</p></details>
- <details><summary>Qual é a proposta de valor?<span>2:00–2:30</span></summary><p>Mais retiradas concluídas, menos reclamações e cobertura em áreas com sinal instável, sem trocar a frota existente. Para o usuário, liberação em até 5 segundos e acesso para quem está sem plano de dados.</p></details>
- <details><summary>Quem são os concorrentes?<span>2:30–3:00</span></summary><p>Tembici e Yellow são operadoras e, portanto, clientes potenciais. Os concorrentes diretos são fabricantes de estações com tecnologia própria, fechaduras inteligentes com Bluetooth e sistemas dockless. O diferencial é ser uma camada agnóstica, compatível com estações já instaladas.</p></details>
- <details><summary>Como a empresa ganha dinheiro?<span>3:00–3:30</span></summary><p>Assinatura por estação (R$ 150 a R$ 200 por mês) mais implantação única (R$ 750 a R$ 1.600 por estação). Quem paga é o cliente B2B, nunca o usuário final. O hardware se paga em 5 a 11 meses de mensalidade.</p></details>
- <details><summary>Como irá conquistar clientes?<span>3:30–4:00</span></summary><p>Começa com um piloto em 1 ou 2 estações de uma universidade, que tem ciclo de decisão curto. O resultado vira estudo de caso. Os canais seguintes são venda direta, parcerias com fabricantes de estações, feiras de mobilidade e indicações.</p></details>
- <details><summary>Como poderá crescer?<span>4:00–4:30</span></summary><p>Validação em 0 a 6 meses, operadoras regionais e condomínios em 6 a 18 meses e, depois, prefeituras por licitação e grandes operadoras. Mais adiante: patinetes, bicicletas elétricas e outros países da América Latina.</p></details>
- <details><summary>Por que esse negócio tem potencial?<span>4:30–5:00</span></summary><p>A estimativa é de 100 a 500 estações em 24 a 36 meses, com receita de R$ 2,7 a 4,5 milhões no terceiro ano no cenário conservador. A receita é recorrente, o cliente tem custo de troca alto e o ponto de equilíbrio fica em 250 a 350 estações. São estimativas do plano de negócios, a validar com um piloto.</p></details>
+<section id="conhecendo"><div class="wrap">
+ <h2>Conhecendo melhor o BikeConnect</h2>
+ <p class="lead">Dez perguntas que qualquer pessoa faria sobre a empresa, respondidas em linguagem simples e com apoio visual. Os números de negócio são estimativas do nosso plano, a confirmar em um piloto.</p>
+
+ <article class="q"><div><h3>Qual é o problema?</h3>
+  <p>Imagine chegar a uma estação de bicicletas compartilhadas, com pressa para a aula ou o trabalho. Você já tem o aplicativo e já tem cadastro. A bicicleta está ali, livre. Mas o seu pacote de dados acabou, ou o sinal ali é fraco.</p>
+  <p>Hoje, para liberar a bicicleta, o celular precisa falar com a internet. Sem ela, nada acontece. O serviço existe, a bicicleta existe, e a pessoa não consegue usar.</p>
+  <p class="k">Em uma frase: o usuário está pronto para pagar e o sistema o deixa na calçada.</p></div>
+  <div class="vis"><h4>A cena, em uma checagem</h4><ul class="chk">
+   <li><span class="dot">✓</span>Tem o aplicativo instalado</li><li><span class="dot">✓</span>Tem cadastro ativo</li><li><span class="dot">✓</span>Tem bicicleta livre na estação</li><li><span class="dot x">✕</span>Está sem internet no celular</li><li><span class="dot x">✕</span>Resultado: não consegue sair</li></ul></div></article>
+
+ <article class="q"><div><h3>Quem sofre com ele?</h3>
+  <p>De um lado, quem anda de bicicleta: estudantes, trabalhadores e turistas. Perdem tempo esperando sinal, procuram Wi-Fi ou desistem e vão a pé ou de ônibus.</p>
+  <p>Do outro, quem opera o serviço: empresas de bicicleta compartilhada, prefeituras e universidades. Cada retirada que não acontece é uma corrida que não vira receita. E há um detalhe traiçoeiro: quem não consegue liberar a bicicleta nem chega a gerar um erro no sistema. A perda é invisível.</p></div>
+  <div class="vis"><div class="cmp"><div><b>Quem usa</b>Perde tempo, paga transporte mais caro ou desiste.</div><div><b>Quem opera</b>Perde corridas, assinantes e ganha reclamações.</div></div>
+   <p class="src">Nas duas entrevistas que fizemos, as duas pessoas já desistiram de usar o serviço por causa da internet ou do aplicativo.</p></div></article>
+
+ <article class="q"><div><h3>Qual é a solução?</h3>
+  <p>Em vez de exigir internet no celular, colocamos a inteligência na estação. Um pequeno módulo, instalado nas estações que o cliente já tem, conversa com o celular por Bluetooth, a poucos metros de distância. Não precisa de internet para isso.</p>
+  <p>O usuário continua fazendo o que já fazia: escaneia o QR Code da estação e a bicicleta é liberada. A diferença é que a estação tem sua própria conexão com a central. Depois da retirada, é ela quem informa à central os dados da viagem, inclusive de quem estava offline.</p>
+  <p class="k">Em uma frase: a conexão sai do bolso do usuário e passa a ser responsabilidade da estação.</p></div>
+  <div class="vis"><h4>Hoje × com o BikeConnect</h4><div class="flow">
+   <div class="nd"><b>Hoje</b><span>Celular → internet → servidor → estação</span></div><div class="ar">↓</div>
+   <div class="nd" style="border:2px solid var(--sig)"><b>Com o BikeConnect</b><span>Celular → Bluetooth → estação → central</span></div></div></div></article>
+
+ <article class="q"><div><h3>Como a tecnologia será utilizada?</h3>
+  <p>Pense em um ingresso de cinema com QR Code. A catraca não liga para a bilheteria: ela confere se o carimbo do ingresso é verdadeiro e se ainda está no prazo. Nosso <b>token</b> funciona igual: uma credencial com assinatura digital e validade curta, de 24 a 48 horas.</p>
+  <p>O aplicativo baixa o token quando o celular está com internet, por exemplo em casa. Na estação, um microcontrolador (um computador minúsculo, o ESP32) confere a assinatura sozinho e abre a trava. Ele guarda o registro da retirada e, assim que tem conexão, envia à central quem retirou, com qual token, onde e quando.</p>
+  <p>A segurança vem da validade curta e de um limite de usos offline por dia.</p></div>
+  <div class="vis"><h4>O caminho do token</h4><div class="flow">
+   <div class="nd"><b>1. Com internet</b><span>O app recebe o token assinado</span></div><div class="ar">↓</div>
+   <div class="nd"><b>2. Na estação, sem internet</b><span>Bluetooth leva o token; o ESP32 confere e libera</span></div><div class="ar">↓</div>
+   <div class="nd"><b>3. Registro gravado</b><span>A estação guarda quem retirou e quando</span></div><div class="ar">↓</div>
+   <div class="nd"><b>4. Estação avisa a central</b><span>Os dados offline chegam e a viagem é conciliada</span></div></div></div></article>
+
+ <article class="q"><div><h3>Qual é a proposta de valor?</h3>
+  <p>Para quem opera: mais retiradas concluídas, menos reclamações no suporte e cobertura em lugares de sinal ruim, como subsolos e parques, sem trocar as estações que já funcionam.</p>
+  <p>Para quem usa: a bicicleta abre em até 5 segundos e o acesso deixa de depender de plano de dados. Isso inclui quem usa plano pré-pago esgotado.</p>
+  <p class="k">Em uma frase: a bicicleta sai sempre que o usuário chega, com ou sem sinal.</p></div>
+  <div class="vis"><div class="big"><div><b>5 s</b><span>para liberar a bicicleta</span></div><div><b>0</b><span>estações a trocar</span></div><div><b>24–48 h</b><span>de validade do token</span></div><div><b>Sem dados</b><span>móveis na retirada</span></div></div></div></article>
+
+ <article class="q"><div><h3>Quem são os concorrentes?</h3>
+  <p>Tembici e Yellow operam bicicletas compartilhadas. Para nós, elas são clientes em potencial, não rivais. Nossos concorrentes de verdade são outras formas de resolver o acesso: fabricantes de estações com tecnologia própria, fechaduras inteligentes por Bluetooth e sistemas sem estação fixa.</p>
+  <p>Nosso diferencial é ser uma camada que se encaixa no que já existe, em vez de pedir ao cliente que compre tudo de novo.</p></div>
+  <div class="vis"><table><tr><th>Alternativa</th><th>Limite</th></tr>
+   <tr><td>Estação do fabricante</td><td>Exige trocar ou comprar o conjunto</td></tr>
+   <tr><td>Fechadura Bluetooth</td><td>Resolve a bicicleta, não a estação</td></tr>
+   <tr><td>Sem estação fixa</td><td>Modelo diferente, com outros custos</td></tr>
+   <tr><td><b>BikeConnect</b></td><td><b>Se acopla à estação existente</b></td></tr></table></div></article>
+
+ <article class="q"><div><h3>Como a empresa ganha dinheiro?</h3>
+  <p>Cobramos de quem opera, nunca do usuário final. Cada estação tem uma taxa única de implantação (equipamento e instalação) e uma mensalidade pelo uso da tecnologia, do suporte e das atualizações.</p>
+  <p>O equipamento se paga com 5 a 11 meses de mensalidade. A receita é recorrente: enquanto o cliente tiver estações funcionando, ele continua pagando.</p>
+  <p>Além da mensalidade e da implantação, o Canvas prevê um contrato de suporte e manutenção. Uma cobrança por retirada offline realizada é uma hipótese que ainda vamos testar.</p></div>
+  <div class="vis"><div class="big"><div><b>R$ 150–200</b><span>por estação, por mês</span></div><div><b>R$ 750–1.600</b><span>por estação, uma vez</span></div></div>
+   <p class="src">Exemplo de conta: um cliente com 10 estações paga R$ 7.500 a R$ 16.000 de implantação e R$ 1.500 a R$ 2.000 por mês.</p></div></article>
+
+ <article class="q"><div><h3>Como irá conquistar clientes?</h3>
+  <p>Começamos pequeno: um piloto em 1 ou 2 estações de uma universidade, onde as decisões são rápidas e o público é jovem e conectado ao tema. Os pilotos podem ser gratuitos ou de baixo custo, e seus resultados viram um caso real para mostrar a outros clientes.</p>
+  <p>Depois vem a venda direta a operadoras, parcerias com fabricantes de estações, feiras de mobilidade urbana e indicações de clientes satisfeitos.</p></div>
+  <div class="vis"><div class="tl"><div><b>Piloto</b><span>1 a 2 estações em uma universidade</span></div><div><b>Estudo de caso</b><span>Dados reais de retiradas concluídas</span></div><div><b>Escala comercial</b><span>Venda direta, parceiros, feiras e indicações</span></div></div></div></article>
+
+ <article class="q"><div><h3>Como poderá crescer?</h3>
+  <p>Em etapas. Primeiro provamos que funciona. Depois levamos a operadoras regionais e condomínios. Só então entramos em prefeituras, que compram por licitação e levam mais tempo, e em grandes operadoras.</p>
+  <p>A mesma tecnologia pode servir a patinetes, bicicletas elétricas e outros países da América Latina.</p></div>
+  <div class="vis"><div class="tl"><div><b>0 a 6 meses</b><span>Validação com o piloto</span></div><div><b>6 a 18 meses</b><span>Operadoras regionais e condomínios</span></div><div><b>Depois</b><span>Prefeituras, grandes operadoras e novos veículos</span></div></div></div></article>
+
+ <article class="q"><div><h3>Por que esse negócio tem potencial?</h3>
+  <p>Porque a receita se repete todo mês, porque trocar de fornecedor é trabalhoso para o cliente e porque o problema é comum em qualquer cidade com bicicleta compartilhada.</p>
+  <p>Nossa estimativa é de 100 a 500 estações em 24 a 36 meses, com receita de R$ 2,7 a 4,5 milhões no terceiro ano no cenário conservador. A empresa se sustenta a partir de 250 a 350 estações.</p></div>
+  <div class="vis"><h4>Estações, de 0 a 500</h4>
+   <div class="rng" role="img" aria-label="Meta de 100 a 500 estações; equilíbrio entre 250 e 350"><i style="left:20%;width:80%;background:var(--teal);opacity:.55"></i><i style="left:50%;width:20%;background:var(--sig)"></i></div>
+   <div class="ax"><span>0</span><span>250</span><span>500</span></div>
+   <div class="leg"><u style="background:var(--teal)"></u>Meta em 24 a 36 meses: 100 a 500</div><div class="leg"><u style="background:var(--sig)"></u>Ponto de equilíbrio: 250 a 350</div>
+   <p class="src">Estimativas do plano de negócios, a validar com o piloto.</p></div></article>
 </div></section>
 
 <section id="simulador"><div class="wrap">
  <h2>Simulador de liberação</h2>
- <p class="lead">Escaneie o QR Code da estação e acompanhe, lado a lado, o que o celular e a estação fazem. Funciona também no seu celular, pelo QR Code do topo da página.</p>
- <iframe src="simulador.html" title="Simulador de liberação de bicicleta"></iframe>
+ <p class="lead">Veja o que o celular, a estação e a central fazem em cada etapa. Você pode simular o celular sem internet e até a estação sem sinal.</p>
+ <iframe class="sim" src="simulador.html?embed=1" title="Simulador de liberação da bicicleta" loading="lazy"></iframe>
+</div></section>
+
+<section id="canvas"><div class="wrap">
+ <h2>O modelo de negócio em uma página</h2>
+ <p class="lead">O Business Model Canvas reúne, em nove blocos, quem atendemos, o que entregamos, como chegamos até o cliente e como a empresa se sustenta.</p>
+ <div class="bmc">
+  <div style="grid-area:sg"><h3>Segmentos de clientes</h3><ul><li>Operadoras de bicicletas compartilhadas (cliente principal)</li><li>Prefeituras com sistemas públicos de bikes</li><li>Universidades, parques, condomínios e empresas</li><li>Usuário final (estudantes, trabalhadores, turistas): não paga, mas valida a solução</li></ul></div>
+  <div class="pv" style="grid-area:pv"><h3>Proposta de valor</h3><ul><li>Retirada da bicicleta mesmo sem internet móvel, por comunicação local entre celular e estação</li><li>Usuário: menos tempo perdido e frustração</li><li>Operadora: menos retiradas perdidas e melhor experiência do cliente</li><li>Funcionalidade nova sem trocar a infraestrutura atual</li></ul></div>
+  <div style="grid-area:pa"><h3>Parcerias-chave</h3><ul><li>Operadoras de bikes compartilhadas (ex.: Tembici, Yellow)</li><li>Fabricantes de estações, travas e módulos BLE</li><li>Prefeituras e universidades, como locais de piloto</li><li>Parceiros de segurança digital e de pagamento</li></ul></div>
+  <div style="grid-area:at"><h3>Atividades-chave</h3><ul><li>Pesquisa e validação com usuários e operadoras</li><li>Desenvolvimento e teste da comunicação local (BLE e Wi-Fi local)</li><li>Integração com sistemas existentes</li><li>Segurança contra fraude e desbloqueio indevido</li><li>Vendas, pilotos e suporte</li></ul></div>
+  <div style="grid-area:rr"><h3>Recursos-chave</h3><ul><li>Equipe de desenvolvimento (app/SDK, firmware, backend)</li><li>Tecnologia de autenticação e desbloqueio local seguro</li><li>Hardware e módulos para protótipos e testes</li><li>Conhecimento técnico e propriedade intelectual</li></ul></div>
+  <div style="grid-area:rc"><h3>Relacionamento com clientes</h3><ul><li>Atendimento consultivo na integração</li><li>Suporte técnico e manutenção contínuos</li><li>Pilotos gratuitos ou de baixo custo</li><li>Feedback e relatórios de uso</li></ul></div>
+  <div style="grid-area:ca"><h3>Canais</h3><ul><li>Venda direta e reuniões com operadoras e prefeituras</li><li>Demonstração ou piloto em estação (ex.: campus)</li><li>Site e documentação de integração</li><li>Divulgação no app da operadora parceira</li></ul></div>
+  <div style="grid-area:cu"><h3>Estrutura de custos</h3><ul><li>Equipe de desenvolvimento</li><li>Hardware de teste e protótipos</li><li>Nuvem e licenças</li><li>Segurança, testes e certificações</li><li>Marketing e vendas B2B; deslocamentos para pilotos</li></ul></div>
+  <div style="grid-area:rv"><h3>Fontes de receita</h3><ul><li>Licença ou assinatura mensal por estação ou por operadora</li><li>Taxa de implantação e integração</li><li>Contrato de suporte e manutenção</li><li>Cobrança por retirada offline (hipótese a testar)</li></ul></div>
+ </div>
 </div></section>
 
 <section id="pesquisa"><div class="wrap">
  <h2>O que os entrevistados disseram</h2>
- <p class="lead">Duas entrevistas de validação com o mesmo questionário de 15 perguntas. Os participantes não são identificados.</p>
+ <p class="lead">Para conhecer o problema de perto, ouvimos dois perfis opostos: uma pessoa sem acesso à internet e outra com internet, mas que também esbarra em sinal ruim e na exigência do aplicativo. Os dois responderam ao mesmo questionário de 15 perguntas e preferem não ser identificados.</p>
  <div class="two">
-  <div class="card"><h3>Participante A</h3><p class="tag">Sem acesso à internet</p><dl>
+  <div class="card"><h3>Perfil A</h3><p class="tag">Sem acesso à internet</p><dl>
    <dt>Já usou bicicleta compartilhada?</dt><dd>Tentou, mas teve dificuldades, e já deixou de usar por precisar de internet.</dd>
    <dt>Principal dificuldade</dt><dd>Precisar de internet. Dificulta bastante.</dd>
    <dt>Quando não consegue</dt><dd>Vai a pé. O que mais incomoda é não conseguir liberar a bicicleta e ter de ir de ônibus ou a pé.</dd>
    <dt>Usaria sem internet ou aplicativo?</dt><dd>Sim. Prefere código ou senha.</dd>
    <dt>Pagaria?</dt><dd>Talvez, dependendo do preço: até R$ 5.</dd>
-   <dt>Sugestão</dt><dd>Liberar um código válido por 24 horas para a pessoa usar a bicicleta naquele dia.</dd></dl></div>
-  <div class="card"><h3>Participante B</h3><p class="tag">Internet sempre disponível</p><dl>
+   <dt>Sugestão</dt><dd>Liberar um código válido por 24 horas para usar a bicicleta naquele dia.</dd></dl></div>
+  <div class="card"><h3>Perfil B</h3><p class="tag">Internet sempre disponível</p><dl>
    <dt>Já usou bicicleta compartilhada?</dt><dd>Sim, e já deixou de usar por precisar de internet ou aplicativo.</dd>
    <dt>Principal dificuldade</dt><dd>Precisar de um aplicativo. A falta de internet dificulta muito.</dd>
    <dt>Quando não consegue</dt><dd>Usa ônibus ou vai a pé. O que mais incomoda é o sinal ruim ou o celular descarregado.</dd>
@@ -66,15 +203,15 @@
    <dt>Pagaria?</dt><dd>Sim: de R$ 6 a R$ 10.</dd>
    <dt>Sugestão</dt><dd>Cadastro e recarga em pontos pela cidade, que gerem um código de uso. Ampliar o acesso a quem não tem familiaridade com aplicativos.</dd></dl></div>
  </div>
- <p class="note"><b>Em comum:</b> os dois já desistiram de usar o serviço, os dois usariam uma alternativa sem internet e os dois propuseram um código temporário como solução. Com apenas duas entrevistas, a evidência é inicial, e o grupo pretende ampliar a amostra antes do piloto.</p>
+ <p class="note"><b>Em comum:</b> os dois já desistiram de usar o serviço, os dois usariam uma alternativa sem internet e os dois sugeriram um código temporário. É uma amostra inicial, e vamos ampliá-la antes do piloto.</p>
+</div></section>
+
+<section id="equipe"><div class="wrap">
+ <h2>Quem faz o BikeConnect</h2>
+ <p class="lead">Grupo de Ciência da Computação do Centro Universitário Anhanguera de Niterói, na disciplina Modelos de Negócios para TI, com o professor Wilton Araujo.</p>
+ <ul class="team"><li>Daniel Holanda de Campos</li><li>David Capulot Corrêa</li><li>Fabrício Mello Tegon</li><li>Gabriel do Almo Silveira Vicente</li><li>Peter Emmerich Mulim e Silva</li><li>Welington Carlos Silva De Barros</li></ul>
 </div></section>
 </main>
-<footer><div class="wrap">BikeConnect · Centro Universitário Anhanguera de Niterói · Modelos de Negócios para TI · Ciências da Computação, 2026<br>Daniel Holanda de Campos, David Capulot Corrêa, Fabrício Mello Tegon, Gabriel do Almo Silveira Vicente e Welington Carlos Silva De Barros</div></footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script>
-var u=new URL('simulador.html?origem=qr',location.href).href;
-document.getElementById('qrurl').textContent=u;
-try{new QRCode(document.getElementById('qr'),{text:u,width:200,height:200,correctLevel:QRCode.CorrectLevel.M})}catch(e){document.getElementById('qr').textContent='Abra o endereço abaixo no celular.'}
-</script>
+<footer><div class="wrap">BikeConnect · Centro Universitário Anhanguera de Niterói · Modelos de Negócios para TI · Ciência da Computação, 2026</div></footer>
 </body>
 </html>
