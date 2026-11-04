@@ -55,8 +55,21 @@ table{width:100%;border-collapse:collapse;font-size:15px}th,td{text-align:left;p
 .sec{margin:8px 0 0;background:var(--sf);border:1px solid var(--line);border-radius:18px;padding:26px}
 .sec h4{font:800 26px "Bricolage Grotesque";margin:0 0 6px}.sec>p{color:var(--mute);margin:0 0 16px;max-width:46em}
 .sec .tw{overflow-x:auto}.sec table{min-width:640px}.sec td:first-child{font-weight:700;width:20%}.sec td:nth-child(2){color:var(--mute);width:30%}
-button.btn{font-family:inherit;cursor:pointer}.addr{display:block;font:800 clamp(19px,3.4vw,24px) "Bricolage Grotesque",sans-serif;color:var(--sig);margin:0;word-break:break-all}.ok-msg{display:block;min-height:1.5em;margin-top:8px;color:var(--ok);font-size:15px}
+button.btn{font-family:inherit;cursor:pointer}.addr{display:block;font:800 clamp(19px,3.4vw,24px) "Bricolage Grotesque",sans-serif;color:var(--sig);margin:0 0 16px;word-break:break-all}.ok-msg{display:block;min-height:1.5em;margin-top:8px;color:var(--ok);font-size:15px}
 .ct{display:grid;grid-template-columns:1fr 1fr;gap:24px}.ct .card p{margin:10px 0 18px}.ct .card .btn{margin:0}
+#intro{position:fixed;inset:0;z-index:50;background:var(--bg);display:grid;place-content:center;justify-items:center;gap:20px;text-align:center;padding:24px;animation:iout .7s ease 3.6s forwards}
+#intro.off{display:none}
+#intro .il{font:800 clamp(38px,9vw,72px) "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;animation:iin .8s ease both}
+#intro .il i{display:inline-block;width:.28em;height:.28em;border-radius:50%;background:var(--sig);margin-right:.2em}
+#intro .it{color:var(--mute);max-width:26em;margin:0;animation:iin .8s ease .5s both}
+.ir{position:relative;width:min(560px,86vw);height:78px;overflow:hidden;margin:6px 0}
+.ir::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:5px;background:repeating-linear-gradient(90deg,var(--sig) 0 30px,transparent 30px 52px)}
+.ir svg{position:absolute;bottom:12px;left:0;width:92px;height:62px;animation:ride 3.2s cubic-bezier(.4,.1,.5,1) .2s both}
+#intro button{margin-top:8px;background:transparent;border:2px solid var(--line);color:var(--ink);padding:10px 20px;border-radius:10px;font:600 16px system-ui;cursor:pointer;animation:iin .6s ease 1s both}
+@keyframes ride{from{transform:translateX(-110px)}to{transform:translateX(min(560px,86vw))}}
+@keyframes iin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes iout{to{opacity:0;visibility:hidden}}
+@media(prefers-reduced-motion:reduce){#intro{display:none}}
 .src{font-size:14px;color:var(--mute);margin-top:6px}
 .sim{width:100%;height:760px;border:1px solid var(--line);border-radius:18px;background:var(--bg)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
@@ -73,6 +86,9 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
 </style>
 </head>
 <body>
+<div id="intro" role="dialog" aria-label="Apresentação do BikeConnect"><div class="il"><i></i>BikeConnect</div>
+ <div class="ir" aria-hidden="true"><svg viewBox="0 0 92 62" fill="none" stroke="#f4c20d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="44" r="14"/><circle cx="76" cy="44" r="14"/><path d="M16 44L34 18h26l16 26M34 18l14 26H16M60 18l-4-10h12M30 12h14"/></svg></div>
+ <p class="it">Libere a bicicleta, mesmo sem sinal no celular.</p><button type="button" id="skip">Entrar no site</button></div>
 <header><div class="wrap"><a class="logo" href="#"><i></i>BikeConnect</a>
 <nav><a href="#equipe">Equipe</a><a href="#conhecendo">Conhecendo</a><a href="#simulador">Simulador</a><a href="#canvas">Canvas</a><a href="#pesquisa">Pesquisa</a><a href="#contato">Contato</a></nav></div></header>
 <main>
@@ -224,14 +240,18 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
  <h2>Fale com o BikeConnect</h2>
  <p class="lead">Dois canais separados: um para quem quer contratar e outro para quem já usa e precisa de ajuda técnica.</p>
  <div class="ct">
-  <div class="card"><h3>Quero contratar</h3><p class="tag">Operadoras, prefeituras, universidades, parques e condomínios</p><p>Peça uma conversa sobre o piloto, a integração com as suas estações e os valores por estação.</p><a class="addr" href="mailto:comercial@bikeconnect.com.br?subject=Quero%20contratar%20o%20BikeConnect&amp;body=Nome%3A%0AOrganiza%C3%A7%C3%A3o%3A%0AQuantidade%20de%20esta%C3%A7%C3%B5es%3A%0ACidade%3A">comercial@bikeconnect.com.br</a></div>
-  <div class="card"><h3>Preciso de suporte técnico</h3><p class="tag">Para clientes que já têm o BikeConnect instalado</p><p>Conte o que aconteceu. Informe o código da estação (por exemplo, EST-001), o horário e o que o usuário viu na tela.</p><a class="addr" href="mailto:suporte@bikeconnect.com.br?subject=Suporte%20t%C3%A9cnico%20BikeConnect&amp;body=C%C3%B3digo%20da%20esta%C3%A7%C3%A3o%3A%0AData%20e%20hor%C3%A1rio%3A%0AO%20que%20aconteceu%3A">suporte@bikeconnect.com.br</a></div>
+  <div class="card"><h3>Quero contratar</h3><p class="tag">Operadoras, prefeituras, universidades, parques e condomínios</p><p>Peça uma conversa sobre o piloto, a integração com as suas estações e os valores por estação.</p><span class="addr">comercial@bikeconnect.com.br</span><a class="btn" href="mailto:comercial@bikeconnect.com.br?subject=Quero%20contratar%20o%20BikeConnect&amp;body=Nome%3A%0AOrganiza%C3%A7%C3%A3o%3A%0AQuantidade%20de%20esta%C3%A7%C3%B5es%3A%0ACidade%3A">Falar com o comercial</a><a class="btn ghost" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=comercial@bikeconnect.com.br&amp;su=Quero%20contratar%20o%20BikeConnect&amp;body=Nome%3A%0AOrganiza%C3%A7%C3%A3o%3A%0AQuantidade%20de%20esta%C3%A7%C3%B5es%3A%0ACidade%3A" target="_blank" rel="noopener">Abrir no Gmail</a></div>
+  <div class="card"><h3>Preciso de suporte técnico</h3><p class="tag">Para clientes que já têm o BikeConnect instalado</p><p>Conte o que aconteceu. Informe o código da estação (por exemplo, EST-001), o horário e o que o usuário viu na tela.</p><span class="addr">suporte@bikeconnect.com.br</span><a class="btn" href="mailto:suporte@bikeconnect.com.br?subject=Suporte%20t%C3%A9cnico%20BikeConnect&amp;body=C%C3%B3digo%20da%20esta%C3%A7%C3%A3o%3A%0AData%20e%20hor%C3%A1rio%3A%0AO%20que%20aconteceu%3A">Abrir chamado de suporte</a><a class="btn ghost" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=suporte@bikeconnect.com.br&amp;su=Suporte%20t%C3%A9cnico%20BikeConnect&amp;body=C%C3%B3digo%20da%20esta%C3%A7%C3%A3o%3A%0AData%20e%20hor%C3%A1rio%3A%0AO%20que%20aconteceu%3A" target="_blank" rel="noopener">Abrir no Gmail</a></div>
  </div>
 </div></section>
 </main>
 <footer><div class="wrap">BikeConnect · Centro Universitário Anhanguera de Niterói · Modelos de Negócios para TI · Ciência da Computação, 2026</div></footer>
 <script>
 (function(){
+var intro=document.getElementById('intro');
+function skip(){intro.className='off';try{sessionStorage.setItem('bc_intro','1')}catch(x){}}
+document.getElementById('skip').addEventListener('click',skip);
+try{if(location.hash||sessionStorage.getItem('bc_intro'))intro.className='off';else sessionStorage.setItem('bc_intro','1')}catch(x){}
 function go(e){var h=this.getAttribute('href');if(h.length>1){var t=document.getElementById(h.slice(1));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});try{history.replaceState(null,'',h)}catch(x){}}}}
 var l=document.querySelectorAll('a[href^="#"]');for(var i=0;i<l.length;i++)l[i].addEventListener('click',go);
 })();
