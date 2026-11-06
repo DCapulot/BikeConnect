@@ -69,7 +69,7 @@ button.btn{font-family:inherit;cursor:pointer}.addr{display:block;font:800 clamp
 @keyframes ride{from{transform:translateX(-110px)}to{transform:translateX(min(560px,86vw))}}
 @keyframes iin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes iout{to{opacity:0;visibility:hidden}}
-@media(prefers-reduced-motion:reduce){#intro{display:none}}
+@media(prefers-reduced-motion:reduce){#intro,#intro *{animation:none!important}}
 .fin h5{font:800 21px "Bricolage Grotesque",sans-serif;margin:30px 0 10px}.fin h5:first-of-type{margin-top:8px}
 .fin table{min-width:0}.fin td:first-child{width:auto;font-weight:600}.fin td:nth-child(2){color:var(--ink);width:auto}.fin td.n,.fin th.n{text-align:right;white-space:nowrap}
 .fin tr.tot td{font-weight:800;border-top:2px solid var(--line)}.fin .neg{color:#ff8a76}.fin .pos{color:#5fd8a0}
@@ -295,9 +295,10 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
 <script>
 (function(){
 var intro=document.getElementById('intro');
-function skip(){intro.className='off';try{sessionStorage.setItem('bc_intro','1')}catch(x){}}
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+function skip(){intro.className='off'}
 document.getElementById('skip').addEventListener('click',skip);
-try{if(location.hash||sessionStorage.getItem('bc_intro'))intro.className='off';else sessionStorage.setItem('bc_intro','1')}catch(x){}
+setTimeout(skip,reduce?2000:4400);
 function go(e){var h=this.getAttribute('href');if(h.length>1){var t=document.getElementById(h.slice(1));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});try{history.replaceState(null,'',h)}catch(x){}}}}
 var l=document.querySelectorAll('a[href^="#"]');for(var i=0;i<l.length;i++)l[i].addEventListener('click',go);
 })();
