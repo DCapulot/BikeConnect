@@ -78,7 +78,7 @@ button.btn{font-family:inherit;cursor:pointer}.addr{display:block;font:800 clamp
 .ch{width:100%;height:auto;display:block}.ch text{fill:var(--mute);font-size:12px;font-family:system-ui}.ch .ln{stroke:var(--line)}
 .fin .two2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .src{font-size:14px;color:var(--mute);margin-top:6px}
-.sim{width:100%;height:760px;border:1px solid var(--line);border-radius:18px;background:var(--bg)}
+.sim{width:100%;height:1020px;border:1px solid var(--line);border-radius:18px;background:var(--bg)}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .card{background:var(--sf);border:1px solid var(--line);border-radius:18px;padding:28px}.card h3{font-size:26px}.tag{color:var(--sig);font-size:15px;margin:4px 0 14px;font-weight:600}
 dt{font-weight:700;font-size:15px;margin-top:12px;color:var(--teal)}dd{margin:2px 0 0}dl{margin:0}
@@ -88,7 +88,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
 @media(max-width:1000px){.bmc{grid-template-columns:1fr 1fr;grid-template-areas:"sg sg" "pv pv" "pa at" "rr ca" "rc rc" "cu rv"}}
 @media(max-width:820px){.eso,.fin .two2{grid-template-columns:1fr}.ct{grid-template-columns:1fr}.hero,.q,.two{grid-template-columns:1fr}.hero{padding-top:40px;gap:36px}.q{gap:22px}nav a:not(:last-child){display:none}.team{grid-template-columns:1fr 1fr}.sim{height:880px}}
 @media(max-width:620px){.bmc{grid-template-columns:1fr;grid-template-areas:"sg" "pv" "pa" "at" "rr" "rc" "ca" "cu" "rv"}}
-@media(max-width:480px){body{font-size:17px}.wrap{padding:0 18px}.team,.cmp,.big{grid-template-columns:1fr}.sim{height:940px}}
+@media(max-width:480px){body{font-size:17px}.wrap{padding:0 18px}.team,.cmp,.big{grid-template-columns:1fr}.sim{height:1350px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .idx{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:24px}.idx a{background:var(--sf);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);font-weight:600;font-size:16px}.idx a:hover{border-color:var(--sig)}.idx span{color:var(--sig);margin-right:8px;font-weight:800}.card ul{margin:12px 0 0;padding-left:20px}.card li{margin:0 0 8px}#resumo{padding-top:56px}@media(max-width:820px){.idx{grid-template-columns:1fr 1fr}}@media(max-width:480px){.idx{grid-template-columns:1fr}}
 </style>
@@ -159,6 +159,8 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
   <p>A peça central é o <b>Bluetooth</b>. Ele cria uma ligação direta entre o celular e a estação, a poucos metros de distância, e por isso <b>não precisa de internet</b> nem de plano de dados. É o mesmo tipo de conexão do fone sem fio.</p>
   <p>Pense em um ingresso de cinema com QR Code. A catraca não liga para a bilheteria: ela confere se o carimbo é verdadeiro e se ainda está no prazo. Nosso <b>token</b> funciona igual: uma credencial com assinatura digital e validade curta, de 24 a 48 horas. O app o baixa quando há internet, por exemplo em casa.</p>
   <p>Na estação, um microcontrolador (um computador minúsculo, o ESP32) recebe o token pelo Bluetooth, confere a assinatura sozinho e abre a trava. Ele guarda o registro da retirada e, assim que tem conexão própria, envia à central quem retirou, com qual token, onde e quando.</p>
+  <p><b>E o QR Code, sem internet?</b> Ele só carrega o identificador da estação (por exemplo, EST-001). O app lê isso pela câmera, sem consultar nada na internet, e usa o token que já está guardado no celular. Por isso o app precisa estar instalado e com um token válido baixado antes.</p>
+  <p><b>Limite assumido:</b> com a estação desconectada, a central não consegue cancelar um token na hora. Por isso a validade é curta, o número de retiradas offline por dia é limitado e a estação guarda quais tokens já foram usados.</p>
   <p class="k">Mesmo sem internet, a estação só abre para quem tem uma credencial válida. A proteção contra ataques está detalhada logo abaixo.</p></div>
   <div class="vis"><h4>O caminho do token</h4><div class="flow">
    <div class="nd"><b>1. Com internet</b><span>O app recebe o token assinado</span></div><div class="ar">↓</div>
@@ -166,7 +168,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
    <div class="nd"><b>3. Registro gravado</b><span>A estação guarda quem retirou e quando</span></div><div class="ar">↓</div>
    <div class="nd"><b>4. Estação avisa a central</b><span>Os dados offline chegam e a viagem é conciliada</span></div></div></div>
   </article>
-  <div class="sec"><h4>Cibersegurança: o que pode dar errado e como nos defendemos</h4><p>Liberar uma bicicleta sem consultar a internet exige que a própria estação saiba desconfiar. Por isso o projeto trata a segurança em camadas: cada ameaça abaixo tem uma defesa específica.</p><div class="tw"><table><tr><th>Ameaça</th><th>Como poderia acontecer</th><th>Como nos defendemos</th></tr><tr><td>Token falso</td><td>Alguém inventa ou altera uma credencial</td><td>Assinatura digital: a estação recusa qualquer token que não tenha sido assinado pela central</td></tr><tr><td>Token roubado ou copiado</td><td>Celular perdido ou credencial clonada</td><td>Validade de 24 a 48 horas, limite de retiradas offline por dia e revogação assim que houver conexão</td></tr><tr><td>Repetição do sinal</td><td>Gravar a conversa Bluetooth e repetir depois</td><td>Cada tentativa usa um desafio único da estação, e o token vale para uma retirada por vez</td></tr><tr><td>Escuta do Bluetooth</td><td>Interceptar os dados no ar</td><td>Canal cifrado entre app e estação, sem dados pessoais dentro do token</td></tr><tr><td>Estação adulterada</td><td>Mexer no firmware ou forçar a trava</td><td>Firmware assinado, atualizações seguras e chaves protegidas no microcontrolador</td></tr><tr><td>Troca de chaves</td><td>Uma chave de assinatura vazar</td><td>Chaves rotativas: a chave antiga deixa de valer e os tokens são renovados</td></tr><tr><td>Invasão da central</td><td>Atacar servidor ou banco de dados</td><td>Comunicação cifrada (TLS), acessos mínimos, registros de auditoria e alerta para padrões estranhos</td></tr><tr><td>Registro duplicado</td><td>O mesmo evento chegar duas vezes</td><td>Conciliação que reconhece e descarta repetições</td></tr></table></div><p class="src" style="margin-top:14px">Também seguimos o princípio de coletar só o necessário: o token não carrega dados pessoais, o que ajuda no cumprimento da LGPD.</p></div>
+  <div class="sec"><h4>Cibersegurança: o que pode dar errado e como nos defendemos</h4><p>Liberar uma bicicleta sem consultar a internet exige que a própria estação saiba desconfiar. Por isso o projeto trata a segurança em camadas: cada ameaça abaixo tem uma defesa específica. Estes mecanismos são a arquitetura planejada para o MVP e serão testados no piloto.</p><div class="tw"><table><tr><th>Ameaça</th><th>Como poderia acontecer</th><th>Como nos defendemos</th></tr><tr><td>Token falso</td><td>Alguém inventa ou altera uma credencial</td><td>Assinatura digital: a estação recusa qualquer token que não tenha sido assinado pela central</td></tr><tr><td>Token roubado ou copiado</td><td>Celular perdido ou credencial clonada</td><td>Validade de 24 a 48 horas, identificador único guardado pela estação (um token não é aceito duas vezes), limite de retiradas offline por dia e revogação assim que houver conexão</td></tr><tr><td>Repetição do sinal</td><td>Gravar a conversa Bluetooth e repetir depois</td><td>Cada tentativa usa um desafio único da estação, e o token vale para uma retirada por vez</td></tr><tr><td>Escuta do Bluetooth</td><td>Interceptar os dados no ar</td><td>Canal cifrado entre app e estação, sem dados pessoais dentro do token</td></tr><tr><td>Estação adulterada</td><td>Mexer no firmware ou forçar a trava</td><td>Firmware assinado, atualizações seguras e chaves protegidas no microcontrolador</td></tr><tr><td>Troca de chaves</td><td>Uma chave de assinatura vazar</td><td>Chaves rotativas: a chave antiga deixa de valer e os tokens são renovados</td></tr><tr><td>Invasão da central</td><td>Atacar servidor ou banco de dados</td><td>Comunicação cifrada (TLS), acessos mínimos, registros de auditoria e alerta para padrões estranhos</td></tr><tr><td>Registro duplicado</td><td>O mesmo evento chegar duas vezes</td><td>Conciliação que reconhece e descarta repetições</td></tr></table></div><p class="src" style="margin-top:14px">Também seguimos o princípio de coletar só o necessário: o token não carrega dados pessoais, o que ajuda no cumprimento da LGPD.</p></div>
 
  <article class="q" id="valor"><div><h3>Qual é a proposta de valor?</h3>
   <p>Para quem opera: mais retiradas concluídas, menos reclamações no suporte e cobertura em lugares de sinal ruim, como subsolos e parques, sem trocar as estações que já funcionam.</p>
@@ -176,9 +178,9 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
 
  <article class="q" id="mercado"><div><h3>Qual é o tamanho do mercado?</h3>
   <p>O mercado são os sistemas de bicicleta compartilhada com estações, e ele já é grande. A Tembici, maior operadora da América Latina, está em 14 cidades de quatro países e prevê fechar 2026 com 37 mil bicicletas nas ruas.</p>
-  <p>Cada sistema municipal tem algumas dezenas de estações: segundo as prefeituras e a operadora, Florianópolis tem 50, Belo Horizonte e Curitiba 51 cada e Porto Alegre 100. Só essas quatro cidades somam cerca de 250 estações, o começo da nossa faixa de equilíbrio.</p>
+  <p>Cada sistema municipal tem algumas dezenas de estações: segundo as prefeituras e a operadora, Florianópolis tem 50, Belo Horizonte e Curitiba 51 cada e Porto Alegre 100. Só essas quatro cidades somam cerca de 250 estações, perto do início da nossa faixa de equilíbrio (306 a 550).</p>
   <p class="k">Em uma frase: poucos clientes grandes bastam para sustentar a empresa.</p></div>
-  <div class="vis"><div class="big"><div><b>14</b><span>cidades da Tembici, em 4 países</span></div><div><b>37 mil</b><span>bicicletas previstas até o fim de 2026</span></div><div><b>~250</b><span>estações em 4 capitais brasileiras</span></div><div><b>250–350</b><span>estações para o nosso equilíbrio</span></div></div>
+  <div class="vis"><div class="big"><div><b>14</b><span>cidades da Tembici, em 4 países</span></div><div><b>37 mil</b><span>bicicletas previstas até o fim de 2026</span></div><div><b>~250</b><span>estações em 4 capitais brasileiras</span></div><div><b>306–550</b><span>estações para o nosso equilíbrio</span></div></div>
    <p class="src">Fontes: Exame (ago./2026) e prefeituras de Curitiba, Belo Horizonte e Porto Alegre. As contagens de estações são de datas diferentes; o tamanho total do mercado ainda será levantado.</p></div></article>
 
  <article class="q" id="concorrentes"><div><h3>Quem são os concorrentes?</h3>
@@ -210,15 +212,15 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
    <tr><td>Nuvem</td><td>Servidores, banco de dados e monitoramento</td><td class="n">R$ 800 a 2.500</td></tr>
    <tr class="tot"><td>Total</td><td>O plano usa a média de cerca de R$ 55.000 por mês</td><td class="n">R$ 47.800 a 87.500</td></tr></table></div>
   <h5>3. Quantas estações para pagar essa conta</h5>
-  <div class="two2"><div><p style="margin:0 0 10px;color:var(--mute)">Cada estação rende de R$ 150 a 200 por mês. As despesas fixas de R$ 55 mil só são cobertas quando a soma das mensalidades chega a esse valor, entre 250 e 350 estações. Antes disso a empresa gasta mais do que recebe; depois, começa a sobrar.</p><p class="src">Esse ponto é esperado entre o fim do ano 2 e o início do ano 3.</p></div>
-   <svg class="ch" viewBox="0 0 520 262" role="img" aria-label="Gráfico: a receita mensal das estações cruza a despesa fixa de R$ 55 mil entre 275 e 367 estações">
+  <div class="two2"><div><p style="margin:0 0 10px;color:var(--mute)">Cada estação deixa de R$ 100 a 180 por mês (mensalidade menos manutenção). As despesas fixas de R$ 55 mil só são cobertas quando a soma dessas sobras chega a esse valor: R$ 55.000 ÷ R$ 180 ≈ 306 estações no melhor caso e R$ 55.000 ÷ R$ 100 = 550 no pior. Antes disso a empresa gasta mais do que recebe; depois, começa a sobrar.</p><p class="src">No cenário otimista, o equilíbrio chega no ano 3. No conservador, fica além dos três primeiros anos.</p></div>
+   <svg class="ch" viewBox="0 0 520 262" role="img" aria-label="Gráfico: a sobra mensal das estações (mensalidade menos manutenção) cruza a despesa fixa de R$ 55 mil entre 306 e 550 estações">
     <g class="ln"><path d="M50 220H500M50 170H500M50 120H500M50 70H500M50 20H500" stroke-width="1"/></g>
-    <rect x="297" y="20" width="83" height="200" fill="#f4c20d" opacity=".18"/>
-    <polygon points="50,220 500,70 500,20" fill="#3cc4d6" opacity=".25"/><path d="M50 220L500 45" stroke="#3cc4d6" stroke-width="3" fill="none"/>
+    <rect x="280" y="20" width="183" height="200" fill="#f4c20d" opacity=".18"/>
+    <polygon points="50,220 500,100 500,20 466,20" fill="#3cc4d6" opacity=".25"/><path d="M50 220L500 52" stroke="#3cc4d6" stroke-width="3" fill="none"/>
     <path d="M50 110H500" stroke="#e5533d" stroke-width="3" stroke-dasharray="8 6"/>
-    <text x="54" y="104" style="fill:#ff8a76">Despesa fixa: R$ 55 mil</text><text x="340" y="38" style="fill:#3cc4d6">Receita das mensalidades</text><text x="300" y="214" style="fill:#f4c20d">equilíbrio</text>
+    <text x="54" y="104" style="fill:#ff8a76">Despesa fixa: R$ 55 mil</text><text x="270" y="38" style="fill:#3cc4d6">Sobra das estações</text><text x="300" y="214" style="fill:#f4c20d">equilíbrio</text>
     <text x="38" y="224" text-anchor="end">0</text><text x="38" y="174" text-anchor="end">25 mil</text><text x="38" y="124" text-anchor="end">50 mil</text><text x="38" y="74" text-anchor="end">75 mil</text><text x="38" y="24" text-anchor="end">100 mil</text>
-    <text x="50" y="240" text-anchor="middle">0</text><text x="140" y="240" text-anchor="middle">100</text><text x="230" y="240" text-anchor="middle">200</text><text x="320" y="240" text-anchor="middle">300</text><text x="410" y="240" text-anchor="middle">400</text><text x="500" y="240" text-anchor="middle">500</text><text x="275" y="257" text-anchor="middle">estações ativas (reais por mês no eixo vertical)</text></svg></div>
+    <text x="50" y="240" text-anchor="middle">0</text><text x="125" y="240" text-anchor="middle">100</text><text x="200" y="240" text-anchor="middle">200</text><text x="275" y="240" text-anchor="middle">300</text><text x="350" y="240" text-anchor="middle">400</text><text x="425" y="240" text-anchor="middle">500</text><text x="500" y="240" text-anchor="middle">600</text><text x="275" y="257" text-anchor="middle">estações ativas (reais por mês no eixo vertical)</text></svg></div>
   <h5>4. O dinheiro para começar</h5>
   <div class="tw"><table><tr><th>Investimento inicial</th><th class="n">Estimativa</th></tr>
    <tr><td>Desenvolvimento do MVP (software e hardware)</td><td class="n">R$ 80.000 a 150.000</td></tr>
@@ -228,11 +230,11 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
    <tr class="tot"><td>Total</td><td class="n">R$ 250.000 a 440.000</td></tr></table></div>
   <p class="src" style="margin-top:10px">Fontes de captação previstas: editais de inovação (como FINEP e fundações estaduais), investidores-anjo e fundos de mobilidade, incubadoras e contratos-piloto pagos.</p>
   <h5>5. Em três anos: quanto entra, quanto sai e quanto sobra</h5>
-  <div class="tw"><table><tr><th>Ano</th><th class="n">Estações no fim do ano</th><th class="n">Entra (receita)</th><th class="n">Sai (despesas fixas)</th><th class="n">Sobra</th></tr>
-   <tr><td>Ano 1</td><td class="n">20 a 50</td><td class="n">R$ 180 a 450 mil</td><td class="n">R$ 660 mil</td><td class="n neg">falta R$ 210 a 480 mil</td></tr>
-   <tr><td>Ano 2</td><td class="n">100 a 200</td><td class="n">R$ 900 mil a 1,8 mi</td><td class="n">R$ 660 mil</td><td class="n pos">R$ 240 mil a 1,14 mi</td></tr>
-   <tr><td>Ano 3</td><td class="n">300 a 500</td><td class="n">R$ 2,7 a 4,5 mi</td><td class="n">R$ 660 mil</td><td class="n pos">R$ 2,04 a 3,84 mi</td></tr></table></div>
-  <p class="src" style="margin-top:10px">Receita do cenário conservador do plano, que inclui a implantação das estações novas. Despesas fixas: R$ 55 mil por mês durante 12 meses. A sobra ainda não desconta manutenção, impostos nem o crescimento da equipe. O primeiro ano fecha no vermelho, e é para cobrir esse período que existe o investimento inicial.</p></div>
+  <div class="tw"><table><tr><th>Ano</th><th class="n">Estações no fim do ano</th><th class="n">Entra (mensalidades)</th><th class="n">Sai (fixas + manutenção)</th><th class="n">Resultado</th></tr>
+   <tr><td>Ano 1</td><td class="n">20 a 50</td><td class="n">R$ 18 a 60 mil</td><td class="n">R$ 666 mil</td><td class="n neg">falta R$ 606 a 648 mil</td></tr>
+   <tr><td>Ano 2</td><td class="n">100 a 200</td><td class="n">R$ 108 a 300 mil</td><td class="n">R$ 690 a 696 mil</td><td class="n neg">falta R$ 390 a 588 mil</td></tr>
+   <tr><td>Ano 3</td><td class="n">300 a 500</td><td class="n">R$ 360 a 840 mil</td><td class="n">R$ 744 a 780 mil</td><td class="n neg">de falta R$ 420 mil a sobra R$ 96 mil</td></tr></table></div>
+  <p class="src" style="margin-top:10px">Como a conta foi feita: as estações entram aos poucos ao longo do ano, então a receita usa a média de estações do ano (no ano 1, de 0 ao total do fim do ano). Cenário conservador: mensalidade de R$ 150 e manutenção de R$ 50, com a meta mínima de estações. Cenário otimista: R$ 200 e R$ 20, com a meta máxima. A taxa de implantação não entra porque cobre o custo do equipamento e da instalação. Despesas fixas: R$ 55 mil por mês. Não inclui impostos nem o crescimento da equipe. O déficit acumulado em três anos (de R$ 0,9 a 1,7 milhão) é maior que o investimento inicial estimado; por isso o ritmo de crescimento, os preços e o cronograma de contratações serão revisados antes da captação.</p></div>
 
 
  <article class="q" id="crescimento"><div><h3>Como irá conquistar clientes?</h3>
@@ -248,11 +250,11 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
 
  <article class="q"><div><h3>Por que esse negócio tem potencial?</h3>
   <p>Porque a receita se repete todo mês, porque trocar de fornecedor é trabalhoso para o cliente e porque o problema é comum em qualquer cidade com bicicleta compartilhada.</p>
-  <p>Nossa estimativa é de 100 a 500 estações em 24 a 36 meses, com receita de R$ 2,7 a 4,5 milhões no terceiro ano no cenário conservador. A empresa se sustenta a partir de 250 a 350 estações.</p></div>
-  <div class="vis"><h4>Estações, de 0 a 500</h4>
-   <div class="rng" role="img" aria-label="Meta de 100 a 500 estações; equilíbrio entre 250 e 350"><i style="left:20%;width:80%;background:var(--teal);opacity:.55"></i><i style="left:50%;width:20%;background:var(--sig)"></i></div>
-   <div class="ax"><span>0</span><span>250</span><span>500</span></div>
-   <div class="leg"><u style="background:var(--teal)"></u>Meta em 24 a 36 meses: 100 a 500</div><div class="leg"><u style="background:var(--sig)"></u>Ponto de equilíbrio: 250 a 350</div>
+  <p>Nossa estimativa é de 100 a 500 estações em 24 a 36 meses. Como cada estação deixa de R$ 100 a 180 por mês depois da manutenção, a empresa só cobre as despesas fixas a partir de cerca de 306 a 550 estações.</p></div>
+  <div class="vis"><h4>Estações, de 0 a 600</h4>
+   <div class="rng" role="img" aria-label="Meta de 100 a 500 estações; equilíbrio entre 306 e 550"><i style="left:16.7%;width:66.6%;background:var(--teal);opacity:.55"></i><i style="left:51%;width:40.8%;background:var(--sig)"></i></div>
+   <div class="ax"><span>0</span><span>300</span><span>600</span></div>
+   <div class="leg"><u style="background:var(--teal)"></u>Meta em 24 a 36 meses: 100 a 500</div><div class="leg"><u style="background:var(--sig)"></u>Ponto de equilíbrio: 306 a 550</div>
    <p class="src">Estimativas do plano de negócios, a validar com o piloto.</p></div></article>
 </div></section>
 
@@ -268,7 +270,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
 
 <section id="simulador"><div class="wrap">
  <h2>Simulador de liberação</h2>
- <p class="lead">Veja o que o celular, a estação e a central fazem em cada etapa. Você pode simular o celular sem internet e até a estação sem sinal.</p>
+ <p class="lead">Veja o que o celular, a estação e a central fazem em cada etapa. Você pode simular o celular sem internet, a estação sem sinal e também falhas: token inválido, vencido ou já usado, e Bluetooth desconectado.</p>
  <iframe class="sim" src="simulador.html?embed=1" title="Simulador de liberação da bicicleta" loading="lazy"></iframe>
 </div></section>
 
