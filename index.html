@@ -75,6 +75,7 @@ button.btn{font-family:inherit;cursor:pointer}.addr{display:block;font:800 clamp
 .eso{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.eso>div{border-radius:14px;padding:16px;background:var(--sf2)}
 .eso h6{margin:0 0 8px;font:800 18px "Bricolage Grotesque",sans-serif}.eso p{margin:0 0 8px;font-size:15px}.eso b{display:block;font:800 23px "Bricolage Grotesque",sans-serif;line-height:1.15}
 .eso .in b{color:var(--ok)}.eso .out b{color:#ff8a76}.eso .left{border:2px solid var(--sig)}.eso .left b{color:var(--sig)}
+.ch.arch text{fill:var(--ink);font-size:14px}.ch.arch .m{fill:var(--mute);font-size:13px}.ch.arch .z{fill:var(--sig);font-size:14px;font-weight:700}.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:14px;font-weight:700;background:var(--line);color:var(--ink)}.pill.ok{background:var(--ok);color:#fff}.pill.wip{background:var(--sig);color:#11242c}
 .ch{width:100%;height:auto;display:block}.ch text{fill:var(--mute);font-size:12px;font-family:system-ui}.ch .ln{stroke:var(--line)}
 .fin .two2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 .src{font-size:14px;color:var(--mute);margin-top:6px}
@@ -98,7 +99,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
  <div class="ir" aria-hidden="true"><svg viewBox="0 0 92 62" fill="none" stroke="#f4c20d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="44" r="14"/><circle cx="76" cy="44" r="14"/><path d="M16 44L34 18h26l16 26M34 18l14 26H16M60 18l-4-10h12M30 12h14"/></svg></div>
  <p class="it">Libere a bicicleta, mesmo sem sinal no celular.</p><button type="button" id="skip">Entrar no site</button></div>
 <header><div class="wrap"><a class="logo" href="#"><i></i>BikeConnect</a>
-<nav><a href="#resumo">Resumo</a><a href="#conhecendo">Conhecendo</a><a href="#mercado">Mercado</a><a href="#mvp">MVP</a><a href="#simulador">Simulador</a><a href="#canvas">Canvas</a><a href="#pesquisa">Pesquisa</a><a href="#contato">Contato</a></nav></div></header>
+<nav><a href="#resumo">Resumo</a><a href="#conhecendo">Conhecendo</a><a href="#mercado">Mercado</a><a href="#mvp">MVP</a><a href="#status">Status</a><a href="#simulador">Simulador</a><a href="#canvas">Canvas</a><a href="#pesquisa">Pesquisa</a><a href="#contato">Contato</a></nav></div></header>
 <main>
 <div class="road" aria-hidden="true"></div>
 <div class="wrap hero">
@@ -161,6 +162,8 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
   <p>Na estação, um microcontrolador (um computador minúsculo, o ESP32) recebe o token pelo Bluetooth, confere a assinatura sozinho e abre a trava. Ele guarda o registro da retirada e, assim que tem conexão própria, envia à central quem retirou, com qual token, onde e quando.</p>
   <p><b>E o QR Code, sem internet?</b> Ele só carrega o identificador da estação (por exemplo, EST-001). O app lê isso pela câmera, sem consultar nada na internet, e usa o token que já está guardado no celular. Por isso o app precisa estar instalado e com um token válido baixado antes.</p>
   <p><b>Limite assumido:</b> com a estação desconectada, a central não consegue cancelar um token na hora. Por isso a validade é curta, o número de retiradas offline por dia é limitado e a estação guarda quais tokens já foram usados.</p>
+  <p><b>Como a estação sabe que um token já foi usado, sem internet?</b> O ESP32 mantém, em memória que não se apaga quando falta energia, a lista dos identificadores de token já aceitos. Ela é enviada à central na próxima conexão. O token também é preso ao aparelho do usuário: a estação lança um desafio e o app prova, com uma chave que fica no celular, que é o dono do token. Copiar o token sozinho não adianta.</p>
+  <p><b>E se duas estações offline receberem o mesmo token?</b> Como nenhuma sabe da outra, as duas poderiam aceitar. O risco fica limitado a uma retirada extra por estação desconectada, dentro do limite diário. Ao sincronizar, a central vê a duplicata, bloqueia o token e cobra a viagem do titular.</p>
   <p class="k">Mesmo sem internet, a estação só abre para quem tem uma credencial válida. A proteção contra ataques está detalhada logo abaixo.</p></div>
   <div class="vis"><h4>O caminho do token</h4><div class="flow">
    <div class="nd"><b>1. Com internet</b><span>O app recebe o token assinado</span></div><div class="ar">↓</div>
@@ -168,11 +171,33 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
    <div class="nd"><b>3. Registro gravado</b><span>A estação guarda quem retirou e quando</span></div><div class="ar">↓</div>
    <div class="nd"><b>4. Estação avisa a central</b><span>Os dados offline chegam e a viagem é conciliada</span></div></div></div>
   </article>
-  <div class="sec"><h4>Cibersegurança: o que pode dar errado e como nos defendemos</h4><p>Liberar uma bicicleta sem consultar a internet exige que a própria estação saiba desconfiar. Por isso o projeto trata a segurança em camadas: cada ameaça abaixo tem uma defesa específica. Estes mecanismos são a arquitetura planejada para o MVP e serão testados no piloto.</p><div class="tw"><table><tr><th>Ameaça</th><th>Como poderia acontecer</th><th>Como nos defendemos</th></tr><tr><td>Token falso</td><td>Alguém inventa ou altera uma credencial</td><td>Assinatura digital: a estação recusa qualquer token que não tenha sido assinado pela central</td></tr><tr><td>Token roubado ou copiado</td><td>Celular perdido ou credencial clonada</td><td>Validade de 24 a 48 horas, identificador único guardado pela estação (um token não é aceito duas vezes), limite de retiradas offline por dia e revogação assim que houver conexão</td></tr><tr><td>Repetição do sinal</td><td>Gravar a conversa Bluetooth e repetir depois</td><td>Cada tentativa usa um desafio único da estação, e o token vale para uma retirada por vez</td></tr><tr><td>Escuta do Bluetooth</td><td>Interceptar os dados no ar</td><td>Canal cifrado entre app e estação, sem dados pessoais dentro do token</td></tr><tr><td>Estação adulterada</td><td>Mexer no firmware ou forçar a trava</td><td>Firmware assinado, atualizações seguras e chaves protegidas no microcontrolador</td></tr><tr><td>Troca de chaves</td><td>Uma chave de assinatura vazar</td><td>Chaves rotativas: a chave antiga deixa de valer e os tokens são renovados</td></tr><tr><td>Invasão da central</td><td>Atacar servidor ou banco de dados</td><td>Comunicação cifrada (TLS), acessos mínimos, registros de auditoria e alerta para padrões estranhos</td></tr><tr><td>Registro duplicado</td><td>O mesmo evento chegar duas vezes</td><td>Conciliação que reconhece e descarta repetições</td></tr></table></div><p class="src" style="margin-top:14px">Também seguimos o princípio de coletar só o necessário: o token não carrega dados pessoais, o que ajuda no cumprimento da LGPD.</p></div>
+  <div class="sec" id="arquitetura"><h4>Arquitetura: o que fica perto e o que fica longe</h4><p>Duas conversas separadas. A local, por Bluetooth, não precisa de internet. A de longa distância é feita pela estação, que tem conexão própria.</p>
+  <svg class="ch arch" viewBox="0 0 520 500" role="img" aria-label="Diagrama: o app lê o QR Code e fala por Bluetooth com o ESP32 da estação, que tem memória local e módulo da trava. A estação usa a internet própria para falar com o servidor e o banco de dados. O app baixa o token do servidor quando tem internet.">
+   <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#f4c20d"/></marker><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#3cc4d6"/></marker></defs>
+   <rect x="4" y="6" width="512" height="284" rx="14" fill="none" stroke="#f4c20d" stroke-dasharray="6 5"/><text class="z" x="16" y="28">Comunicação local, sem internet</text>
+   <rect x="4" y="300" width="512" height="194" rx="14" fill="none" stroke="#3cc4d6" stroke-dasharray="6 5"/><text class="z" x="16" y="322" style="fill:#3cc4d6">Comunicação com a central, pela internet</text>
+   <rect x="16" y="70" width="150" height="76" rx="10" fill="#173640" stroke="#25464f"/><text x="91" y="100" text-anchor="middle">Celular (app)</text><text class="m" x="91" y="122" text-anchor="middle">token guardado</text>
+   <rect x="204" y="44" width="300" height="236" rx="12" fill="#112a31" stroke="#25464f"/>
+   <rect x="218" y="56" width="272" height="42" rx="8" fill="#173640" stroke="#25464f"/><text x="354" y="82" text-anchor="middle">QR Code: só o identificador</text>
+   <rect x="218" y="112" width="272" height="56" rx="8" fill="#173640" stroke="#f4c20d" stroke-width="2"/><text x="354" y="137" text-anchor="middle">ESP32</text><text class="m" x="354" y="157" text-anchor="middle">valida e decide</text>
+   <rect x="218" y="182" width="130" height="50" rx="8" fill="#173640" stroke="#25464f"/><text x="283" y="203" text-anchor="middle">Trava</text><text class="m" x="283" y="222" text-anchor="middle">módulo de acionamento</text>
+   <rect x="360" y="182" width="130" height="50" rx="8" fill="#173640" stroke="#25464f"/><text x="425" y="203" text-anchor="middle">Memória local</text><text class="m" x="425" y="222" text-anchor="middle">registros e tokens usados</text>
+   <text class="m" x="354" y="262" text-anchor="middle">Estação BikeConnect</text>
+   <path d="M166 90L216 77" stroke="#f4c20d" stroke-width="2" stroke-dasharray="4 4" fill="none" marker-end="url(#ah)"/><text class="m" x="22" y="170">câmera lê o QR</text>
+   <path d="M166 124L216 138" stroke="#f4c20d" stroke-width="3" fill="none" marker-end="url(#ah)"/><text x="22" y="192" style="fill:#f4c20d">Bluetooth BLE</text>
+   <path d="M354 168V180M283 168V180M425 168V180" stroke="#25464f" stroke-width="2"/>
+   <path d="M354 280V338" stroke="#3cc4d6" stroke-width="3" fill="none" marker-end="url(#ah2)"/>
+   <rect x="204" y="340" width="300" height="44" rx="8" fill="#173640" stroke="#25464f"/><text x="354" y="367" text-anchor="middle">Internet da estação</text>
+   <path d="M354 384V418" stroke="#3cc4d6" stroke-width="3" fill="none" marker-end="url(#ah2)"/>
+   <rect x="204" y="420" width="300" height="60" rx="8" fill="#173640" stroke="#3cc4d6" stroke-width="2"/><text x="354" y="446" text-anchor="middle">Servidor e banco de dados</text><text class="m" x="354" y="466" text-anchor="middle">emite tokens e concilia viagens</text>
+   <rect x="16" y="420" width="150" height="60" rx="10" fill="#173640" stroke="#25464f"/><text x="91" y="446" text-anchor="middle">Celular com</text><text x="91" y="464" text-anchor="middle">internet</text>
+   <path d="M166 450L202 450" stroke="#3cc4d6" stroke-width="3" fill="none" marker-end="url(#ah2)"/><text class="m" x="22" y="410">baixa o token antes</text>
+  </svg></div>
+  <div class="sec"><h4>Cibersegurança: o que pode dar errado e como nos defendemos</h4><p>Liberar uma bicicleta sem consultar a internet exige que a própria estação saiba desconfiar. Por isso o projeto trata a segurança em camadas: cada ameaça abaixo tem uma defesa específica. Estes mecanismos são a arquitetura planejada para o MVP e serão testados no piloto.</p><div class="tw"><table><tr><th>Ameaça</th><th>Como poderia acontecer</th><th>Como nos defendemos</th></tr><tr><td>Token falso</td><td>Alguém inventa ou altera uma credencial</td><td>Assinatura digital: a estação recusa qualquer token que não tenha sido assinado pela central</td></tr><tr><td>Token roubado ou copiado</td><td>Celular perdido ou credencial clonada</td><td>Validade de 24 a 48 horas, identificador único guardado pela estação (um token não é aceito duas vezes), limite de retiradas offline por dia e revogação assim que houver conexão</td></tr><tr><td>Mesmo token em duas estações offline</td><td>Uma credencial usada em estações diferentes, antes de qualquer sincronização</td><td>Token preso ao aparelho (prova de posse da chave), limite de retiradas offline e detecção da duplicata na central, que bloqueia o token</td></tr><tr><td>Repetição do sinal</td><td>Gravar a conversa Bluetooth e repetir depois</td><td>Cada tentativa usa um desafio único da estação, e o token vale para uma retirada por vez</td></tr><tr><td>Escuta do Bluetooth</td><td>Interceptar os dados no ar</td><td>Canal cifrado entre app e estação, sem dados pessoais dentro do token</td></tr><tr><td>Estação adulterada</td><td>Mexer no firmware ou forçar a trava</td><td>Firmware assinado, atualizações seguras e chaves protegidas no microcontrolador</td></tr><tr><td>Troca de chaves</td><td>Uma chave de assinatura vazar</td><td>Chaves rotativas: a chave antiga deixa de valer e os tokens são renovados</td></tr><tr><td>Invasão da central</td><td>Atacar servidor ou banco de dados</td><td>Comunicação cifrada (TLS), acessos mínimos, registros de auditoria e alerta para padrões estranhos</td></tr><tr><td>Registro duplicado</td><td>O mesmo evento chegar duas vezes</td><td>Conciliação que reconhece e descarta repetições</td></tr></table></div><p class="src" style="margin-top:14px">Também seguimos o princípio de coletar só o necessário: o token não carrega dados pessoais, o que ajuda no cumprimento da LGPD.</p></div>
 
  <article class="q" id="valor"><div><h3>Qual é a proposta de valor?</h3>
   <p>Para quem opera: mais retiradas concluídas, menos reclamações no suporte e cobertura em lugares de sinal ruim, como subsolos e parques, sem trocar as estações que já funcionam.</p>
-  <p>Para quem usa: a bicicleta abre em até 5 segundos e o acesso deixa de depender de plano de dados. Isso inclui quem usa plano pré-pago esgotado.</p>
+  <p>Para quem usa: a bicicleta deve abrir em até 5 segundos (meta do MVP, ainda não medida) e o acesso deixa de depender de plano de dados. Isso inclui quem usa plano pré-pago esgotado.</p>
   <p class="k">Em uma frase: a bicicleta sai sempre que o usuário chega, com ou sem sinal.</p></div>
   <div class="vis"><div class="big"><div><b>5 s</b><span>para liberar a bicicleta</span></div><div><b>0</b><span>estações a trocar</span></div><div><b>24–48 h</b><span>de validade do token</span></div><div><b>Sem dados</b><span>móveis na retirada</span></div></div></div></article>
 
@@ -186,11 +211,11 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
  <article class="q" id="concorrentes"><div><h3>Quem são os concorrentes?</h3>
   <p>Tembici e Mobilicidade operam bicicletas compartilhadas. Para nós, elas são clientes em potencial, não rivais. Nossos concorrentes de verdade são outras formas de resolver o acesso: fabricantes de estações com tecnologia própria, fechaduras inteligentes por Bluetooth e sistemas sem estação fixa.</p>
   <p>Nosso diferencial é ser uma camada que se encaixa no que já existe, em vez de pedir ao cliente que compre tudo de novo.</p></div>
-  <div class="vis"><table><tr><th>Alternativa</th><th>Limite</th></tr>
-   <tr><td>Estação do fabricante</td><td>Exige trocar ou comprar o conjunto</td></tr>
-   <tr><td>Fechadura Bluetooth</td><td>Resolve a bicicleta, não a estação</td></tr>
-   <tr><td>Sem estação fixa</td><td>Modelo diferente, com outros custos</td></tr>
-   <tr><td><b>BikeConnect</b></td><td><b>Se acopla à estação existente</b></td></tr></table></div></article>
+  <div class="vis"><table><tr><th>Alternativa</th><th>Aproveita a estação atual?</th><th>Limite</th></tr>
+   <tr><td>Estação do fabricante</td><td>Não</td><td>Exige trocar ou comprar o conjunto</td></tr>
+   <tr><td>Fechadura Bluetooth</td><td>Não se aplica</td><td>Resolve a bicicleta, não a estação</td></tr>
+   <tr><td>Sem estação fixa</td><td>Não se aplica</td><td>Modelo diferente, com outros custos</td></tr>
+   <tr><td><b>BikeConnect</b></td><td><b>Sim</b></td><td><b>Se acopla à estação existente</b></td></tr></table></div></article>
 
  <article class="q" id="monetizacao"><div><h3>Como a empresa ganha dinheiro?</h3>
   <p>Cobramos de quem opera, nunca do usuário final. Cada estação tem uma taxa única de implantação (equipamento e instalação) e uma mensalidade pelo uso da tecnologia, do suporte e das atualizações.</p>
@@ -221,6 +246,12 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
     <text x="54" y="104" style="fill:#ff8a76">Despesa fixa: R$ 55 mil</text><text x="270" y="38" style="fill:#3cc4d6">Sobra das estações</text><text x="300" y="214" style="fill:#f4c20d">equilíbrio</text>
     <text x="38" y="224" text-anchor="end">0</text><text x="38" y="174" text-anchor="end">25 mil</text><text x="38" y="124" text-anchor="end">50 mil</text><text x="38" y="74" text-anchor="end">75 mil</text><text x="38" y="24" text-anchor="end">100 mil</text>
     <text x="50" y="240" text-anchor="middle">0</text><text x="125" y="240" text-anchor="middle">100</text><text x="200" y="240" text-anchor="middle">200</text><text x="275" y="240" text-anchor="middle">300</text><text x="350" y="240" text-anchor="middle">400</text><text x="425" y="240" text-anchor="middle">500</text><text x="500" y="240" text-anchor="middle">600</text><text x="275" y="257" text-anchor="middle">estações ativas (reais por mês no eixo vertical)</text></svg></div>
+  <h5>Equilíbrio por cenário</h5>
+  <div class="tw"><table><tr><th>Cenário</th><th>Premissas</th><th class="n">Estações para o equilíbrio</th></tr>
+   <tr><td>Conservador</td><td>Sobra de R$ 100 por estação e despesas fixas de R$ 87,5 mil</td><td class="n">875</td></tr>
+   <tr><td>Intermediário</td><td>Sobra de R$ 140 por estação e despesas fixas de R$ 55 mil</td><td class="n">393</td></tr>
+   <tr><td>Otimista</td><td>Sobra de R$ 180 por estação e despesas fixas de R$ 47,8 mil</td><td class="n">266</td></tr></table></div>
+  <p class="src" style="margin-top:10px">A faixa de 306 a 550 usa a despesa fixa média de R$ 55 mil. A despesa fixa varia de R$ 47,8 a 87,5 mil, e é isso que abre o leque dos cenários.</p>
   <h5>4. O dinheiro para começar</h5>
   <div class="tw"><table><tr><th>Investimento inicial</th><th class="n">Estimativa</th></tr>
    <tr><td>Desenvolvimento do MVP (software e hardware)</td><td class="n">R$ 80.000 a 150.000</td></tr>
@@ -268,6 +299,18 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
  <p class="note">Com esses números em mãos, propomos um piloto gratuito ou de baixo custo em poucas estações de uma operadora. O desenvolvimento do MVP está no investimento inicial, nas contas do plano financeiro.</p>
 </div></section>
 
+<section id="status"><div class="wrap">
+ <h2>Status do projeto</h2>
+ <p class="lead">O que já existe e o que ainda é proposta. Evita confundir arquitetura planejada com produto pronto.</p>
+ <div class="sec"><div class="tw"><table><tr><th>Etapa</th><th>Situação</th><th>Observação</th></tr>
+  <tr><td>Planejamento e modelo de negócio</td><td><span class="pill ok">Documentado</span></td><td>Estimativas a confirmar com cotações e piloto</td></tr>
+  <tr><td>Arquitetura e segurança</td><td><span class="pill ok">Documentada</span></td><td>Planejada para o MVP, ainda não implementada</td></tr>
+  <tr><td>Pesquisa com usuários</td><td><span class="pill wip">Inicial</span></td><td>Duas entrevistas exploratórias</td></tr>
+  <tr><td>Simulador</td><td><span class="pill ok">Disponível</span></td><td>Demonstra o fluxo, sem Bluetooth nem hardware real</td></tr>
+  <tr><td>Protótipo físico com ESP32</td><td><span class="pill">Planejado</span></td><td>Faz parte do MVP</td></tr>
+  <tr><td>Testes de segurança</td><td><span class="pill">Planejados</span></td><td>Previstos para o piloto</td></tr></table></div></div>
+</div></section>
+
 <section id="simulador"><div class="wrap">
  <h2>Simulador de liberação</h2>
  <p class="lead">Veja o que o celular, a estação e a central fazem em cada etapa. Você pode simular o celular sem internet, a estação sem sinal e também falhas: token inválido, vencido ou já usado, e Bluetooth desconectado.</p>
@@ -309,7 +352,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
    <dt>Pagaria?</dt><dd>Sim: de R$ 6 a R$ 10.</dd>
    <dt>Sugestão</dt><dd>Cadastro e recarga em pontos pela cidade, que gerem um código de uso. Ampliar o acesso a quem não tem familiaridade com aplicativos.</dd></dl></div>
  </div>
- <p class="note"><b>Em comum:</b> os dois já desistiram de usar o serviço, os dois usariam uma alternativa sem internet e os dois sugeriram um código temporário. É uma amostra inicial, e vamos ampliá-la antes do piloto.</p>
+ <p class="note"><b>Em comum:</b> os dois já desistiram de usar o serviço, os dois usariam uma alternativa sem internet e os dois sugeriram um código temporário. São apenas duas entrevistas, uma amostra exploratória sem valor estatístico: servem para entender o problema, não para provar a demanda. Vamos ampliá-las antes do piloto.</p>
 </div></section>
 
 <section id="contato"><div class="wrap">
