@@ -32,6 +32,7 @@ button[disabled]{opacity:.5;cursor:default}
 .link::before{content:"";display:block;width:100%;height:4px;background:repeating-linear-gradient(90deg,var(--line) 0 8px,transparent 8px 14px);border-radius:2px}
 .link.on::before{background:var(--sig);animation:fl .9s linear infinite alternate}
 .link.on{color:var(--sig);font-weight:700}
+.link.off{color:#ff8a76;font-weight:700}.link.off::before{background:repeating-linear-gradient(90deg,var(--red) 0 8px,transparent 8px 14px)}
 @keyframes fl{from{opacity:.35}to{opacity:1}}
 .cap{background:var(--sf);border-left:5px solid var(--sig);border-radius:10px;padding:14px 18px;margin:20px 0 14px;min-height:6.2em}
 .cap b{display:block;font:800 23px "Bricolage Grotesque",sans-serif;margin-bottom:2px}
@@ -49,7 +50,7 @@ ol li{border-left:3px solid var(--line);padding:4px 0 4px 10px;opacity:.5}ol li.
 @media(max-width:720px){
  body{font-size:16px}.stage{flex-direction:column}.link{flex-basis:auto;min-height:62px;flex-direction:row;gap:10px}
  .link::before{width:4px;height:36px;background:repeating-linear-gradient(180deg,var(--line) 0 8px,transparent 8px 14px)}
- .link.on::before{background:var(--sig)}ol{grid-template-columns:1fr 1fr}.ctl button{width:100%}
+ .link.on::before{background:var(--sig)}.link.off::before{background:repeating-linear-gradient(180deg,var(--red) 0 8px,transparent 8px 14px)}ol{grid-template-columns:1fr 1fr}.ctl button{width:100%}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -88,11 +89,11 @@ function chip(id,txt,k){var e=$(id);e.textContent=txt;e.className='chip'+(k?' '+
 var T0=10*3600+32*60,clock=T0;
 function fmt(t){function z(n){return(n<10?'0':'')+n}return z(Math.floor(t/3600))+':'+z(Math.floor(t/60)%60)+':'+z(t%60)}
 function log(txt,bad){var l=$('log');if(l.firstChild&&l.firstChild.className==='empty')l.innerHTML='';var li=document.createElement('li');if(bad)li.className='bad';li.innerHTML='<time>'+fmt(clock)+'</time>'+txt;l.appendChild(li);l.scrollTop=l.scrollHeight}
-function reset(){clock=T0;chip('cP',$('offP').checked?'Sem internet':'Com internet',$('offP').checked?'':'ok');chip('cS','Aguardando','mute');chip('cC','Em espera','mute');['tP','tS','tC'].forEach(function(i){$(i).textContent=''});['aP','aS','aC','l1','l2'].forEach(function(i){$(i).classList.remove('on')});$('ol').innerHTML='';$('log').innerHTML='<li class="empty">Nenhum evento ainda.</li>'}
+function reset(){clock=T0;var s=$('offS').checked;chip('cP',$('offP').checked?'Sem internet':'Com internet',$('offP').checked?'':'ok');chip('cS',s?'Sem sinal':'Aguardando',s?'bad':'mute');chip('cC',s?'Sem contato':'Em espera','mute');['tP','tS','tC'].forEach(function(i){$(i).textContent=''});if(s)$('tS').textContent='Sem conexão com a central';['aP','aS','aC','l1','l2'].forEach(function(i){$(i).classList.remove('on')});$('l2').classList.toggle('off',s);$('m2').textContent=s?'sem conexão':'Internet da estação';$('m1').textContent='Bluetooth';var pv=steps();$('ol').innerHTML=pv.map(function(x,i){return'<li>'+(i+1)+'. '+x.t+'</li>'}).join('');$('log').innerHTML='<li class="empty">Nenhum evento ainda.</li>'}
 function steps(){
  var p=$('offP').checked,s=$('offS').checked,sc=$('sc').value,ok=sc==='ok',a=[];
  function A(t,d,on,lk,fn,lg,dt,bad){a.push({t:t,d:d,on:on,lk:lk,fn:fn,lg:lg,dt:dt||3,bad:bad})}
- A('Lê o QR Code','O QR Code só diz qual é a estação (EST-001). Não é uma senha. A câmera lê isso sozinha, sem internet.',['aP'],null,function(){$('tP').textContent='Lendo o QR Code da estação';chip('cS','Pronta')},'QR Code lido: estação EST-001',2);
+ A('Lê o QR Code','O QR Code só diz qual é a estação (EST-001). Não é uma senha. A câmera lê isso sozinha, sem internet.',['aP'],null,function(){$('tP').textContent='Lendo o QR Code da estação';if(!$('offS').checked)chip('cS','Pronta')},'QR Code lido: estação EST-001',2);
  A('Conecta por Bluetooth','O celular conversa direto com a estação, sem passar pela internet.',['aP','aS'],['l1','Bluetooth'],function(){$('tP').textContent='Conectando à estação'},'Conexão Bluetooth iniciada',3);
  if(sc==='btfail'){
   A('Bluetooth falha','O sinal caiu ou o celular saiu do alcance. Sem a conexão direta, nada chega à estação e a trava continua fechada.',['aP','aS'],['l1','sem conexão'],function(){chip('cS','Sem conexão','bad');$('tP').textContent='Não conectou'},'Bluetooth desconectado',4,1);
@@ -110,7 +111,7 @@ function steps(){
   A('Recusa a liberação',m[1],['aS','aP'],null,function(){chip('cS','Recusado','bad');$('tS').textContent=m[0];$('tP').textContent='Bicicleta não liberada'},m[2],2,1);
   A('Grava a tentativa','A estação guarda a tentativa recusada para auditoria. A trava continua fechada.',['aS'],null,function(){$('tS').textContent='Tentativa registrada'},'Tentativa recusada gravada na memória',2);
  }
- if(s)A('Registro na fila','A estação está sem sinal agora. O registro fica guardado e segue assim que a conexão voltar.',['aS'],null,function(){chip('cS','Sem sinal');$('tS').textContent='1 registro na fila'},'Estação sem sinal: 1 registro na fila',3);
+ if(s)A('Registro na fila','A estação está sem sinal agora. O registro fica guardado e segue assim que a conexão voltar.',['aS'],null,function(){chip('cS','Sem sinal · 1 pendente','bad');$('tS').textContent='1 registro na fila, aguardando conexão'},'Estação sem sinal: 1 registro na fila',3);
  A(s?'Estação recupera a conexão e avisa a central':'Estação avisa a central',ok?'A estação tem conexão própria. Ela envia à central os dados da retirada feita offline: usuário, token usado, estação e horário.':'A estação envia à central o registro da tentativa recusada.',['aS','aC'],['l2',ok?'registro da retirada':'tentativa recusada'],function(){chip('cS','Conectada','ok');$('tS').textContent='Registro enviado';chip('cC','Recebendo')},(s?'Conexão restabelecida. ':'')+'Registro sincronizado com a central',s?780:3);
  A(ok?'Central concilia':'Central registra a tentativa',ok?'A central confere o token, registra a viagem e prepara a cobrança, mesmo que o celular ainda esteja sem internet.':'A central guarda a tentativa e pode alertar a operação se ela se repetir. Nenhuma viagem é cobrada.',['aC'],null,function(){chip('cC',ok?'Viagem registrada':'Tentativa registrada','ok');$('tC').textContent=ok?'Usuário, estação e horário salvos':'Nenhuma viagem criada'},ok?'Central registrou a viagem':'Central registrou a tentativa recusada',3);
  if(p&&ok)A('Celular sincroniza depois','Ao recuperar a internet, o app recebe o comprovante da viagem e novos tokens.',['aP','aC'],['l2','comprovante'],function(){chip('cP','Online','ok');$('tP').textContent='Comprovante recebido'},'Celular online: comprovante e novos tokens recebidos',5);
@@ -120,14 +121,14 @@ $('go').onclick=async function(){if(run)return;run=true;this.disabled=true;$('sc
  for(var i=0;i<a.length;i++){var x=a[i];
   ['aP','aS','aC','l1','l2'].forEach(function(k){$(k).classList.remove('on')});
   for(var j=0;j<i;j++)li[j].className='done';li[i].className='on';
-  x.on.forEach(function(k){$(k).classList.add('on')});
+  x.on.forEach(function(k){$(k).classList.add('on')});if(x.lk&&x.lk[0]==='l2')$('l2').classList.remove('off');
   if(x.lk){$(x.lk[0]).classList.add('on');$('m'+x.lk[0].slice(1)).textContent=x.lk[1]}
   clock+=x.dt;$('ct').textContent=(i+1)+'. '+x.t;$('cd').textContent=x.d;x.fn();log(x.lg,x.bad);await wait(2800)}
  ['aP','aS','aC','l1','l2'].forEach(function(k){$(k).classList.remove('on')});
  for(var j=0;j<li.length;j++)li[j].className='done';
- $('ct').textContent='Pronto';$('cd').textContent=ok?'A bicicleta saiu sem o celular precisar de internet, e a central ficou com o registro completo da retirada.':'A bicicleta continuou travada. A estação decidiu sozinha, sem internet, e a tentativa ficou registrada.';
+ $('l2').classList.remove('off');$('m2').textContent='Internet da estação';$('ct').textContent='Pronto';$('cd').textContent=ok?'A bicicleta saiu sem o celular precisar de internet, e a central ficou com o registro completo da retirada.':'A bicicleta continuou travada. A estação decidiu sozinha, sem internet, e a tentativa ficou registrada.';
  run=false;this.disabled=false;$('sc').disabled=false;this.textContent='Repetir simulação'};
-$('sc').onchange=function(){if(!run)reset()};
+$('sc').onchange=function(){if(!run)reset()};$('offS').onchange=function(){if(!run)reset()};
 $('offP').onchange=function(){if(!run)reset()};reset();
 })();
 </script>
