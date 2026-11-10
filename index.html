@@ -87,11 +87,13 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
 @media(max-width:480px){body{font-size:17px}.wrap{padding:0 18px}.team,.cmp,.big{grid-template-columns:1fr}.sim{height:2120px}.hero h1{font-size:clamp(36px,11vw,52px)}.card{padding:22px}.sec{padding:18px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 .idx{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:24px}.idx a{background:var(--sf);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink);font-weight:600;font-size:16px}.idx a:hover{border-color:var(--sig)}.idx span{color:var(--sig);margin-right:8px;font-weight:800}.card ul{margin:12px 0 0;padding-left:20px}.card li{margin:0 0 8px}#resumo{padding-top:56px}@media(max-width:820px){.idx{grid-template-columns:1fr 1fr}}@media(max-width:480px){.idx{grid-template-columns:1fr}}
+.roi label{display:block;font-size:15px;color:var(--mute);margin:10px 0 2px}.roi input{width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--sf2);color:var(--ink);font:inherit}.roi .g{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.roi .res{margin-top:16px;padding:14px;border-radius:12px;background:var(--sf2);border-left:4px solid var(--sig)}.roi .res b{font:800 22px "Bricolage Grotesque",sans-serif;display:block}.roi .res.no b{color:#ff8a76}.roi .res.yes b{color:#5fd8a0}@media(max-width:480px){.roi .g{grid-template-columns:1fr}}
+.pmbtn{font:700 14px system-ui;padding:8px 12px;border-radius:8px;border:2px solid var(--sig);background:transparent;color:var(--sig);cursor:pointer;white-space:nowrap}.pmbtn[aria-pressed=true]{background:var(--sig);color:#11242c}.roi .pre{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}.roi .pre button{font:600 14px system-ui;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:var(--sf2);color:var(--ink);cursor:pointer}body.pres .ph{display:none!important}
 </style>
 </head>
 <body>
 <header><div class="wrap"><a class="logo" href="#"><i></i>BikeConnect</a>
-<nav aria-label="Navegação principal"><a href="#resumo">Resumo</a><a href="#conhecendo">Conhecendo</a><a href="#mercado">Mercado</a><a href="#mvp">MVP</a><a href="#status">Status</a><a href="#auditoria">Pendências</a><a href="#simulador">Simulador</a><a href="#canvas">Canvas</a><a href="#pesquisa">Pesquisa</a><a href="#contato">Contato</a></nav></div></header>
+<nav aria-label="Navegação principal"><a href="#resumo">Resumo</a><a href="#conhecendo">Conhecendo</a><a href="#mercado">Mercado</a><a href="#retorno">Retorno</a><a href="#mvp">MVP</a><a href="#status">Status</a><a href="#auditoria">Pendências</a><a href="#simulador">Simulador</a><a href="#canvas">Canvas</a><a href="#pesquisa">Pesquisa</a><a href="#contato">Contato</a><button type="button" class="pmbtn" id="pm" aria-pressed="false">Modo apresentação</button></nav></div></header>
 <main>
 <div class="road" aria-hidden="true"></div>
 <div class="wrap hero">
@@ -115,6 +117,8 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
   <div class="card"><h3>Mensagem para cada público</h3><dl><dt>Operadora</dt><dd>Pare de perder corridas por falta de sinal.</dd><dt>Prefeitura</dt><dd>O transporte ativo funciona também para quem está sem dados ou com sinal ruim.</dd><dt>Usuário</dt><dd>Escaneie o QR Code e libere a bicicleta em segundos, mesmo sem internet.</dd></dl></div>
  </div>
  <div class="idx"><a href="#resumo"><span>1</span>A empresa</a><a href="#problema"><span>2</span>O problema</a><a href="#cliente"><span>3</span>O cliente</a><a href="#solucao"><span>4</span>A solução</a><a href="#tecnologia"><span>5</span>A tecnologia</a><a href="#valor"><span>6</span>Proposta de valor</a><a href="#mercado"><span>7</span>O mercado</a><a href="#concorrentes"><span>8</span>Concorrência</a><a href="#canvas"><span>9</span>Canvas</a><a href="#monetizacao"><span>10</span>Monetização</a><a href="#crescimento"><span>11</span>Crescimento</a><a href="#mvp"><span>+</span>Produto mínimo viável</a></div>
+ <div class="card" style="margin-top:24px"><h3>Roteiro de 5 minutos</h3><p class="tag">O botão “Modo apresentação” esconde o que não entra no roteiro</p>
+  <table><tr><th>Tempo</th><th>Seção</th></tr><tr><td>0:00</td><td>Resumo e QR Code</td></tr><tr><td>0:30</td><td>Problema e cliente</td></tr><tr><td>1:15</td><td>Solução, com o simulador</td></tr><tr><td>2:15</td><td>Mercado e concorrentes</td></tr><tr><td>3:00</td><td>Canvas e monetização</td></tr><tr><td>3:45</td><td>Retorno: calculadora com os três cenários</td></tr><tr><td>4:30</td><td>Crescimento e MVP</td></tr></table></div>
 </div></section>
 
 <section id="equipe"><div class="wrap">
@@ -216,8 +220,27 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
   <p class="k">Os preços abaixo são hipóteses comerciais para testar em entrevistas e pilotos pagos. Não encontramos uma tabela pública de preços de software B2B diretamente comparável que comprove esses valores.</p></div>
   <div class="vis"><div class="big"><div><b>R$ 50 mil</b><span>implantação por operadora, uma vez</span></div><div><b>R$ 2.500</b><span>plataforma por operadora/mês</span></div><div><b>R$ 200</b><span>por estação ativa/mês</span></div><div><b>R$ 35</b><span>reserva variável de suporte por estação/mês</span></div></div>
    <p class="src">Exemplo hipotético: operadora com 10 estações pagaria R$ 50.000 de implantação + R$ 4.500 por mês (R$ 2.500 de plataforma + R$ 2.000 pelas estações). Hardware comprado diretamente pelo operador.</p></div></article>
+ <article class="q" id="retorno"><div><h3>Por que a operadora pagaria R$ 200 por estação?</h3>
+  <p>Só pagaria onde a retirada perdida por falta de sinal custar mais do que a mensalidade. Isso muda a quem vendemos: o alvo não é a rede inteira, e sim as estações em zonas de sinal ruim (subsolos, campi, parques) e com bastante movimento. A calculadora ao lado mostra a conta em três cenários de exemplo. Nenhum deles foi medido: hoje não temos dados sobre quantas retiradas falham por falta de sinal.</p>
+  <p>Com 30 retiradas por dia e R$ 4 por retirada, a mensalidade só se paga se cerca de 5,6% das retiradas se perderem. Numa estação comum, com 2% de falha, não se paga. Numa estação de zona de sinal ruim, com 60 retiradas por dia e 5% de falha, se paga com folga.</p>
+  <p><b>Como protegemos a operadora do risco:</b> o piloto é gratuito ou de baixo custo e mede a taxa real de falha em cada estação. A mensalidade fixa só vale nas estações em que a falha medida passa do ponto de equilíbrio. Nas demais, a proposta é uma cobrança variável sobre as retiradas recuperadas, com valor a negociar e receita menor para nós. Assim, a operadora nunca paga mais do que recebe de volta.</p>
+  <p class="k">Em uma frase: vendemos onde o problema é grande, provamos com medição e só cobramos o valor fixo onde ele se paga.</p></div>
+  <div class="vis roi"><h4>Calculadora: a mensalidade se paga?</h4>
+   <div class="pre"><button type="button" data-d="30" data-v="4" data-f="2">Estação comum</button><button type="button" data-d="60" data-v="4" data-f="5">Zona de sinal ruim</button><button type="button" data-d="20" data-v="3" data-f="1">Cenário fraco</button></div>
+   <div class="g"><div><label for="r_d">Retiradas por dia na estação</label><input id="r_d" type="number" min="0" value="30"></div>
+   <div><label for="r_v">Receita por retirada (R$)</label><input id="r_v" type="number" min="0" step="0.5" value="4"></div>
+   <div><label for="r_f">Retiradas perdidas por falta de sinal (%)</label><input id="r_f" type="number" min="0" step="0.5" value="2"></div>
+   <div><label for="r_m">Mensalidade por estação (R$)</label><input id="r_m" type="number" min="0" value="200"></div></div>
+   <div class="res" id="r_out" aria-live="polite"></div>
+   <p class="src">Simplificação: considera que toda retirada perdida seria recuperada pelo BikeConnect. Na prática, parte dos usuários tentaria de novo ou esperaria o sinal, então o ganho real tende a ser menor.</p></div></article>
+<script>(function(){function g(i){var v=parseFloat(document.getElementById(i).value);return isFinite(v)&&v>=0?v:0}
+function f(n){return n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0})}
+function u(){var d=g("r_d"),v=g("r_v"),p=g("r_f")/100,m=g("r_m"),base=d*30*v,perda=base*p,min=base>0?m/base*100:0,ok=perda>=m,el=document.getElementById("r_out");
+el.className="res "+(ok?"yes":"no");
+el.innerHTML="<span>Receita recuperada por mês</span><b>"+f(perda)+"</b><span>Mensalidade: "+f(m)+" · "+(ok?"a mensalidade se paga":"a mensalidade não se paga com esses valores")+"</span><br><span>Taxa de falha mínima para se pagar: <strong>"+min.toFixed(1).replace(".",",")+"%</strong></span>"}
+["r_d","r_v","r_f","r_m"].forEach(function(i){document.getElementById(i).addEventListener("input",u)});document.querySelectorAll(".roi .pre button").forEach(function(b){b.addEventListener("click",function(){document.getElementById("r_d").value=b.dataset.d;document.getElementById("r_v").value=b.dataset.v;document.getElementById("r_f").value=b.dataset.f;u()})});u()})();</script>
  <div class="sec fin"><h4>Plano financeiro atualizado — 36 meses</h4>
-  <p>Modelo-base de planejamento, não promessa de faturamento. As metas de clientes, estações e preços são hipóteses a validar. O cenário considera crescimento gradual, implantação paga, suporte variável, reserva tributária e investimento inicial no MVP.</p>
+  <p>Modelo-base de planejamento, não promessa de faturamento. O plano assume que as estações contratadas são estações-alvo (zona de sinal ruim e com bastante movimento); em estações comuns, a mensalidade fixa não se paga (veja Retorno). As metas de clientes, estações e preços são hipóteses a validar. O cenário considera crescimento gradual, implantação paga, suporte variável, reserva tributária e investimento inicial no MVP.</p>
   <h5>1. Premissas comerciais e operacionais</h5>
   <div class="tw"><table>
    <tr><th>Premissa</th><th>Valor usado</th><th>Como interpretar</th></tr>
@@ -246,6 +269,15 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
    <tr class="tot"><td>Acumulado</td><td class="n">—</td><td class="n">—</td><td class="n">12</td><td class="n">R$ 2.172.000</td><td class="n">R$ 1.978.500</td><td class="n pos">R$ 193.500</td></tr>
   </table></div>
   <p class="src">*Custos totais incluem custos fixos, suporte variável, custo direto de implantação, provisão tributária de 20% da receita e R$ 60 mil de MVP no ano 1. Resultado antes de juros, depreciação, distribuição de lucros, inadimplência, atrasos relevantes de recebimento e despesas extraordinárias. A planilha anexa detalha os 36 meses e permite alterar as premissas.</p>
+  <h5>3b. E se der errado? Quatro cenários</h5>
+  <div class="tw"><table>
+   <tr><th>Cenário</th><th class="n">Ano 1</th><th class="n">Ano 2</th><th class="n">Ano 3</th><th class="n">Acumulado</th></tr>
+   <tr><td>Base (tabela acima)</td><td class="n neg">– R$ 260 mil</td><td class="n neg">– R$ 34 mil</td><td class="n pos">R$ 488 mil</td><td class="n pos">R$ 194 mil</td></tr>
+   <tr><td>Metade dos clientes e das estações</td><td class="n neg">– R$ 280 mil</td><td class="n neg">– R$ 185 mil</td><td class="n pos">R$ 16 mil</td><td class="n neg">– R$ 449 mil</td></tr>
+   <tr><td>Metade do volume e R$ 100 por estação</td><td class="n neg">– R$ 283 mil</td><td class="n neg">– R$ 233 mil</td><td class="n neg">– R$ 176 mil</td><td class="n neg">– R$ 692 mil</td></tr>
+   <tr><td>Base, sem taxa de implantação</td><td class="n neg">– R$ 280 mil</td><td class="n neg">– R$ 114 mil</td><td class="n pos">R$ 348 mil</td><td class="n neg">– R$ 46 mil</td></tr>
+  </table></div>
+  <p class="src">Calculados com as mesmas fórmulas do cenário-base, mudando só a premissa indicada; custos fixos mantidos. No cenário-base, 65% da receita do ano 1 (R$ 50 mil de R$ 77 mil) vem de uma única implantação. O piloto precisa confirmar três coisas: a taxa real de retiradas perdidas por falta de sinal, a disposição das operadoras de pagar e o número de estações por operadora.</p>
   <h5>4. Metas de crescimento do cenário-base</h5>
   <div class="tw"><table>
    <tr><th>Fim do período</th><th class="n">Operadoras acumuladas</th><th class="n">Estações acumuladas</th><th>Leitura</th></tr>
@@ -259,7 +291,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
    <div class="out"><h6>Reserva operacional</h6><p>Quatro meses de custos fixos e variáveis do ano 2</p><b>R$ 126.000</b></div>
    <div class="left"><h6>Meta de financiamento</h6><p>Com contingência de 10%</p><b>R$ 462.550</b></div>
   </div>
-  <p>O valor de R$ 462.550 é uma meta inicial de caixa calculada como R$ 294.500 de déficit acumulado + R$ 126.000 de quatro meses de custos do ano 2 + R$ 42.050 de contingência. Não é orçamento fechado nem garantia de suficiência: precisa ser refeito quando houver contratos, cronograma de recebimento, cotações e enquadramento tributário.</p>
+  <p>O valor de R$ 462.550 é uma meta inicial de caixa calculada como R$ 294.500 de déficit acumulado + R$ 126.000 de quatro meses de custos do ano 2 + R$ 42.050 de contingência. Não é orçamento fechado nem garantia de suficiência. A fonte do capital ainda não está definida (alternativas: recursos dos sócios, investidor-anjo ou financiamento à inovação, conforme o resultado do piloto). O valor precisa ser refeito quando houver contratos, cronograma de recebimento, cotações e enquadramento tributário.</p>
   <h5>6. Ponto de equilíbrio — cálculo correto do modelo-base</h5>
   <p>O modelo-base cobra R$ 2.500/mês por operadora e R$ 200/mês por estação ativa. Portanto, o equilíbrio não deve ser calculado dividindo despesas fixas apenas pela margem de uma estação. No ano 3, com custo fixo de R$ 38.000/mês, receita de plataforma de R$ 2.500 por operadora e contribuição de R$ 165 por estação antes de tributos, uma aproximação com 12 operadoras seria: (R$ 38.000 − R$ 30.000) ÷ R$ 165 ≈ 49 estações antes dos tributos. Aplicando a reserva de 20% sobre toda a receita, cada operadora contribui com R$ 2.000 líquidos de tributos e cada estação contribui com R$ 125 (R$ 200 menos 20% de tributos e R$ 35 de suporte). Nesse cenário, o equilíbrio aproximado passa a ser (R$ 38.000 − R$ 24.000) ÷ R$ 125 ≈ 112 estações, com 12 contratos ativos. É uma conta simplificada: não inclui custo comercial adicional, inadimplência ou atraso de recebimento.</p>
   <p class="src">O cálculo de equilíbrio desta versão substitui integralmente o cálculo antigo, que usava outra estrutura de preços e custos. Não misture as premissas das duas versões.</p>
@@ -272,7 +304,6 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
    <li><a href="https://registro.br/dominio" target="_blank" rel="noopener noreferrer">Registro.br</a>: domínio .br anunciado a R$ 40/ano.</li>
    <li><a href="https://www8.receita.fazenda.gov.br/SIMPLESNACIONAL/Noticias/NoticiaCompleta.aspx?id=415ad600-7d43-4e55-971b-55df99e95ef3" target="_blank" rel="noopener noreferrer">Receita Federal — fator R</a>: atividades de software sujeitas ao fator R podem variar entre Anexos III e V conforme folha/faturamento; o contador deve confirmar CNAE, atividade e enquadramento.</li>
   </ul>
-  <p class="src">Não foi localizada uma tabela pública confiável de preços para software B2B diretamente comparável ao BikeConnect. Assim, R$ 50 mil, R$ 2.500, R$ 200, R$ 35 e as metas de vendas são hipóteses de negócio, não “preços de mercado comprovados”.</p>
  </div>
  <article class="q" id="crescimento"><div><h3>Como irá conquistar clientes?</h3>
   <p>Começamos pequeno: um piloto em 1 ou 2 estações de uma universidade, onde as decisões são rápidas e o público é jovem e conectado ao tema. A proposta comercial é um piloto pago, de escopo limitado e com critérios de aceite definidos. Se a equipe optar por um teste acadêmico subsidiado, ele deve ser identificado como validação financiada, não como venda nem como prova de disposição de compra.</p>
@@ -281,13 +312,13 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
 
  <article class="q"><div><h3>Como poderá crescer?</h3>
   <p>Em etapas. Primeiro provamos que funciona. Depois levamos a operadoras regionais e condomínios. Só então entramos em prefeituras, que compram por licitação e levam mais tempo, e em grandes operadoras.</p>
-  <p>A mesma tecnologia pode servir a patinetes, bicicletas elétricas e outros países da América Latina.</p>
+  <p>A mesma tecnologia pode servir a patinetes, bicicletas elétricas e outros países da América Latina. Uma extensão importante é atender quem nunca tem internet, com código temporário gerado offline ou cartão.</p>
   <p><b>Como manter clientes:</b> suporte técnico contínuo, relatório mensal das retiradas offline que o BikeConnect viabilizou e um canal de feedback. A integração com estações e app torna a troca de fornecedor trabalhosa, e a mensalidade mantém a receita recorrente.</p></div>
   <div class="vis"><div class="tl"><div><b>0 a 6 meses</b><span>Validação com o piloto</span></div><div><b>6 a 18 meses</b><span>Operadoras regionais e condomínios</span></div><div><b>Depois</b><span>Prefeituras, grandes operadoras e novos veículos</span></div></div></div></article>
 
  <article class="q"><div><h3>Por que esse negócio tem potencial?</h3>
   <p>Porque a receita se repete todo mês, porque trocar de fornecedor é trabalhoso para o cliente e porque o problema é comum em qualquer cidade com bicicleta compartilhada.</p>
-  <p>O cenário-base projeta 12 operadoras e 610 estações ao fim do terceiro ano, mas esse crescimento ainda não foi validado comercialmente. Com 12 contratos ativos, custo fixo de R$ 38 mil/mês, assinatura de R$ 2.500 por operadora, licença de R$ 200 por estação, reserva tributária de 20% e suporte variável de R$ 35 por estação, o ponto de equilíbrio simplificado fica em aproximadamente 112 estações ativas. O cálculo depende de manter os 12 contratos e as premissas de preço e custo.</p></div>
+  <p>O cenário-base projeta 12 operadoras e 610 estações ao fim do terceiro ano, mas esse crescimento ainda não foi validado comercialmente. Com 12 contratos ativos, custo fixo de R$ 38 mil/mês, assinatura de R$ 2.500 por operadora, licença de R$ 200 por estação, reserva tributária de 20% e suporte variável de R$ 35 por estação, o ponto de equilíbrio simplificado fica em aproximadamente 112 estações ativas. O cálculo depende de manter os 12 contratos e as premissas de preço e custo. Em um cenário pessimista, com metade do volume, o resultado acumulado em 36 meses é negativo (veja a tabela de cenários).</p></div>
   <div class="vis"><h4>Estações ativas — cenário de equilíbrio</h4>
    <div class="rng" role="img" aria-label="Ponto de equilíbrio aproximado em 112 estações, assumindo 12 operadoras ativas"><i style="left:0;width:18.7%;background:var(--teal);opacity:.65"></i></div>
    <div class="ax"><span>0</span><span>300</span><span>600</span></div>
@@ -330,6 +361,7 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
    <li>Definir política para credenciais duplicadas em estações desconectadas; não existe prevenção global instantânea sem comunicação.</li>
   </ul></div>
   <div class="card"><h3>Bloqueadores comerciais e operacionais</h3><ul>
+   <li>Medir em campo a taxa real de retiradas perdidas por falta de sinal: ela decide se a mensalidade de R$ 200 por estação se paga (veja a calculadora em Retorno).</li>
    <li>Entrevistar operadoras e mapear estações, fabricantes, protocolos e responsáveis pela decisão de compra.</li>
    <li>Validar preços por meio de propostas e piloto pago; as tarifas exibidas são hipóteses.</li>
    <li>Obter cotações para integração, trava, caixa, energia, instalação, suporte e seguro.</li>
@@ -383,6 +415,11 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
    <dt>Sugestão</dt><dd>Cadastro e recarga em pontos pela cidade, que gerem um código de uso. Ampliar o acesso a quem não tem familiaridade com aplicativos.</dd></dl></div>
  </div>
  <p class="note"><b>Em comum:</b> os dois já desistiram de usar o serviço, os dois usariam uma alternativa sem internet e os dois sugeriram um código temporário. São apenas duas entrevistas, uma amostra exploratória sem valor estatístico: servem para entender o problema, não para provar a demanda. Vamos ampliá-las antes do piloto.</p>
+ <p class="note"><b>Limite do MVP:</b> o Perfil A, que não tem internet em momento nenhum, não é atendido pela primeira versão, porque o token precisa ser baixado antes, com internet. Atender esse perfil exige uma extensão (código temporário gerado offline ou cartão, como os próprios entrevistados sugeriram), prevista no roteiro de crescimento e fora do MVP.</p>
+ <div class="card" style="margin-top:24px"><h3>Ampliando a pesquisa</h3><p class="tag">Meta: 10 entrevistas · realizadas: 2</p>
+  <p>Antes do piloto, vamos ouvir mais 8 pessoas e pelo menos 2 gestores de estação ou operadora. As perguntas miram o que ainda não sabemos:</p>
+  <ul><li>Usuários: nas últimas 4 semanas, quantas vezes você não conseguiu liberar uma bicicleta por falta de sinal ou de dados?</li><li>Usuários: nessas vezes, o que você fez (esperou, foi a pé, usou outro transporte)?</li><li>Usuários: você aceitaria baixar o app e deixar o login pronto antes de sair de casa?</li><li>Gestores: quantas retiradas por dia tem uma estação típica e qual a receita média por retirada?</li><li>Gestores: que parcela das tentativas falha por falta de sinal e quanto pagariam para reduzir isso?</li></ul>
+  <p class="src">Os resultados entram aqui quando as entrevistas forem feitas. Até lá, a pesquisa válida são as duas entrevistas acima.</p></div>
 </div></section>
 
 <section id="contato"><div class="wrap">
@@ -397,5 +434,8 @@ footer{border-top:1px solid var(--line);padding:32px 0 40px;color:var(--mute);fo
 </main>
 <footer><div class="wrap">BikeConnect · Centro Universitário Anhanguera de Niterói · Modelos de Negócios para TI · Ciência da Computação, 2026</div></footer>
 
+<script>(function(){var h=["#equipe","#status","#auditoria","#contato","#pesquisa","#conhecendo .sec","#tecnologia","#valor","article.q:not([id])",'nav a[href="#status"]','nav a[href="#auditoria"]','nav a[href="#pesquisa"]','nav a[href="#contato"]','.idx a[href="#tecnologia"]','.idx a[href="#valor"]'];
+h.forEach(function(q){document.querySelectorAll(q).forEach(function(e){e.classList.add("ph")})});
+var b=document.getElementById("pm");b.addEventListener("click",function(){var on=document.body.classList.toggle("pres");b.setAttribute("aria-pressed",on?"true":"false");b.textContent=on?"Sair do modo apresentação":"Modo apresentação";window.scrollTo(0,0)})})();</script>
 </body>
 </html>
