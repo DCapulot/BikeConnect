@@ -110,15 +110,65 @@ body{padding-left:calc(3.5rem + env(safe-area-inset-left,0rem))}
 #intro p{margin:0;font-size:clamp(0.9375rem,4vw,1.1875rem);color:#9db3ba;animation-delay:1.3s}#intro small{color:#9db3ba;font-size:0.8125rem;animation-delay:1.6s}
 @keyframes idr{to{stroke-dashoffset:0}}@keyframes ipop{to{opacity:1}}
 @media(prefers-reduced-motion:reduce){#intro *{animation:none!important;opacity:1!important;stroke-dashoffset:0!important}#sidenav,#intro{transition:none}}
+#sidenav{overscroll-behavior:contain}
+#sidenav .grp{display:flex;flex-direction:column}
+#sidenav .subs{display:none;flex-direction:column;gap:.05rem;margin:0 0 .3rem;padding-left:.5rem}
+#sidenav .grp.on .subs{display:flex}
+#sidenav .s{min-height:2rem;padding:.2rem .3rem;font-size:.85rem;font-weight:500}
+#sidenav .s span{width:1.5rem;height:1.5rem;font-size:.7rem;background:transparent;color:var(--ink);border:.1rem solid var(--sig);box-sizing:border-box}
+#sidenav .x span{background:transparent;color:var(--ink);border:.1rem solid var(--sig)}
+#sidenav .sep{border:0;border-top:thin solid var(--line);width:calc(100% - .6rem);margin:.35rem .3rem}
+#sidenav .grp.on>.m span{outline:.2rem solid var(--ink);outline-offset:.1rem}
+#sidenav a span{transition:transform .2s ease}
+#sidenav a:hover span{transform:scale(1.12)}
+#prog{position:fixed;top:0;left:0;width:100%;height:.25rem;background:var(--sig);transform-origin:0 50%;transform:scaleX(0);z-index:90;pointer-events:none}
+.rv{opacity:0}
+.rv.in{opacity:1;animation:rise .75s cubic-bezier(.2,.7,.2,1) backwards}
+@keyframes rise{from{opacity:0;transform:translateY(1.6rem)}}
+.card,.vis{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.card:hover,.vis:not(.roi):hover{transform:translateY(-.2rem);box-shadow:0 .7rem 1.6rem rgba(0,0,0,.28)}
+.card:hover{border-color:var(--sig)}
+.btn{transition:transform .2s ease,box-shadow .2s ease}
+.btn:hover{transform:translateY(-.15rem);box-shadow:0 .5rem 1rem rgba(0,0,0,.3)}
+.qr #qr{animation:flt 6s ease-in-out infinite}
+@keyframes flt{50%{transform:translateY(-.45rem)}}
+svg.ch path[marker-end]{stroke-dasharray:.5rem .4rem;animation:flow 1.1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-.9rem}}
+.logo .lg g:last-child path{animation:pls 2.4s ease-in-out infinite}
+.logo .lg g:last-child path:nth-child(2){animation-delay:.2s}.logo .lg g:last-child path:nth-child(3){animation-delay:.4s}
+@keyframes pls{0%,100%{opacity:.3}40%{opacity:1}}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1}.rv.in{animation:none}.qr #qr,svg.ch path[marker-end],.logo .lg g path,#sidenav a span{animation:none;transition:none}#prog{display:none}}
+.vid{margin:1.5rem 0;background:var(--sf);border:thin solid var(--line);border-radius:1.1rem;overflow:hidden}
+.vid .vh{display:flex;gap:.6rem;align-items:center;padding:.8rem 1.1rem;font:800 1.05rem "Bricolage Grotesque",system-ui,sans-serif;color:var(--ink)}
+.vid .vh i{display:inline-block;width:.7rem;height:.7rem;border-radius:50%;background:var(--sig)}
+.vid svg.vs{display:block;width:100%;height:auto;background:var(--bg)}
+.vid text{font-family:system-ui,sans-serif}
+.vid .el{opacity:0;transition:opacity .45s ease}.vid .el.on{opacity:1}
+.vid .mv{transition:transform 1.3s cubic-bezier(.4,0,.2,1)}
+.vid.snap .mv,.vid.snap .el{transition:none}
+.vid .bar{transform-box:fill-box;transform-origin:0 50%}
+.vid .spin{transform-box:fill-box;transform-origin:center;animation:vspin 1s linear infinite}
+@keyframes vspin{to{transform:rotate(360deg)}}
+.vid .pls path{animation:pls 1.4s ease-in-out infinite}.vid .pls path:nth-child(2){animation-delay:.2s}.vid .pls path:nth-child(3){animation-delay:.4s}
+.vid .dash{stroke-dasharray:.5rem .4rem;animation:flow 1.1s linear infinite}
+.vid figcaption{padding:.9rem 1.1rem .3rem;font-size:1.05rem;min-height:3.4rem;color:var(--ink)}
+.vid .vc{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;padding:.5rem 1.1rem 1rem}
+.vid .vc button{border:thin solid var(--line);background:var(--sf2);color:var(--ink);border-radius:.6rem;padding:.5rem .9rem;font:600 .9rem system-ui;cursor:pointer;min-height:2.5rem}
+.vid .vc input{flex:1;min-width:8rem;accent-color:var(--sig)}
+.vid .vc span{font-size:.85rem;color:var(--mute);min-width:3.2rem;text-align:right}
+.vid .vn{margin:0;padding:0 1.1rem 1rem;font-size:.85rem;color:var(--mute)}
+@media(prefers-reduced-motion:reduce){.vid .mv,.vid .el{transition-duration:.01s}.vid .spin,.vid .pls path,.vid .dash{animation:none}}
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%230a1a1f%22/%3E%3Cg transform=%22translate%282 4%29 scale%28.94%29%22%3E%3Cg fill=%22none%22 stroke=%22%23eaf3f1%22 stroke-width=%224%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2216%22 cy=%2242%22 r=%2211%22/%3E%3Ccircle cx=%2248%22 cy=%2242%22 r=%2211%22/%3E%3Cpath d=%22M16 42L26 24H42L48 42M26 24L32 42L42 24M16 42H32%22/%3E%3C/g%3E%3Cg fill=%22none%22 stroke=%22%23f4c20d%22 stroke-width=%223.5%22 stroke-linecap=%22round%22%3E%3Cpath d=%22M46 14A6 6 0 0 1 52 20%22/%3E%3Cpath d=%22M46 9A11 11 0 0 1 57 20%22/%3E%3Cpath d=%22M46 4A16 16 0 0 1 62 20%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
 <script>document.documentElement.classList.add("intro-on");setTimeout(function(){document.documentElement.classList.remove("intro-on")},5000)</script>
 </head>
 <body>
 <div id="intro" aria-hidden="true"><svg class="im" viewBox="0 0 64 64"><g fill="none" stroke="#eaf3f1" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle class="w" cx="16" cy="42" r="11" pathLength="100"/><circle class="w" cx="48" cy="42" r="11" pathLength="100"/><path class="w" d="M16 42L26 24H42L48 42M26 24L32 42L42 24M16 42H32" pathLength="100"/></g><g fill="none" stroke="#f4c20d" stroke-width="3.5" stroke-linecap="round"><path class="a1" d="M46 14A6 6 0 0 1 52 20"/><path class="a2" d="M46 9A11 11 0 0 1 57 20"/><path class="a3" d="M46 4A16 16 0 0 1 62 20"/></g></svg><div class="it">Bike<b>Connect</b></div><p>Retire a bicicleta mesmo sem dados móveis</p><small>Toque para pular</small></div>
+<div id="prog" aria-hidden="true"></div>
 <header><div class="wrap"><a class="logo" href="#" aria-label="BikeConnect, início"><svg class="lg" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="42" r="11"/><circle cx="48" cy="42" r="11"/><path d="M16 42L26 24H42L48 42M26 24L32 42L42 24M16 42H32"/></g><g fill="none" stroke="#f4c20d" stroke-width="3.5" stroke-linecap="round"><path d="M46 14A6 6 0 0 1 52 20"/><path d="M46 9A11 11 0 0 1 57 20"/><path d="M46 4A16 16 0 0 1 62 20"/></g></svg>BikeConnect</a>
 <nav aria-label="Navegação principal"><a href="#resumo">Resumo</a><a href="#conhecendo">Conhecendo</a><a href="#mercado">Mercado</a><a href="#retorno">Retorno</a><a href="#mvp">MVP</a><a href="#status">Status</a><a href="#auditoria">Pendências</a><a href="#simulador">Simulador</a><a href="#canvas">Canvas</a><a href="#pesquisa">Pesquisa</a><a href="#contato">Contato</a><button type="button" class="pmbtn" id="pm" aria-pressed="false">Modo apresentação</button></nav></div></header>
-<nav id="sidenav" aria-label="Ir para uma seção"><a href="#resumo" title="A empresa" aria-label="A empresa"><span>1</span><b class="l">A empresa</b></a><a href="#problema" title="O problema" aria-label="O problema"><span>2</span><b class="l">O problema</b></a><a href="#cliente" title="O cliente" aria-label="O cliente"><span>3</span><b class="l">O cliente</b></a><a href="#solucao" title="A solução" aria-label="A solução"><span>4</span><b class="l">A solução</b></a><a href="#tecnologia" title="A tecnologia" aria-label="A tecnologia"><span>5</span><b class="l">A tecnologia</b></a><a href="#valor" title="Proposta de valor" aria-label="Proposta de valor"><span>6</span><b class="l">Proposta de valor</b></a><a href="#mercado" title="O mercado" aria-label="O mercado"><span>7</span><b class="l">O mercado</b></a><a href="#concorrentes" title="Concorrência" aria-label="Concorrência"><span>8</span><b class="l">Concorrência</b></a><a href="#canvas" title="Canvas" aria-label="Canvas"><span>9</span><b class="l">Canvas</b></a><a href="#monetizacao" title="Monetização" aria-label="Monetização"><span>10</span><b class="l">Monetização</b></a><a href="#crescimento" title="Crescimento" aria-label="Crescimento"><span>11</span><b class="l">Crescimento</b></a><a href="#mvp" title="Produto mínimo viável" aria-label="Produto mínimo viável"><span>+</span><b class="l">Produto mínimo viável</b></a></nav>
+<nav id="sidenav" aria-label="Ir para uma seção"><div class="grp"><a class="m" href="#resumo" title="A empresa" aria-label="A empresa"><span>1</span><b class="l">A empresa</b></a></div><div class="grp"><a class="m" href="#problema" title="O problema" aria-label="O problema"><span>2</span><b class="l">O problema</b></a><div class="subs"><a class="s" href="#problema-cena" title="A cena, em uma checagem" aria-label="A cena, em uma checagem"><span>a</span><b class="l">A cena, em uma checagem</b></a><a class="s" href="#video-problema" title="Vídeo: o problema" aria-label="Vídeo: o problema"><span>b</span><b class="l">Vídeo: o problema</b></a></div></div><div class="grp"><a class="m" href="#cliente" title="O cliente" aria-label="O cliente"><span>3</span><b class="l">O cliente</b></a></div><div class="grp"><a class="m" href="#solucao" title="A solução" aria-label="A solução"><span>4</span><b class="l">A solução</b></a><div class="subs"><a class="s" href="#solucao-hoje" title="Hoje × com o BikeConnect" aria-label="Hoje × com o BikeConnect"><span>a</span><b class="l">Hoje × com o BikeConnect</b></a></div></div><div class="grp"><a class="m" href="#tecnologia" title="A tecnologia" aria-label="A tecnologia"><span>5</span><b class="l">A tecnologia</b></a><div class="subs"><a class="s" href="#tec-token" title="O caminho do token" aria-label="O caminho do token"><span>a</span><b class="l">O caminho do token</b></a><a class="s" href="#video-tecnologia" title="Vídeo: retirada sem internet" aria-label="Vídeo: retirada sem internet"><span>b</span><b class="l">Vídeo: retirada sem internet</b></a><a class="s" href="#arquitetura" title="Arquitetura" aria-label="Arquitetura"><span>c</span><b class="l">Arquitetura</b></a></div></div><div class="grp"><a class="m" href="#ciberseguranca" title="Cibersegurança" aria-label="Cibersegurança"><span>6</span><b class="l">Cibersegurança</b></a><div class="subs"><a class="s" href="#video-ciberseguranca" title="Vídeo: token falso" aria-label="Vídeo: token falso"><span>a</span><b class="l">Vídeo: token falso</b></a></div></div><div class="grp"><a class="m" href="#valor" title="Proposta de valor" aria-label="Proposta de valor"><span>7</span><b class="l">Proposta de valor</b></a></div><div class="grp"><a class="m" href="#mercado" title="O mercado" aria-label="O mercado"><span>8</span><b class="l">O mercado</b></a></div><div class="grp"><a class="m" href="#concorrentes" title="Concorrência" aria-label="Concorrência"><span>9</span><b class="l">Concorrência</b></a></div><div class="grp"><a class="m" href="#canvas" title="Canvas" aria-label="Canvas"><span>10</span><b class="l">Canvas</b></a></div><div class="grp"><a class="m" href="#monetizacao" title="Monetização" aria-label="Monetização"><span>11</span><b class="l">Monetização</b></a><div class="subs"><a class="s" href="#retorno" title="Retorno por estação" aria-label="Retorno por estação"><span>a</span><b class="l">Retorno por estação</b></a><a class="s" href="#calc-retorno" title="Calculadora" aria-label="Calculadora"><span>b</span><b class="l">Calculadora</b></a><a class="s" href="#video-retorno" title="Vídeo: quando se paga" aria-label="Vídeo: quando se paga"><span>c</span><b class="l">Vídeo: quando se paga</b></a><a class="s" href="#plano-financeiro" title="Plano financeiro" aria-label="Plano financeiro"><span>d</span><b class="l">Plano financeiro</b></a><a class="s" href="#fin-premissas" title="Premissas" aria-label="Premissas"><span>e</span><b class="l">Premissas</b></a><a class="s" href="#fin-custos" title="Custos fixos" aria-label="Custos fixos"><span>f</span><b class="l">Custos fixos</b></a><a class="s" href="#fin-projecao" title="Projeção anual" aria-label="Projeção anual"><span>g</span><b class="l">Projeção anual</b></a><a class="s" href="#fin-cenarios" title="Cenários" aria-label="Cenários"><span>h</span><b class="l">Cenários</b></a><a class="s" href="#fin-metas" title="Metas de crescimento" aria-label="Metas de crescimento"><span>i</span><b class="l">Metas de crescimento</b></a><a class="s" href="#fin-caixa" title="Capital de giro" aria-label="Capital de giro"><span>j</span><b class="l">Capital de giro</b></a><a class="s" href="#fin-equilibrio" title="Ponto de equilíbrio" aria-label="Ponto de equilíbrio"><span>k</span><b class="l">Ponto de equilíbrio</b></a></div></div><div class="grp"><a class="m" href="#crescimento" title="Crescimento" aria-label="Crescimento"><span>12</span><b class="l">Crescimento</b></a><div class="subs"><a class="s" href="#crescer" title="Como poderá crescer" aria-label="Como poderá crescer"><span>a</span><b class="l">Como poderá crescer</b></a><a class="s" href="#potencial" title="Potencial do negócio" aria-label="Potencial do negócio"><span>b</span><b class="l">Potencial do negócio</b></a></div></div><div class="grp"><a class="m" href="#mvp" title="Produto mínimo viável" aria-label="Produto mínimo viável"><span>+</span><b class="l">Produto mínimo viável</b></a><div class="subs"><a class="s" href="#mvp-entra" title="O que entra" aria-label="O que entra"><span>a</span><b class="l">O que entra</b></a><a class="s" href="#mvp-metricas" title="Como medimos o sucesso" aria-label="Como medimos o sucesso"><span>b</span><b class="l">Como medimos o sucesso</b></a></div></div><hr class="sep"><div class="grp"><a class="m x" href="#equipe" title="Equipe" aria-label="Equipe"><span>E</span><b class="l">Equipe</b></a></div><div class="grp"><a class="m x" href="#simulador" title="Simulador" aria-label="Simulador"><span>S</span><b class="l">Simulador</b></a></div><div class="grp"><a class="m x" href="#pesquisa" title="Pesquisa" aria-label="Pesquisa"><span>P</span><b class="l">Pesquisa</b></a><div class="subs"><a class="s" href="#perfil-a" title="Perfil A" aria-label="Perfil A"><span>a</span><b class="l">Perfil A</b></a><a class="s" href="#perfil-b" title="Perfil B" aria-label="Perfil B"><span>b</span><b class="l">Perfil B</b></a><a class="s" href="#pesquisa-ampliar" title="Ampliando a pesquisa" aria-label="Ampliando a pesquisa"><span>c</span><b class="l">Ampliando a pesquisa</b></a></div></div><div class="grp"><a class="m x" href="#status" title="Status do projeto" aria-label="Status do projeto"><span>T</span><b class="l">Status do projeto</b></a></div><div class="grp"><a class="m x" href="#auditoria" title="Pendências" aria-label="Pendências"><span>!</span><b class="l">Pendências</b></a><div class="subs"><a class="s" href="#bloq-tec" title="Bloqueadores técnicos" aria-label="Bloqueadores técnicos"><span>a</span><b class="l">Bloqueadores técnicos</b></a><a class="s" href="#bloq-com" title="Bloqueadores comerciais" aria-label="Bloqueadores comerciais"><span>b</span><b class="l">Bloqueadores comerciais</b></a></div></div><div class="grp"><a class="m x" href="#contato" title="Contato" aria-label="Contato"><span>C</span><b class="l">Contato</b></a></div></nav>
 <main>
 <div class="road" aria-hidden="true"></div>
 <div class="wrap hero">
@@ -141,7 +191,6 @@ body{padding-left:calc(3.5rem + env(safe-area-inset-left,0rem))}
   <div class="card"><h3>Posicionamento</h3><p class="tag">Como queremos ser vistos</p><p>A camada de confiabilidade das bicicletas compartilhadas: confiável, simples, seguro e inclusivo. Somos parceiro tecnológico das operadoras, não uma nova operadora nem concorrente delas.</p></div>
   <div class="card"><h3>Mensagem para cada público</h3><dl><dt>Operadora</dt><dd>Pare de perder corridas por falta de sinal.</dd><dt>Prefeitura</dt><dd>O transporte ativo funciona também para quem está sem dados ou com sinal ruim.</dd><dt>Usuário</dt><dd>Escaneie o QR Code e libere a bicicleta em segundos, mesmo sem internet.</dd></dl></div>
  </div>
- <div class="idx"><a href="#resumo"><span>1</span>A empresa</a><a href="#problema"><span>2</span>O problema</a><a href="#cliente"><span>3</span>O cliente</a><a href="#solucao"><span>4</span>A solução</a><a href="#tecnologia"><span>5</span>A tecnologia</a><a href="#valor"><span>6</span>Proposta de valor</a><a href="#mercado"><span>7</span>O mercado</a><a href="#concorrentes"><span>8</span>Concorrência</a><a href="#canvas"><span>9</span>Canvas</a><a href="#monetizacao"><span>10</span>Monetização</a><a href="#crescimento"><span>11</span>Crescimento</a><a href="#mvp"><span>+</span>Produto mínimo viável</a></div>
 </div></section>
 
 <section id="equipe"><div class="wrap">
@@ -157,8 +206,9 @@ body{padding-left:calc(3.5rem + env(safe-area-inset-left,0rem))}
   <p>Imagine chegar a uma estação de bicicletas compartilhadas, com pressa para a aula ou o trabalho. Você já tem o aplicativo e já tem cadastro. A bicicleta está ali, livre. Mas o seu pacote de dados acabou, ou o sinal ali é fraco.</p>
   <p>Hoje, para liberar a bicicleta, o celular precisa falar com a internet. Sem ela, nada acontece. O serviço existe, a bicicleta existe, e a pessoa não consegue usar.</p>
   <p class="k">Em uma frase: o usuário está pronto para pagar e o sistema o deixa na calçada.</p></div>
-  <div class="vis"><h4>A cena, em uma checagem</h4><ul class="chk">
+  <div class="vis"><h4 id="problema-cena">A cena, em uma checagem</h4><ul class="chk">
    <li><span class="dot">✓</span>Tem o aplicativo instalado</li><li><span class="dot">✓</span>Tem cadastro ativo</li><li><span class="dot">✓</span>Tem bicicleta livre na estação</li><li><span class="dot x">✕</span>Está sem internet no celular</li><li><span class="dot x">✕</span>Resultado: não consegue sair</li></ul></div></article>
+ <figure id="video-problema" data-v="problema"></figure>
 
  <article class="q" id="cliente"><div><h3>Quem sofre com ele?</h3>
   <p>De um lado, quem anda de bicicleta: estudantes, trabalhadores e turistas. Perdem tempo esperando sinal, procuram Wi-Fi ou desistem e vão a pé ou de ônibus.</p>
@@ -170,7 +220,7 @@ body{padding-left:calc(3.5rem + env(safe-area-inset-left,0rem))}
   <p>Em vez de exigir internet no celular, a proposta leva parte da validação para a estação. Um módulo com Bluetooth conversa diretamente com o aplicativo, a poucos metros de distância. Essa comunicação local não precisa de internet. A instalação depende de uma análise de compatibilidade elétrica, mecânica e de protocolo com cada modelo de estação; não prometemos integração universal sem adaptação.</p>
   <p>O fluxo proposto mantém a leitura do QR Code da estação; a liberação só ocorre se a credencial e as condições locais forem aprovadas. Quando disponível, a estação usa sua própria conexão para informar a central. Se a conexão da estação também cair, o evento fica em uma fila local persistente e é enviado quando a conexão voltar.</p>
   <p class="k">Em uma frase: a conexão sai do bolso do usuário e passa a ser responsabilidade da estação.</p></div>
-  <div class="vis"><h4>Hoje × com o BikeConnect</h4><div class="flow">
+  <div class="vis"><h4 id="solucao-hoje">Hoje × com o BikeConnect</h4><div class="flow">
    <div class="nd"><b>Hoje</b><span>Celular → internet → servidor → estação</span></div><div class="ar">↓</div>
    <div class="nd" style="border:2px solid var(--sig)"><b>Com o BikeConnect</b><span>Celular → Bluetooth → estação → central</span></div></div></div></article>
 
@@ -183,12 +233,13 @@ body{padding-left:calc(3.5rem + env(safe-area-inset-left,0rem))}
   <p><b>Como a estação sabe que um token já foi usado, sem internet?</b> O ESP32 mantém localmente os identificadores já aceitos naquela estação. Além disso, a credencial deve estar vinculada a uma chave do aplicativo/dispositivo: a estação envia um desafio aleatório (nonce), e o app assina esse desafio com a chave privada protegida no aparelho. A estação valida a prova com a chave pública vinculada à credencial. Assim, copiar apenas o arquivo do token não basta. O relógio da estação também precisa ser confiável; se a hora estiver inválida ou incerta, a política segura é negar a retirada offline.</p>
   <p><b>E se duas estações offline receberem o mesmo token?</b> Como nenhuma sabe da outra, duas estações isoladas podem aceitar a mesma credencial se ela for válida para ambas. Portanto, não é correto prometer uso globalmente único enquanto as estações estão desconectadas. O MVP deve reduzir esse risco com credenciais vinculadas ao dispositivo e ao escopo de estação/região, cotas offline pequenas, validade curta e reconciliação posterior. A central identifica conflitos na sincronização; qualquer cobrança ou bloqueio exige regra operacional transparente, não uma cobrança automática baseada apenas na duplicata.</p>
   <p class="k">Mesmo sem internet, a estação aplica as verificações locais previstas. Há limites conhecidos: revogação e detecção de reutilização entre estações isoladas só podem ser consolidadas após a sincronização. Os mecanismos ainda precisam ser implementados e testados no MVP.</p></div>
-  <div class="vis"><h4>O caminho do token</h4><div class="flow">
+  <div class="vis"><h4 id="tec-token">O caminho do token</h4><div class="flow">
    <div class="nd"><b>1. Com internet</b><span>O app recebe o token assinado</span></div><div class="ar">↓</div>
    <div class="nd" style="border:2px solid var(--sig)"><b>2. Bluetooth, sem internet</b><span>O token vai direto do celular à estação; o ESP32 confere e libera</span></div><div class="ar">↓</div>
    <div class="nd"><b>3. Registro gravado</b><span>A estação guarda quem retirou e quando</span></div><div class="ar">↓</div>
    <div class="nd"><b>4. Estação avisa a central</b><span>Os dados offline chegam e a viagem é conciliada</span></div></div></div>
   </article>
+ <figure id="video-tecnologia" data-v="tecnologia"></figure>
   <div class="sec" id="arquitetura"><h4>Arquitetura: o que fica perto e o que fica longe</h4><p>Duas conversas separadas. A local, por Bluetooth, não precisa de internet. A de longa distância é feita pela estação, que tem conexão própria.</p>
   <svg class="ch arch" viewBox="0 0 520 500" role="img" aria-label="Diagrama: o app lê o QR Code e fala por Bluetooth com o ESP32 da estação, que tem memória local e módulo da trava. Quando disponível, a estação usa sua conexão própria para falar com o servidor e o banco de dados; se ficar offline, armazena eventos para sincronizar depois. O app baixa o token do servidor quando tem internet.">
    <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#f4c20d"/></marker><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#3cc4d6"/></marker></defs>
@@ -211,7 +262,15 @@ body{padding-left:calc(3.5rem + env(safe-area-inset-left,0rem))}
    <rect x="16" y="420" width="150" height="60" rx="10" fill="#173640" stroke="#25464f"/><text x="91" y="446" text-anchor="middle">Celular com</text><text x="91" y="464" text-anchor="middle">internet</text>
    <path d="M166 450L202 450" stroke="#3cc4d6" stroke-width="3" fill="none" marker-end="url(#ah2)"/><text class="m" x="22" y="410">baixa o token antes</text>
   </svg></div>
-  <div class="sec"><h4>Cibersegurança: o que pode dar errado e como nos defendemos</h4><p>Liberar uma bicicleta sem consultar a internet exige que a própria estação saiba desconfiar. Por isso o projeto trata a segurança em camadas: cada ameaça abaixo tem uma defesa específica. Estes mecanismos são a arquitetura planejada para o MVP e serão testados no piloto.</p><div class="tw"><table><tr><th>Ameaça</th><th>Como poderia acontecer</th><th>Como nos defendemos</th></tr><tr><td>Token falso</td><td>Alguém inventa ou altera uma credencial</td><td>Assinatura digital: a estação recusa qualquer token que não tenha sido assinado pela central</td></tr><tr><td>Token roubado ou copiado</td><td>Celular perdido ou credencial clonada</td><td>Credencial vinculada à chave do dispositivo, protegida pelo armazenamento seguro do sistema operacional e liberada após autenticação local do usuário, desafio-resposta, validade curta, cota offline e lista local de identificadores já aceitos. A lista impede repetição na mesma estação; não garante prevenção global entre estações isoladas até a sincronização.</td></tr><tr><td>Mesmo token em duas estações offline</td><td>Uma credencial usada em estações diferentes, antes de qualquer sincronização</td><td>Prova de posse da chave do dispositivo, escopo de estação/região, cota offline e reconciliação de conflitos na central. Uma duplicata entre estações isoladas é um risco residual, não algo bloqueado em tempo real.</td></tr><tr><td>Repetição do sinal</td><td>Gravar a conversa Bluetooth e repetir depois</td><td>A estação gera um nonce aleatório e exige uma assinatura de resposta do dispositivo; o nonce é descartado após a tentativa. Isso reduz ataques de repetição, mas precisa ser implementado e testado no protocolo BLE.</td></tr><tr><td>Escuta do Bluetooth</td><td>Interceptar os dados no ar</td><td>Canal cifrado entre app e estação, sem dados pessoais dentro do token</td></tr><tr><td>Estação adulterada</td><td>Mexer no firmware ou forçar a trava</td><td>Inicialização segura e firmware assinado; criptografia de flash e proteção de chaves conforme o modelo ESP32 e a configuração adotada. A chave privada da central não deve ficar no ESP32.</td></tr><tr><td>Troca de chaves</td><td>Uma chave de assinatura vazar</td><td>Chaves rotativas: a chave antiga deixa de valer e os tokens são renovados</td></tr><tr><td>Invasão da central</td><td>Atacar servidor ou banco de dados</td><td>Comunicação cifrada (TLS), acessos mínimos, registros de auditoria e alerta para padrões estranhos</td></tr><tr><td>Registro duplicado</td><td>O mesmo evento chegar duas vezes</td><td>Conciliação que reconhece e descarta repetições</td></tr></table></div><p class="src" style="margin-top:14px">Também adotamos como princípio coletar apenas os dados necessários. Isso contribui para a privacidade, mas não significa conformidade automática com a LGPD: o produto ainda precisará definir base legal, transparência, retenção, controle de acesso e atendimento aos direitos dos titulares.</p></div>
+  </div></section>
+
+<section id="ciberseguranca"><div class="wrap">
+ <h2>Cibersegurança</h2>
+ <figure id="video-ciberseguranca" data-v="ciberseguranca"></figure>
+ <div class="sec"><h4>O que pode dar errado e como nos defendemos</h4><p>Liberar uma bicicleta sem consultar a internet exige que a própria estação saiba desconfiar. Por isso o projeto trata a segurança em camadas: cada ameaça abaixo tem uma defesa específica. Estes mecanismos são a arquitetura planejada para o MVP e serão testados no piloto.</p><div class="tw"><table><tr><th>Ameaça</th><th>Como poderia acontecer</th><th>Como nos defendemos</th></tr><tr><td>Token falso</td><td>Alguém inventa ou altera uma credencial</td><td>Assinatura digital: a estação recusa qualquer token que não tenha sido assinado pela central</td></tr><tr><td>Token roubado ou copiado</td><td>Celular perdido ou credencial clonada</td><td>Credencial vinculada à chave do dispositivo, protegida pelo armazenamento seguro do sistema operacional e liberada após autenticação local do usuário, desafio-resposta, validade curta, cota offline e lista local de identificadores já aceitos. A lista impede repetição na mesma estação; não garante prevenção global entre estações isoladas até a sincronização.</td></tr><tr><td>Mesmo token em duas estações offline</td><td>Uma credencial usada em estações diferentes, antes de qualquer sincronização</td><td>Prova de posse da chave do dispositivo, escopo de estação/região, cota offline e reconciliação de conflitos na central. Uma duplicata entre estações isoladas é um risco residual, não algo bloqueado em tempo real.</td></tr><tr><td>Repetição do sinal</td><td>Gravar a conversa Bluetooth e repetir depois</td><td>A estação gera um nonce aleatório e exige uma assinatura de resposta do dispositivo; o nonce é descartado após a tentativa. Isso reduz ataques de repetição, mas precisa ser implementado e testado no protocolo BLE.</td></tr><tr><td>Escuta do Bluetooth</td><td>Interceptar os dados no ar</td><td>Canal cifrado entre app e estação, sem dados pessoais dentro do token</td></tr><tr><td>Estação adulterada</td><td>Mexer no firmware ou forçar a trava</td><td>Inicialização segura e firmware assinado; criptografia de flash e proteção de chaves conforme o modelo ESP32 e a configuração adotada. A chave privada da central não deve ficar no ESP32.</td></tr><tr><td>Troca de chaves</td><td>Uma chave de assinatura vazar</td><td>Chaves rotativas: a chave antiga deixa de valer e os tokens são renovados</td></tr><tr><td>Invasão da central</td><td>Atacar servidor ou banco de dados</td><td>Comunicação cifrada (TLS), acessos mínimos, registros de auditoria e alerta para padrões estranhos</td></tr><tr><td>Registro duplicado</td><td>O mesmo evento chegar duas vezes</td><td>Conciliação que reconhece e descarta repetições</td></tr></table></div><p class="src" style="margin-top:14px">Também adotamos como princípio coletar apenas os dados necessários. Isso contribui para a privacidade, mas não significa conformidade automática com a LGPD: o produto ainda precisará definir base legal, transparência, retenção, controle de acesso e atendimento aos direitos dos titulares.</p></div>
+</div></section>
+
+<section id="negocio"><div class="wrap">
 
  <article class="q" id="valor"><div><h3>Qual é a proposta de valor?</h3>
   <p>Para quem opera: potencial para mais retiradas concluídas e menos reclamações em lugares de sinal ruim, desde que a estação seja tecnicamente compatível ou possa ser adaptada.</p>
@@ -247,7 +306,7 @@ body{padding-left:calc(3.5rem + env(safe-area-inset-left,0rem))}
   <p>Com 30 retiradas por dia e R$ 4 por retirada, a mensalidade só se paga se cerca de 5,6% das retiradas se perderem. Numa estação comum, com 2% de falha, não se paga. Numa estação de zona de sinal ruim, com 60 retiradas por dia e 5% de falha, se paga com folga.</p>
   <p><b>Como protegemos a operadora do risco:</b> o piloto é gratuito ou de baixo custo e mede a taxa real de falha em cada estação. A mensalidade fixa só vale nas estações em que a falha medida passa do ponto de equilíbrio. Nas demais, a proposta é uma cobrança variável sobre as retiradas recuperadas, com valor a negociar e receita menor para nós. Assim, a operadora nunca paga mais do que recebe de volta.</p>
   <p class="k">Em uma frase: vendemos onde o problema é grande, provamos com medição e só cobramos o valor fixo onde ele se paga.</p></div>
-  <div class="vis roi"><h4>Calculadora: a mensalidade se paga?</h4>
+  <div class="vis roi"><h4 id="calc-retorno">Calculadora: a mensalidade se paga?</h4>
    <div class="pre"><button type="button" data-d="30" data-v="4" data-f="2">Estação comum</button><button type="button" data-d="60" data-v="4" data-f="5">Zona de sinal ruim</button><button type="button" data-d="20" data-v="3" data-f="1">Cenário fraco</button></div>
    <div class="g"><div><label for="r_d">Retiradas por dia na estação</label><input id="r_d" type="number" min="0" value="30"></div>
    <div><label for="r_v">Receita por retirada (R$)</label><input id="r_v" type="number" min="0" step="0.5" value="4"></div>
@@ -255,15 +314,16 @@ body{padding-left:calc(3.5rem + env(safe-area-inset-left,0rem))}
    <div><label for="r_m">Mensalidade por estação (R$)</label><input id="r_m" type="number" min="0" value="200"></div></div>
    <div class="res" id="r_out" aria-live="polite"></div>
    <p class="src">Simplificação: considera que toda retirada perdida seria recuperada pelo BikeConnect. Na prática, parte dos usuários tentaria de novo ou esperaria o sinal, então o ganho real tende a ser menor.</p></div></article>
+ <figure id="video-retorno" data-v="retorno"></figure>
 <script>(function(){function g(i){var v=parseFloat(document.getElementById(i).value);return isFinite(v)&&v>=0?v:0}
 function f(n){return n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0})}
 function u(){var d=g("r_d"),v=g("r_v"),p=g("r_f")/100,m=g("r_m"),base=d*30*v,perda=base*p,min=base>0?m/base*100:0,ok=perda>=m,el=document.getElementById("r_out");
 el.className="res "+(ok?"yes":"no");
 el.innerHTML="<span>Receita recuperada por mês</span><b>"+f(perda)+"</b><span>Mensalidade: "+f(m)+" · "+(ok?"a mensalidade se paga":"a mensalidade não se paga com esses valores")+"</span><br><span>Taxa de falha mínima para se pagar: <strong>"+min.toFixed(1).replace(".",",")+"%</strong></span>"}
 ["r_d","r_v","r_f","r_m"].forEach(function(i){document.getElementById(i).addEventListener("input",u)});document.querySelectorAll(".roi .pre button").forEach(function(b){b.addEventListener("click",function(){document.getElementById("r_d").value=b.dataset.d;document.getElementById("r_v").value=b.dataset.v;document.getElementById("r_f").value=b.dataset.f;u()})});u()})();</script>
- <div class="sec fin"><h4>Plano financeiro atualizado — 36 meses</h4>
+ <div class="sec fin" id="plano-financeiro"><h4>Plano financeiro atualizado — 36 meses</h4>
   <p>Modelo-base de planejamento, não promessa de faturamento. O plano assume que as estações contratadas são estações-alvo (zona de sinal ruim e com bastante movimento); em estações comuns, a mensalidade fixa não se paga (veja Retorno). As metas de clientes, estações e preços são hipóteses a validar. O cenário considera crescimento gradual, implantação paga, suporte variável, reserva tributária e investimento inicial no MVP.</p>
-  <h5>1. Premissas comerciais e operacionais</h5>
+  <h5 id="fin-premissas">1. Premissas comerciais e operacionais</h5>
   <div class="tw"><table>
    <tr><th>Premissa</th><th>Valor usado</th><th>Como interpretar</th></tr>
    <tr><td>Implantação por nova operadora</td><td class="n">R$ 50.000</td><td>Receita única por integração; hipótese de preço</td></tr>
@@ -274,7 +334,7 @@ el.innerHTML="<span>Receita recuperada por mês</span><b>"+f(perda)+"</b><span>M
    <tr><td>Tributos provisionados</td><td class="n">20% da receita bruta</td><td>Reserva conservadora para modelagem; não é alíquota fiscal definida</td></tr>
    <tr><td>MVP — desenvolvimento e validação</td><td class="n">R$ 60.000</td><td>Desembolso concentrado no primeiro ano; orçamento a cotar</td></tr>
   </table></div>
-  <h5>2. Custos fixos por fase</h5>
+  <h5 id="fin-custos">2. Custos fixos por fase</h5>
   <div class="tw"><table>
    <tr><th>Período</th><th class="n">Custo fixo mensal</th><th>Estratégia de equipe</th></tr>
    <tr><td>Ano 1</td><td class="n">R$ 20.000</td><td>Fundadores executam parte do desenvolvimento; pró-labore contido e contratação pontual. Não comporta duas contratações CLT integrais com os salários de referência.</td></tr>
@@ -282,7 +342,7 @@ el.innerHTML="<span>Receita recuperada por mês</span><b>"+f(perda)+"</b><span>M
    <tr><td>Ano 3</td><td class="n">R$ 38.000</td><td>Ampliar suporte, engenharia e comercial conforme carteira e receita recorrente.</td></tr>
   </table></div>
   <p class="src">Referência salarial nacional atualizada em 05/11/2026: programador de sistemas, custo estimado para a empresa de R$ 10.376/mês; analista de desenvolvimento, R$ 14.390/mês. São referências CLT nacionais, não orçamento de contratação do BikeConnect. Isso reforça que o ano 1 depende de fundadores e contratação parcial/terceirizada, e que os custos fixos precisam ser revistos com cotações locais.</p>
-  <h5>3. Projeção anual — cenário-base</h5>
+  <h5 id="fin-projecao">3. Projeção anual — cenário-base</h5>
   <div class="tw"><table>
    <tr><th>Ano</th><th class="n">Clientes médios</th><th class="n">Estações médias</th><th class="n">Novos clientes</th><th class="n">Receita bruta</th><th class="n">Custos totais*</th><th class="n">Resultado</th></tr>
    <tr><td>Ano 1</td><td class="n">0,5</td><td class="n">5</td><td class="n">1</td><td class="n">R$ 77.000</td><td class="n">R$ 337.500</td><td class="n neg">– R$ 260.500</td></tr>
@@ -291,7 +351,7 @@ el.innerHTML="<span>Receita recuperada por mês</span><b>"+f(perda)+"</b><span>M
    <tr class="tot"><td>Acumulado</td><td class="n">—</td><td class="n">—</td><td class="n">12</td><td class="n">R$ 2.172.000</td><td class="n">R$ 1.978.500</td><td class="n pos">R$ 193.500</td></tr>
   </table></div>
   <p class="src">*Custos totais incluem custos fixos, suporte variável, custo direto de implantação, provisão tributária de 20% da receita e R$ 60 mil de MVP no ano 1. Resultado antes de juros, depreciação, distribuição de lucros, inadimplência, atrasos relevantes de recebimento e despesas extraordinárias. A planilha anexa detalha os 36 meses e permite alterar as premissas.</p>
-  <h5>3b. E se der errado? Quatro cenários</h5>
+  <h5 id="fin-cenarios">3b. E se der errado? Quatro cenários</h5>
   <div class="tw"><table>
    <tr><th>Cenário</th><th class="n">Ano 1</th><th class="n">Ano 2</th><th class="n">Ano 3</th><th class="n">Acumulado</th></tr>
    <tr><td>Base (tabela acima)</td><td class="n neg">– R$ 260 mil</td><td class="n neg">– R$ 34 mil</td><td class="n pos">R$ 488 mil</td><td class="n pos">R$ 194 mil</td></tr>
@@ -300,21 +360,21 @@ el.innerHTML="<span>Receita recuperada por mês</span><b>"+f(perda)+"</b><span>M
    <tr><td>Base, sem taxa de implantação</td><td class="n neg">– R$ 280 mil</td><td class="n neg">– R$ 114 mil</td><td class="n pos">R$ 348 mil</td><td class="n neg">– R$ 46 mil</td></tr>
   </table></div>
   <p class="src">Calculados com as mesmas fórmulas do cenário-base, mudando só a premissa indicada; custos fixos mantidos. No cenário-base, 65% da receita do ano 1 (R$ 50 mil de R$ 77 mil) vem de uma única implantação. O piloto precisa confirmar três coisas: a taxa real de retiradas perdidas por falta de sinal, a disposição das operadoras de pagar e o número de estações por operadora.</p>
-  <h5>4. Metas de crescimento do cenário-base</h5>
+  <h5 id="fin-metas">4. Metas de crescimento do cenário-base</h5>
   <div class="tw"><table>
    <tr><th>Fim do período</th><th class="n">Operadoras acumuladas</th><th class="n">Estações acumuladas</th><th>Leitura</th></tr>
    <tr><td>Ano 1</td><td class="n">1</td><td class="n">10</td><td>Um piloto comercial / primeiro contrato</td></tr>
    <tr><td>Ano 2</td><td class="n">5</td><td class="n">190</td><td>Quatro novas integrações no ano</td></tr>
    <tr><td>Ano 3</td><td class="n">12</td><td class="n">610</td><td>Sete novas integrações no ano</td></tr>
   </table></div>
-  <h5>5. Capital de giro e necessidade de caixa</h5>
+  <h5 id="fin-caixa">5. Capital de giro e necessidade de caixa</h5>
   <div class="eso">
    <div class="out"><h6>Maior déficit acumulado</h6><p>Após o ano 2, considerando o MVP</p><b>R$ 294.500</b></div>
    <div class="out"><h6>Reserva operacional</h6><p>Quatro meses de custos fixos e variáveis do ano 2</p><b>R$ 126.000</b></div>
    <div class="left"><h6>Meta de financiamento</h6><p>Com contingência de 10%</p><b>R$ 462.550</b></div>
   </div>
   <p>O valor de R$ 462.550 é uma meta inicial de caixa calculada como R$ 294.500 de déficit acumulado + R$ 126.000 de quatro meses de custos do ano 2 + R$ 42.050 de contingência. Não é orçamento fechado nem garantia de suficiência. A fonte do capital ainda não está definida (alternativas: recursos dos sócios, investidor-anjo ou financiamento à inovação, conforme o resultado do piloto). O valor precisa ser refeito quando houver contratos, cronograma de recebimento, cotações e enquadramento tributário.</p>
-  <h5>6. Ponto de equilíbrio — cálculo correto do modelo-base</h5>
+  <h5 id="fin-equilibrio">6. Ponto de equilíbrio — cálculo correto do modelo-base</h5>
   <p>O modelo-base cobra R$ 2.500/mês por operadora e R$ 200/mês por estação ativa. Portanto, o equilíbrio não deve ser calculado dividindo despesas fixas apenas pela margem de uma estação. No ano 3, com custo fixo de R$ 38.000/mês, receita de plataforma de R$ 2.500 por operadora e contribuição de R$ 165 por estação antes de tributos, uma aproximação com 12 operadoras seria: (R$ 38.000 − R$ 30.000) ÷ R$ 165 ≈ 49 estações antes dos tributos. Aplicando a reserva de 20% sobre toda a receita, cada operadora contribui com R$ 2.000 líquidos de tributos e cada estação contribui com R$ 125 (R$ 200 menos 20% de tributos e R$ 35 de suporte). Nesse cenário, o equilíbrio aproximado passa a ser (R$ 38.000 − R$ 24.000) ÷ R$ 125 ≈ 112 estações, com 12 contratos ativos. É uma conta simplificada: não inclui custo comercial adicional, inadimplência ou atraso de recebimento.</p>
  </div>
  <article class="q" id="crescimento"><div><h3>Como irá conquistar clientes?</h3>
@@ -322,13 +382,13 @@ el.innerHTML="<span>Receita recuperada por mês</span><b>"+f(perda)+"</b><span>M
   <p>Depois vem a venda direta a operadoras, parcerias com fabricantes de estações, feiras de mobilidade urbana e indicações de clientes satisfeitos.</p></div>
   <div class="vis"><div class="tl"><div><b>Piloto</b><span>1 a 2 estações em uma universidade</span></div><div><b>Estudo de caso</b><span>Dados reais de retiradas concluídas</span></div><div><b>Escala comercial</b><span>Venda direta, parceiros, feiras e indicações</span></div></div></div></article>
 
- <article class="q"><div><h3>Como poderá crescer?</h3>
+ <article class="q" id="crescer"><div><h3>Como poderá crescer?</h3>
   <p>Em etapas. Primeiro provamos que funciona. Depois levamos a operadoras regionais e condomínios. Só então entramos em prefeituras, que compram por licitação e levam mais tempo, e em grandes operadoras.</p>
   <p>A mesma tecnologia pode servir a patinetes, bicicletas elétricas e outros países da América Latina. Uma extensão importante é atender quem nunca tem internet, com código temporário gerado offline ou cartão.</p>
   <p><b>Como manter clientes:</b> suporte técnico contínuo, relatório mensal das retiradas offline que o BikeConnect viabilizou e um canal de feedback. A integração com estações e app torna a troca de fornecedor trabalhosa, e a mensalidade mantém a receita recorrente.</p></div>
   <div class="vis"><div class="tl"><div><b>0 a 6 meses</b><span>Validação com o piloto</span></div><div><b>6 a 18 meses</b><span>Operadoras regionais e condomínios</span></div><div><b>Depois</b><span>Prefeituras, grandes operadoras e novos veículos</span></div></div></div></article>
 
- <article class="q"><div><h3>Por que esse negócio tem potencial?</h3>
+ <article class="q" id="potencial"><div><h3>Por que esse negócio tem potencial?</h3>
   <p>Porque a receita se repete todo mês, porque trocar de fornecedor é trabalhoso para o cliente e porque o problema é comum em qualquer cidade com bicicleta compartilhada.</p>
   <p>O cenário-base projeta 12 operadoras e 610 estações ao fim do terceiro ano, mas esse crescimento ainda não foi validado comercialmente. Com 12 contratos ativos, custo fixo de R$ 38 mil/mês, assinatura de R$ 2.500 por operadora, licença de R$ 200 por estação, reserva tributária de 20% e suporte variável de R$ 35 por estação, o ponto de equilíbrio simplificado fica em aproximadamente 112 estações ativas. O cálculo depende de manter os 12 contratos e as premissas de preço e custo. Em um cenário pessimista, com metade do volume, o resultado acumulado em 36 meses é negativo (veja a tabela de cenários).</p></div>
   <div class="vis"><h4>Estações ativas — cenário de equilíbrio</h4>
@@ -342,8 +402,8 @@ el.innerHTML="<span>Receita recuperada por mês</span><b>"+f(perda)+"</b><span>M
  <h2>A primeira versão: produto mínimo viável</h2>
  <p class="lead">O menor conjunto proposto para testar a ideia em campo: uma estação compatível em um campus universitário, com autorização do operador e procedimentos de segurança. O piloto ainda não foi executado.</p>
  <div class="two">
-  <div class="card"><h3>O que entra</h3><p class="tag">Escopo do MVP</p><ul><li>1 a 2 estações compatíveis, com módulo BLE (ESP32) e trava ou interface de acionamento adaptada</li><li>App com leitura do QR Code, token guardado no celular e envio por Bluetooth</li><li>Servidor mínimo: emite credenciais assinadas, registra eventos e concilia a fila offline</li><li>Relatório simples de retiradas offline</li></ul></div>
-  <div class="card"><h3>Como medimos o sucesso</h3><p class="tag">Fica de fora por ora: pagamento, painel completo e várias operadoras</p><ul><li>Retiradas offline concluídas por estação, por mês</li><li>Tempo médio de desbloqueio (meta: até 5 segundos)</li><li>Taxa de falha baixa e sem liberação indevida</li><li>Feedback dos alunos que participaram do piloto</li></ul></div>
+  <div class="card"><h3 id="mvp-entra">O que entra</h3><p class="tag">Escopo do MVP</p><ul><li>1 a 2 estações compatíveis, com módulo BLE (ESP32) e trava ou interface de acionamento adaptada</li><li>App com leitura do QR Code, token guardado no celular e envio por Bluetooth</li><li>Servidor mínimo: emite credenciais assinadas, registra eventos e concilia a fila offline</li><li>Relatório simples de retiradas offline</li></ul></div>
+  <div class="card"><h3 id="mvp-metricas">Como medimos o sucesso</h3><p class="tag">Fica de fora por ora: pagamento, painel completo e várias operadoras</p><ul><li>Retiradas offline concluídas por estação, por mês</li><li>Tempo médio de desbloqueio (meta: até 5 segundos)</li><li>Taxa de falha baixa e sem liberação indevida</li><li>Feedback dos alunos que participaram do piloto</li></ul></div>
  </div>
  <p class="note">Com esses números em mãos, propomos um piloto pago, de escopo limitado e com critérios de sucesso acordados. Se houver subsídio acadêmico ou edital, ele deve aparecer como fonte de financiamento separada, não como receita comercial. O desenvolvimento do MVP está no investimento inicial, nas contas do plano financeiro.</p>
 </div></section>
@@ -365,14 +425,14 @@ el.innerHTML="<span>Receita recuperada por mês</span><b>"+f(perda)+"</b><span>M
  <h2>O que ainda precisa ser resolvido</h2>
  <p class="lead">O projeto está em fase de proposta e prototipagem. Os itens abaixo são dependências reais para sair da demonstração e chegar a uma estação em operação.</p>
  <div class="two">
-  <div class="card"><h3>Bloqueadores técnicos</h3><ul>
+  <div class="card"><h3 id="bloq-tec">Bloqueadores técnicos</h3><ul>
    <li>Construir o aplicativo real com leitura de QR Code e armazenamento seguro de credenciais.</li>
    <li>Implementar firmware BLE no ESP32 e validar compatibilidade com Android e iOS.</li>
    <li>Definir interface elétrica, alimentação, proteção e acionamento seguro da trava por modelo de estação.</li>
    <li>Implementar relógio confiável, proteção de chaves, nonce, prevenção de replay, armazenamento persistente e recuperação após queda de energia.</li>
    <li>Definir política para credenciais duplicadas em estações desconectadas; não existe prevenção global instantânea sem comunicação.</li>
   </ul></div>
-  <div class="card"><h3>Bloqueadores comerciais e operacionais</h3><ul>
+  <div class="card"><h3 id="bloq-com">Bloqueadores comerciais e operacionais</h3><ul>
    <li>Medir em campo a taxa real de retiradas perdidas por falta de sinal: ela decide se a mensalidade de R$ 200 por estação se paga (veja a calculadora em Retorno).</li>
    <li>Entrevistar operadoras e mapear estações, fabricantes, protocolos e responsáveis pela decisão de compra.</li>
    <li>Validar preços por meio de propostas e piloto pago; as tarifas exibidas são hipóteses.</li>
@@ -411,14 +471,14 @@ el.innerHTML="<span>Receita recuperada por mês</span><b>"+f(perda)+"</b><span>M
  <h2>O que os entrevistados disseram</h2>
  <p class="lead">Para conhecer o problema de perto, ouvimos dois perfis opostos: uma pessoa sem acesso à internet e outra com internet, mas que também esbarra em sinal ruim e na exigência do aplicativo. Os dois responderam ao mesmo questionário de 15 perguntas e preferem não ser identificados.</p>
  <div class="two">
-  <div class="card"><h3>Perfil A</h3><p class="tag">Sem acesso à internet</p><dl>
+  <div class="card"><h3 id="perfil-a">Perfil A</h3><p class="tag">Sem acesso à internet</p><dl>
    <dt>Já usou bicicleta compartilhada?</dt><dd>Tentou, mas teve dificuldades, e já deixou de usar por precisar de internet.</dd>
    <dt>Principal dificuldade</dt><dd>Precisar de internet. Dificulta bastante.</dd>
    <dt>Quando não consegue</dt><dd>Vai a pé. O que mais incomoda é não conseguir liberar a bicicleta e ter de ir de ônibus ou a pé.</dd>
    <dt>Usaria sem internet ou aplicativo?</dt><dd>Sim. Prefere código ou senha.</dd>
    <dt>Pagaria?</dt><dd>Talvez, dependendo do preço: até R$ 5.</dd>
    <dt>Sugestão</dt><dd>Liberar um código válido por 24 horas para usar a bicicleta naquele dia.</dd></dl></div>
-  <div class="card"><h3>Perfil B</h3><p class="tag">Internet sempre disponível</p><dl>
+  <div class="card"><h3 id="perfil-b">Perfil B</h3><p class="tag">Internet sempre disponível</p><dl>
    <dt>Já usou bicicleta compartilhada?</dt><dd>Sim, e já deixou de usar por precisar de internet ou aplicativo.</dd>
    <dt>Principal dificuldade</dt><dd>Precisar de um aplicativo. A falta de internet dificulta muito.</dd>
    <dt>Quando não consegue</dt><dd>Usa ônibus ou vai a pé. O que mais incomoda é o sinal ruim ou o celular descarregado.</dd>
@@ -428,7 +488,7 @@ el.innerHTML="<span>Receita recuperada por mês</span><b>"+f(perda)+"</b><span>M
  </div>
  <p class="note"><b>Em comum:</b> os dois já desistiram de usar o serviço, os dois usariam uma alternativa sem internet e os dois sugeriram um código temporário. São apenas duas entrevistas, uma amostra exploratória sem valor estatístico: servem para entender o problema, não para provar a demanda. Vamos ampliá-las antes do piloto.</p>
  <p class="note"><b>Limite do MVP:</b> o Perfil A, que não tem internet em momento nenhum, não é atendido pela primeira versão, porque o token precisa ser baixado antes, com internet. Atender esse perfil exige uma extensão (código temporário gerado offline ou cartão, como os próprios entrevistados sugeriram), prevista no roteiro de crescimento e fora do MVP.</p>
- <div class="card" style="margin-top:1.5rem"><h3>Ampliando a pesquisa</h3><p class="tag">Meta: 10 entrevistas · realizadas: 2</p>
+ <div class="card" style="margin-top:1.5rem"><h3 id="pesquisa-ampliar">Ampliando a pesquisa</h3><p class="tag">Meta: 10 entrevistas · realizadas: 2</p>
   <p>Antes do piloto, vamos ouvir mais 8 pessoas e pelo menos 2 gestores de estação ou operadora. As perguntas miram o que ainda não sabemos:</p>
   <ul><li>Usuários: nas últimas 4 semanas, quantas vezes você não conseguiu liberar uma bicicleta por falta de sinal ou de dados?</li><li>Usuários: nessas vezes, o que você fez (esperou, foi a pé, usou outro transporte)?</li><li>Usuários: você aceitaria baixar o app e deixar o login pronto antes de sair de casa?</li><li>Gestores: quantas retiradas por dia tem uma estação típica e qual a receita média por retirada?</li><li>Gestores: que parcela das tentativas falha por falta de sinal e quanto pagariam para reduzir isso?</li></ul>
   <p class="src">Os resultados entram aqui quando as entrevistas forem feitas. Até lá, a pesquisa válida são as duas entrevistas acima.</p></div>
@@ -446,13 +506,111 @@ el.innerHTML="<span>Receita recuperada por mês</span><b>"+f(perda)+"</b><span>M
 </main>
 <footer><div class="wrap">BikeConnect · Centro Universitário Anhanguera de Niterói · Modelos de Negócios para TI · Ciência da Computação, 2026</div></footer>
 
-<script>(function(){var h=["#equipe","#status","#auditoria","#contato","#pesquisa","#conhecendo .sec","#tecnologia","#valor","article.q:not([id])",'nav a[href="#status"]','nav a[href="#auditoria"]','nav a[href="#pesquisa"]','nav a[href="#contato"]','.idx a[href="#tecnologia"]','.idx a[href="#valor"]'];
+<script>(function(){var h=["#equipe","#status","#auditoria","#contato","#pesquisa","#conhecendo .sec","#negocio .sec","#ciberseguranca","#tecnologia","#valor","#crescer","#potencial",'nav a[href="#status"]','nav a[href="#auditoria"]','nav a[href="#pesquisa"]','nav a[href="#contato"]','.idx a[href="#tecnologia"]','.idx a[href="#valor"]'];
 h.forEach(function(q){document.querySelectorAll(q).forEach(function(e){e.classList.add("ph")})});
 var b=document.getElementById("pm");b.addEventListener("click",function(){var on=document.body.classList.toggle("pres");b.setAttribute("aria-pressed",on?"true":"false");b.textContent=on?"Sair do modo apresentação":"Modo apresentação";window.scrollTo(0,0)})})();</script>
-<script>(function(){var d=document,n=d.getElementById("sidenav");
-["#tecnologia","#valor"].forEach(function(h){var a=n.querySelector('a[href="'+h+'"]');if(a)a.classList.add("ph")});
-if(window.IntersectionObserver){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){n.querySelectorAll("a").forEach(function(a){a.removeAttribute("aria-current")});var a=n.querySelector('a[href="#'+e.target.id+'"]');if(a)a.setAttribute("aria-current","true")}})},{rootMargin:"-30% 0px -60% 0px"});n.querySelectorAll("a").forEach(function(a){var t=d.getElementById(a.getAttribute("href").slice(1));if(t)io.observe(t)})}
-var i=d.getElementById("intro"),done=false;function end(){if(done)return;done=true;i.classList.add("out");setTimeout(function(){d.documentElement.classList.remove("intro-on")},500)}
-var rm=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;i.addEventListener("click",end);setTimeout(end,rm?900:2800)})();</script>
+<script>(function(){var d=document,de=d.documentElement,n=d.getElementById("sidenav"),pg=d.getElementById("prog"),i=d.getElementById("intro"),
+rm=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches,items=[],tick=false,started=false,done=false;
+[].slice.call(n.querySelectorAll("a")).forEach(function(a){var t=d.getElementById(a.getAttribute("href").slice(1));if(!t)return;if(t.closest(".ph"))a.classList.add("ph");items.push({a:a,t:t,g:a.closest(".grp")})});
+function spy(){tick=false;var y=window.innerHeight*.35,best=null,bt=-1e9;
+items.forEach(function(x){if(!x.t.offsetParent)return;var r=x.t.getBoundingClientRect().top;if(r<=y&&r>bt){bt=r;best=x}});
+if(!best)return;
+items.forEach(function(x){x.a.removeAttribute("aria-current")});best.a.setAttribute("aria-current","true");
+n.querySelectorAll(".grp").forEach(function(g){g.classList.toggle("on",g===best.g)});
+var a=best.a,top=a.offsetTop,h=a.offsetHeight;if(top<n.scrollTop+8||top+h>n.scrollTop+n.clientHeight-8)n.scrollTop=top-n.clientHeight/2+h/2;
+var m=de.scrollHeight-window.innerHeight;if(pg)pg.style.transform="scaleX("+(m>0?Math.min(1,window.scrollY/m):0)+")"}
+function onS(){if(!tick){tick=true;requestAnimationFrame(spy)}}
+window.addEventListener("scroll",onS,{passive:true});window.addEventListener("resize",onS);
+var pm=d.getElementById("pm");if(pm)pm.addEventListener("click",function(){setTimeout(spy,60)});
+function reveal(){if(started)return;started=true;
+var seen=[];[".hero>div",".wrap>h2",".q>div",".card",".sec",".vis",".note",".vid"].forEach(function(q){d.querySelectorAll(q).forEach(function(e){if(seen.indexOf(e)<0)seen.push(e)})});
+seen.forEach(function(e){e.classList.add("rv");var k=Array.prototype.indexOf.call(e.parentNode.children,e);if(k>0)e.style.animationDelay=Math.min(k,4)*.08+"s"});
+if(rm||!window.IntersectionObserver){seen.forEach(function(e){e.classList.add("in")});return}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:0,rootMargin:"0px 0px -8% 0px"});
+seen.forEach(function(e){io.observe(e)})}
+function end(){if(done)return;done=true;if(i)i.classList.add("out");reveal();setTimeout(function(){de.classList.remove("intro-on");spy()},500)}
+if(i){i.addEventListener("click",end);setTimeout(end,rm?900:2800);setTimeout(reveal,5200)}else{reveal()}
+spy()})();</script>
+<script>var VC={ink:"#eaf3f1",sig:"#f4c20d",cy:"#3cc4d6",red:"#ff8a76",grn:"#5fd8a0",bg:"#0a1a1f",pn:"#16272f",mu:"#9db3ba"};
+function vT(t,x,y,o){o=o||{};return '<text x="'+x+'" y="'+y+'" text-anchor="'+(o.a||'middle')+'" font-size="'+(o.s||14)+'" font-weight="'+(o.w||600)+'" fill="'+(o.c||VC.ink)+'">'+t+'</text>'}
+function vG(n,inner,cl,t){return '<g id="@'+n+'" class="'+cl+'"'+(t?' style="transform:'+t+'"':'')+'>'+inner+'</g>'}
+function vPH(n,t,kids,cl,col){return vG(n,'<g transform="scale(1.5)"><rect x="-20" y="-34" width="40" height="68" rx="8" fill="'+VC.bg+'" stroke="'+(col||VC.ink)+'" stroke-width="2.5"/><rect x="-15" y="-27" width="30" height="50" rx="3" fill="'+VC.pn+'"/>'+(kids||'')+'</g>',cl,t)}
+function vNX(){return vG('nx','<path d="M-9 12v-4M-3 12v-8M3 12v-12M9 12v-16" stroke="'+VC.mu+'" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M-13 17L13 -15" stroke="'+VC.red+'" stroke-width="3" stroke-linecap="round"/>','el')}
+function vSP(){return vG('sp','<circle class="spin" cx="0" cy="-6" r="9" fill="none" stroke="'+VC.sig+'" stroke-width="3" stroke-dasharray="16 40"/>','el')}
+function vER(){return vG('er','<path d="M-9 -14l18 18M9 -14l-18 18" stroke="'+VC.red+'" stroke-width="4" stroke-linecap="round"/>','el')}
+function vTM(n,col){return vG(n,'<rect x="-11" y="-18" width="22" height="13" rx="3" fill="'+col+'"/><path d="M-6 -13h12" stroke="'+VC.bg+'" stroke-width="2" stroke-linecap="round"/>','el')}
+function vTK(n,t,col,cl){return vG(n,'<rect x="-18" y="-11" width="36" height="22" rx="5" fill="'+col+'"/><path d="M-10 -3h20M-10 3h12" stroke="'+VC.bg+'" stroke-width="2.5" stroke-linecap="round"/>',cl,t)}
+function vST(x,y){return '<g transform="translate('+x+' '+y+')"><rect x="-38" y="-70" width="76" height="140" rx="10" fill="'+VC.pn+'" stroke="'+VC.mu+'" stroke-width="3"/><rect x="-24" y="-38" width="48" height="12" rx="4" fill="'+VC.bg+'"/><circle cx="0" cy="-55" r="7" fill="#4b5f66"/><circle id="@lr" class="el" cx="0" cy="-55" r="7" fill="'+VC.red+'"/><circle id="@lg" class="el" cx="0" cy="-55" r="7" fill="'+VC.grn+'"/>'+vT('Estação',0,90,{s:12,c:VC.mu})+'</g>'}
+function vBK(n,t){return vG(n,'<g transform="translate(-45 -53) scale(1.4)" fill="none" stroke="'+VC.ink+'" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="42" r="11"/><circle cx="48" cy="42" r="11"/><path d="M16 42L26 24H42L48 42M26 24L32 42L42 24M16 42H32"/></g>','mv',t)}
+function vBB(n,txt,col,x,y,w){return vG(n,'<rect x="'+(x-w/2)+'" y="'+(y-20)+'" width="'+w+'" height="40" rx="10" fill="'+VC.pn+'" stroke="'+col+'" stroke-width="2.5"/>'+vT(txt,x,y+5,{s:13,c:col}),'el')}
+var VS={
+problema:{title:"o problema",init:{ph:"translate(110px,240px)"},
+ svg:function(){return vST(540,215)+vBK('bk','translate(450px,286px)')+vPH('ph','translate(110px,240px)',vNX()+vSP()+vER(),'mv')+vG('lost',vT('Corrida perdida',300,70,{c:VC.red,s:24,w:800}),'el')},
+ steps:[[2.5,"Você chega à estação e abre o aplicativo.",[],{ph:"translate(220px,240px)"}],
+ [2.5,"Mas o celular está sem sinal.",["nx"],{ph:"translate(330px,240px)"}],
+ [3,"O app tenta liberar a bicicleta e fica carregando…",["nx","sp"],{}],
+ [2.5,"A retirada falha. A trava continua fechada.",["nx","er","lr"],{}],
+ [3,"O usuário desiste e a operadora perde a corrida.",["er","lr","lost"],{ph:"translate(90px,240px)"}]]},
+tecnologia:{title:"como a retirada funciona sem internet",init:{ph:"translate(120px,255px)",tk:"translate(120px,128px)",bk:"translate(490px,286px)"},
+ svg:function(){var sv='<rect x="80" y="40" width="80" height="60" rx="10" fill="'+VC.pn+'" stroke="'+VC.cy+'" stroke-width="3"/><path d="M92 58h56M92 70h56M92 82h36" stroke="'+VC.cy+'" stroke-width="3" stroke-linecap="round"/>'+vT('Central',120,120,{s:12,c:VC.mu});
+ return vG('sv',sv,'el')+vG('wf','<path class="dash" d="M120 138V212" stroke="'+VC.cy+'" stroke-width="3" fill="none"/>'+vT('internet',150,180,{a:'start',s:12,c:VC.cy}),'el')+vST(575,215)+vBK('bk','translate(490px,286px)')
+ +vG('ble','<path d="M381 247a12 12 0 0 1 0 16M388 241a22 22 0 0 1 0 28M396 235a32 32 0 0 1 0 40" fill="none" stroke="'+VC.cy+'" stroke-width="3" stroke-linecap="round"/>','el pls')
+ +vBB('chk','Conferindo a assinatura…',VC.sig,420,120,200)+vBB('okb','Assinatura válida ✓',VC.grn,420,120,200)
+ +vG('sync','<path class="dash" d="M575 142C575 40 320 30 165 70" fill="none" stroke="'+VC.cy+'" stroke-width="3"/>'+vT('conexão própria da estação',390,40,{s:12,c:VC.cy}),'el')
+ +vG('h1',vT('Em casa, com internet',120,345,{s:13,c:VC.mu}),'el')+vG('h2',vT('Na estação, sem internet no celular',450,345,{s:13,c:VC.mu}),'el')
+ +vPH('ph','translate(120px,255px)',vNX()+vTM('tkp',VC.sig),'mv')+vTK('tk','translate(120px,128px)',VC.sig,'mv el')},
+ steps:[[2.5,"Antes de sair, com internet, o app pede um token à central.",["sv","wf","h1"],{}],
+ [2.5,"A central envia o token, assinado digitalmente.",["sv","wf","h1","tk"],{tk:"translate(120px,218px)"}],
+ [2.5,"O token fica guardado no celular. Agora dá para sair.",["tkp","h1"],{ph:"translate(260px,255px)"}],
+ [2.5,"Na estação, sem sinal, o celular conversa com ela por Bluetooth.",["tkp","nx","ble","h2"],{ph:"translate(350px,255px)"}],
+ [2.5,"A estação confere a assinatura do token.",["tkp","nx","ble","chk","h2"],{}],
+ [2.5,"Assinatura válida: a trava abre e a bicicleta sai.",["tkp","nx","ble","okb","lg","h2"],{bk:"translate(430px,300px)"}],
+ [3,"Depois, a estação avisa a central pela conexão própria dela.",["sync","sv","lg","h2"],{}]]},
+ciberseguranca:{title:"o que acontece com um token falso",init:{atk:"translate(90px,240px)",usr:"translate(90px,240px)"},
+ svg:function(){return vST(570,215)+vBK('bk','translate(490px,286px)')+vPH('atk','translate(90px,240px)',vTM('tf',VC.red)+vG('q',vT('?',0,12,{s:16,c:VC.red,w:800}),''),'mv el',VC.red)+vPH('usr','translate(90px,240px)',vTM('tu',VC.sig),'mv el',VC.grn)
+ +vBB('chk','Conferindo a assinatura…',VC.sig,300,120,210)+vBB('rej','Assinatura inválida: recusado',VC.red,300,120,250)+vBB('acc','Assinatura válida: liberado',VC.grn,300,120,240)},
+ steps:[[2.5,"A estação precisa desconfiar, mesmo sem internet.",[],{}],
+ [2.5,"Alguém tenta usar um token falso.",["atk","tf","q"],{atk:"translate(300px,240px)"}],
+ [2.5,"A estação confere a assinatura digital do token.",["atk","tf","q","chk"],{}],
+ [2.5,"A assinatura não confere: acesso recusado.",["atk","tf","q","rej","lr"],{atk:"translate(150px,240px)"}],
+ [2.5,"Com um token autêntico, a assinatura confere.",["usr","tu","chk"],{usr:"translate(300px,240px)"}],
+ [3,"A trava abre e a bicicleta é liberada.",["usr","tu","acc","lg"],{bk:"translate(425px,302px)"}]]},
+retorno:{title:"quando a mensalidade se paga",note:"Valores de exemplo, não medidos em campo.",init:{rec:"scaleX(0)"},
+ svg:function(){return vG('bar','<rect x="80" y="150" width="480" height="40" rx="8" fill="'+VC.grn+'" opacity=".85"/>','')+vG('t0',vT('100 retiradas por mês',80,138,{a:'start',s:14}),'el')
+ +vG('lost','<rect x="536" y="150" width="24" height="40" rx="0" fill="'+VC.red+'"/>','el')+vG('rec','<rect x="536" y="150" width="24" height="40" fill="'+VC.cy+'"/>','mv bar el')
+ +vG('tl',vT('5% perdidas por falta de sinal',560,222,{a:'end',s:13,c:VC.red}),'el')+vG('tr',vT('recuperadas pelo BikeConnect',560,246,{a:'end',s:13,c:VC.cy}),'el')
+ +vG('thr','<path d="M546.6 128V196" stroke="'+VC.sig+'" stroke-width="3" stroke-dasharray="6 5"/>'+vT('ponto de equilíbrio: 2,8%',546,118,{a:'end',s:13,c:VC.sig}),'el')
+ +vG('com','<rect x="550.4" y="150" width="9.6" height="40" fill="'+VC.red+'"/>'+vT('2% perdidas: não se paga',560,222,{a:'end',s:13,c:VC.red}),'el')},
+ steps:[[2.5,"Estação em zona de sinal ruim: 60 retiradas por dia, R$ 4 cada.",["t0"],{}],
+ [3,"Cerca de 5% das tentativas se perdem por falta de sinal.",["t0","lost","tl"],{}],
+ [3,"Com o BikeConnect, essas retiradas são recuperadas.",["t0","lost","rec","tl","tr"],{rec:"scaleX(1)"}],
+ [3.5,"O ponto de equilíbrio é 2,8%. Aqui são R$ 360 recuperados por mês, contra R$ 200 de mensalidade.",["t0","lost","rec","tl","tr","thr"],{}],
+ [3.5,"Numa estação comum, com 2% de falha, não se paga. Por isso o piloto mede.",["t0","thr","com"],{rec:"scaleX(0)"}]]}
+};
+
+(function(){var rm=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function mount(f){var k=f.getAttribute("data-v"),sc=VS[k];if(!sc)return;
+var n=sc.steps.length,tot=sc.steps.reduce(function(a,s){return a+s[0]},0),t=0,idx=-1,pl=false,user=false,last=0,raf=0;
+f.className="vid";f.setAttribute("role","group");f.setAttribute("aria-label","Vídeo animado: "+sc.title);
+f.innerHTML='<div class="vh"><i></i>Vídeo: '+sc.title+'</div><svg class="vs" viewBox="0 0 640 360" aria-hidden="true"><path d="M20 310H620" stroke="#27404a" stroke-width="2"/>'+sc.svg().replace(/"@/g,'"'+k+"-")+'</svg><figcaption></figcaption><div class="vc"><button type="button" class="bp">Reproduzir</button><button type="button" class="br">Reiniciar</button><input type="range" min="0" max="1000" value="0" aria-label="Posição do vídeo"><span></span></div>'+(sc.note?'<p class="vn">'+sc.note+"</p>":"");
+var cap=f.querySelector("figcaption"),bp=f.querySelector(".bp"),br=f.querySelector(".br"),rg=f.querySelector("input"),cn=f.querySelector(".vc span");
+function q(x){return f.querySelector("#"+k+"-"+x)}
+function show(i){if(i===idx)return;idx=i;f.querySelectorAll(".el.on").forEach(function(e){e.classList.remove("on")});
+sc.steps[i][2].forEach(function(x){var e=q(x);if(e)e.classList.add("on")});
+var m={},j,z,e;for(j in sc.init)m[j]=sc.init[j];for(j=0;j<=i;j++){var s=sc.steps[j][3];if(s)for(z in s)m[z]=s[z]}
+for(j in m){e=q(j);if(e)e.style.transform=m[j]}cap.textContent=sc.steps[i][1];cn.textContent=(i+1)+"/"+n}
+function at(x){var a=0;for(var i=0;i<n;i++){a+=sc.steps[i][0];if(x<a)return i}return n-1}
+function snap(fn){f.classList.add("snap");fn();requestAnimationFrame(function(){requestAnimationFrame(function(){f.classList.remove("snap")})})}
+function frame(ts){if(!pl)return;var dt=Math.min(.1,(ts-last)/1000);last=ts;t+=dt;
+if(t>=tot+1.2){t=0;idx=-1;snap(function(){show(0)})}else show(at(Math.min(t,tot-.001)));
+rg.value=Math.min(1,t/tot)*1000;raf=requestAnimationFrame(frame)}
+function play(){if(pl)return;pl=true;bp.textContent="Pausar";last=performance.now();raf=requestAnimationFrame(frame)}
+function pause(){pl=false;bp.textContent="Reproduzir";cancelAnimationFrame(raf)}
+bp.addEventListener("click",function(){if(pl){user=true;pause()}else{user=false;play()}});
+br.addEventListener("click",function(){t=0;idx=-1;snap(function(){show(0)});rg.value=0;user=false;play()});
+rg.addEventListener("input",function(){t=rg.value/1000*tot;show(at(Math.min(t,tot-.001)))});
+show(0);
+if(window.IntersectionObserver&&!rm)new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){if(!user)play()}else pause()})},{threshold:.5}).observe(f)}
+[].forEach.call(document.querySelectorAll("figure[data-v]"),mount)})();</script>
 </body>
 </html>
