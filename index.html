@@ -159,6 +159,7 @@ svg.ch path[marker-end]{stroke-dasharray:.5rem .4rem;animation:flow 1.1s linear 
 .vid .vc span{font-size:.85rem;color:var(--mute);min-width:3.2rem;text-align:right}
 .vid .vn{margin:0;padding:0 1.1rem 1rem;font-size:.85rem;color:var(--mute)}
 @media(prefers-reduced-motion:reduce){.vid .mv,.vid .el{transition-duration:.01s}.vid .spin,.vid .pls path,.vid .dash{animation:none}}
+.vid video{display:block;width:100%;height:auto;max-height:80vh;background:#000}
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%230a1a1f%22/%3E%3Cg transform=%22translate%282 4%29 scale%28.94%29%22%3E%3Cg fill=%22none%22 stroke=%22%23eaf3f1%22 stroke-width=%224%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2216%22 cy=%2242%22 r=%2211%22/%3E%3Ccircle cx=%2248%22 cy=%2242%22 r=%2211%22/%3E%3Cpath d=%22M16 42L26 24H42L48 42M26 24L32 42L42 24M16 42H32%22/%3E%3C/g%3E%3Cg fill=%22none%22 stroke=%22%23f4c20d%22 stroke-width=%223.5%22 stroke-linecap=%22round%22%3E%3Cpath d=%22M46 14A6 6 0 0 1 52 20%22/%3E%3Cpath d=%22M46 9A11 11 0 0 1 57 20%22/%3E%3Cpath d=%22M46 4A16 16 0 0 1 62 20%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
 <script>document.documentElement.classList.add("intro-on");setTimeout(function(){document.documentElement.classList.remove("intro-on")},5000)</script>
@@ -208,7 +209,7 @@ svg.ch path[marker-end]{stroke-dasharray:.5rem .4rem;animation:flow 1.1s linear 
   <p class="k">Em uma frase: o usuário está pronto para pagar e o sistema o deixa na calçada.</p></div>
   <div class="vis"><h4 id="problema-cena">A cena, em uma checagem</h4><ul class="chk">
    <li><span class="dot">✓</span>Tem o aplicativo instalado</li><li><span class="dot">✓</span>Tem cadastro ativo</li><li><span class="dot">✓</span>Tem bicicleta livre na estação</li><li><span class="dot x">✕</span>Está sem internet no celular</li><li><span class="dot x">✕</span>Resultado: não consegue sair</li></ul></div></article>
- <figure id="video-problema" data-v="problema"></figure>
+ <figure id="video-problema" class="vid"><div class="vh"><i></i>Vídeo: o problema</div><video controls playsinline preload="metadata" aria-label="Vídeo: o problema"><source src="Imagens/bikeconnectVideoProblema.mp4" type="video/mp4">Seu navegador não reproduz vídeo. <a href="Imagens/bikeconnectVideoProblema.mp4">Baixe o arquivo</a>.</video></figure>
 
  <article class="q" id="cliente"><div><h3>Quem sofre com ele?</h3>
   <p>De um lado, quem anda de bicicleta: estudantes, trabalhadores e turistas. Perdem tempo esperando sinal, procuram Wi-Fi ou desistem e vão a pé ou de ônibus.</p>
@@ -239,7 +240,7 @@ svg.ch path[marker-end]{stroke-dasharray:.5rem .4rem;animation:flow 1.1s linear 
    <div class="nd"><b>3. Registro gravado</b><span>A estação guarda quem retirou e quando</span></div><div class="ar">↓</div>
    <div class="nd"><b>4. Estação avisa a central</b><span>Os dados offline chegam e a viagem é conciliada</span></div></div></div>
   </article>
- <figure id="video-tecnologia" data-v="tecnologia"></figure>
+ <figure id="video-tecnologia" class="vid"><div class="vh"><i></i>Vídeo: a solução</div><video controls playsinline preload="metadata" aria-label="Vídeo: a solução"><source src="Imagens/bikeconnectVideoSolucao.mp4" type="video/mp4">Seu navegador não reproduz vídeo. <a href="Imagens/bikeconnectVideoSolucao.mp4">Baixe o arquivo</a>.</video></figure>
   <div class="sec" id="arquitetura"><h4>Arquitetura: o que fica perto e o que fica longe</h4><p>Duas conversas separadas. A local, por Bluetooth, não precisa de internet. A de longa distância é feita pela estação, que tem conexão própria.</p>
   <svg class="ch arch" viewBox="0 0 520 500" role="img" aria-label="Diagrama: o app lê o QR Code e fala por Bluetooth com o ESP32 da estação, que tem memória local e módulo da trava. Quando disponível, a estação usa sua conexão própria para falar com o servidor e o banco de dados; se ficar offline, armazena eventos para sincronizar depois. O app baixa o token do servidor quando tem internet.">
    <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#f4c20d"/></marker><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#3cc4d6"/></marker></defs>
